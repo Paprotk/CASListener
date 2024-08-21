@@ -1,8 +1,7 @@
-﻿using System;
-using Sims3.Gameplay.Utilities;
-using Sims3.SimIFace;
+﻿using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
+using System;
 
 namespace Arro
 {
@@ -84,9 +83,13 @@ namespace Arro
         {
             try
             {
+                if (!bShouldRepeat)
+                {
+                    return;
+                }
                 var PhysicalLayout = CASPhysical.sPhysicalLayout;
                 var FacialDetailsLayout = CASFacialDetails.sPhysicalLayout;
-                if (FacialDetailsLayout == null && PhysicalLayout == null && bShouldRepeat)
+                if (FacialDetailsLayout == null && PhysicalLayout == null)
                 {
                     Hair.StateListenerHair();
                     Face.StateListenerFace();
@@ -95,7 +98,7 @@ namespace Arro
                         notificationMessage = "Face and Hair are both absent.";
                     }
                 }
-                if (FacialDetailsLayout != null && PhysicalLayout == null && bFace && bShouldRepeat)
+                if (FacialDetailsLayout != null && PhysicalLayout == null && bFace)
                 {
                     Face.StateListenerFace();
                     if (bDebugging)
@@ -103,7 +106,7 @@ namespace Arro
                         notificationMessage = "Face present, Hair absent.";
                     }
                 }
-                if (FacialDetailsLayout == null && PhysicalLayout != null && bHair && bShouldRepeat)
+                if (FacialDetailsLayout == null && PhysicalLayout != null && bHair)
                 {
                     Hair.StateListenerHair();
                     if (bDebugging)
@@ -111,7 +114,10 @@ namespace Arro
                         notificationMessage = "Hair present, Face absent.";
                     }
                 }
-                Simulator.AddObject(new Sims3.Gameplay.OneShotFunctionTask(new Sims3.Gameplay.Function(CASListener.MainStateListener), StopWatch.TickStyles.Seconds, fMainStateListenerSpeed));
+                if (bShouldRepeat)
+                {
+                    Simulator.AddObject(new Sims3.Gameplay.OneShotFunctionTask(new Sims3.Gameplay.Function(CASListener.MainStateListener), StopWatch.TickStyles.Seconds, fMainStateListenerSpeed));
+                }
                 if (bDebugging)
                 {
                     Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format(notificationMessage, StyledNotification.NotificationStyle.kGameMessageNegative));
