@@ -121,7 +121,7 @@ namespace Arro
                 ExceptionHandler.HandleException(ex, "MainStateListener");
             }
         }
-        public static class TinyUIFixForTS3Integration
+        public static class TinyUIFixForTS3Integration 
         {
             public delegate float FloatGetter();
 
