@@ -1,4 +1,5 @@
 ﻿using System;
+using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
@@ -13,29 +14,29 @@ namespace Arro
         protected static bool kInstantiator = false;
 
         [Tunable]
-        public static float fMainStateListenerSpeed;
+        public static float fMainStateListenerSpeed; //This is float time in seconds between MainStateListener repeats
 
         [Tunable]
-        public static bool bDebugging = false;
+        public static bool bDebugging = false; //Debugging, controls notification showing
 
         [Tunable]
-        public static bool bHair = true;
+        public static bool bHair = true; //Controls whether CASPhysical checking should be enabled
 
         [Tunable]
-        public static bool bFace = true;
+        public static bool bFace = true; //Controls whether CASFacialDetails checking should be enabled
 
         [Tunable]
-        public static float fHairWindowSize;
+        public static float fHairWindowSize; //Window size used for controlling background length
 
         [Tunable]
-        public static float fHairColorsPosition;
+        public static float fHairColorsPosition; //This is hardcoded, so this overrides hair color itemgrid position
 
         [Tunable]
-        public static float fFaceWindowSize;
+        public static float fFaceWindowSize; //Window size used for controlling background length
 
-        public static bool bShouldRepeat;
+        public static bool bShouldRepeat; //This is used to check if MainStateListener should be repeating, very important for checking if user is in CAS
 
-        public static string notificationMessage = "";
+        public static string notificationMessage = ""; //Base string for notification text when debugging is present
 
         static CASListener()
         {
@@ -121,7 +122,7 @@ namespace Arro
                 ExceptionHandler.HandleException(ex, "MainStateListener");
             }
         }
-        public static class TinyUIFixForTS3Integration 
+        public static class TinyUIFixForTS3Integration
         {
             public delegate float FloatGetter();
 
