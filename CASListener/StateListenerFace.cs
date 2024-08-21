@@ -40,7 +40,7 @@ namespace Arro
             try
             {
                 Rect area = CASFacialDetails.gSingleton.mLongPanel.Area;
-                area.Height = CASListener.fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale(); ;
+                area.Height = CASListener.fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
                 CASFacialDetails.gSingleton.mLongPanel.Area = area;
             }
             catch (Exception ex)
