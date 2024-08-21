@@ -7,6 +7,8 @@ namespace Arro
 {
     public class CASListener
     {
+        //Tunables are found in Arro.CASListener.xml
+
         [Tunable]
         protected static bool kInstantiator = false;
 
