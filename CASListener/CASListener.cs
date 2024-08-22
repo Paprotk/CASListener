@@ -89,16 +89,18 @@ namespace Arro
                 }
                 var PhysicalLayout = CASPhysical.sPhysicalLayout;
                 var FacialDetailsLayout = CASFacialDetails.sPhysicalLayout;
-                if (FacialDetailsLayout == null && PhysicalLayout == null)
+                var ClothesLayout = CASClothing.sClothingLayout;
+                if (FacialDetailsLayout == null && PhysicalLayout == null && ClothesLayout == null)
                 {
                     Hair.StateListenerHair();
                     Face.StateListenerFace();
+                    Clothes.StateListenerClothes();
                     if (bDebugging)
                     {
                         notificationMessage = "Face and Hair are both absent.";
                     }
                 }
-                if (FacialDetailsLayout != null && PhysicalLayout == null && bFace)
+                if (FacialDetailsLayout != null && PhysicalLayout == null && ClothesLayout == null && bFace)
                 {
                     Face.StateListenerFace();
                     if (bDebugging)
@@ -106,7 +108,7 @@ namespace Arro
                         notificationMessage = "Face present, Hair absent.";
                     }
                 }
-                if (FacialDetailsLayout == null && PhysicalLayout != null && bHair)
+                if (FacialDetailsLayout == null && PhysicalLayout != null && ClothesLayout == null && bHair)
                 {
                     Hair.StateListenerHair();
                     if (bDebugging)
@@ -114,6 +116,14 @@ namespace Arro
                         notificationMessage = "Hair present, Face absent.";
                     }
                 }
+                if (ClothesLayout != null && FacialDetailsLayout == null && PhysicalLayout == null)
+                {
+                    Clothes.StateListenerClothes();
+                    if (bDebugging)
+                    {
+                        notificationMessage = "Clothes";
+                    }
+                }    
                 if (bShouldRepeat)
                 {
                     Simulator.AddObject(new Sims3.Gameplay.OneShotFunctionTask(new Sims3.Gameplay.Function(CASListener.MainStateListener), StopWatch.TickStyles.Seconds, fMainStateListenerSpeed));
