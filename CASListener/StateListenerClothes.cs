@@ -46,11 +46,11 @@ namespace Arro
                 if (fVisibleRows > 3)
                 {
                     VisibleRows = (uint)fVisibleRows;
-                    GridArea.Height = 139f * fVisibleRows;
+                    GridArea.Height = (139f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
                 }
                 if (fVisibleColumns > 1)
                 {VisibleColumns = (uint)fVisibleColumns;
-                    GridArea.Width = 305f * fVisibleColumns + 15f;
+                    GridArea.Width = (305f * fVisibleColumns + 15f) * TinyUIFixForTS3Integration.getUIScale();
                 }
                 CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows = VisibleRows;
                 CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns = VisibleColumns;
@@ -95,11 +95,11 @@ namespace Arro
                     Rect CASClothingHeight = CASClothing.gSingleton.Area;
                     if (fVisibleRows > 3)
                     {
-                        CASClothingHeight.Height = 158.9f * fVisibleRows;
+                        CASClothingHeight.Height = (158.9f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
                     }
                     if (fVisibleColumns > 1)
                     {
-                        CASClothingHeight.Width = 300f * fVisibleColumns + 109f;
+                        CASClothingHeight.Width = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
                     }
                     CASClothing.gSingleton.Area = CASClothingHeight;
                 }
@@ -108,12 +108,11 @@ namespace Arro
                     Rect CASDresserClothingHeight = CASDresserClothing.gSingleton.Area;
                     if (fVisibleRows > 3)
                     {
-                        CASDresserClothingHeight.Height = 158.9f * fVisibleRows;
+                        CASDresserClothingHeight.Height = (158.9f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
                     }
                     if (fVisibleColumns > 1)
                     {
-                        CASDresserClothingHeight.Width = 300f * fVisibleColumns + 109f;
-                        
+                        CASDresserClothingHeight.Width = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
                     }
                     CASDresserClothing.gSingleton.Area = CASDresserClothingHeight;
                 }
@@ -122,11 +121,11 @@ namespace Arro
                     Rect CAPAccessoriesHeight = CAPAccessories.gSingleton.Area;
                     if (fVisibleRows > 3)
                     {
-                        CAPAccessoriesHeight.Height = 158.9f * fVisibleRows;
+                        CAPAccessoriesHeight.Height = (158.9f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
                     }
                     if (fVisibleColumns > 1)
                     {
-                        CAPAccessoriesHeight.Width = 300f * fVisibleColumns + 109f;
+                        CAPAccessoriesHeight.Width = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
                     }
                     CAPAccessories.gSingleton.Area = CAPAccessoriesHeight;
                 }

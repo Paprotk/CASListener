@@ -44,7 +44,7 @@ namespace Arro
         static CASListener()
         {
             World.sOnWorldLoadFinishedEventHandler += new EventHandler(OnWorldLoadFinished);
-            //World.sOnStartupAppEventHandler = new EventHandler(SmoothpatchCheck);
+            //World.sOnStartupAppEventHandler = new EventHandler(ClothesFloatFixer);
         }
         private static void OnWorldLoadFinished(object sender, EventArgs e)
         {
@@ -150,17 +150,24 @@ namespace Arro
             public static FloatGetter getUIScale = () => 1f;
         }
 
-        public static void SmoothpatchCheck(object sender, EventArgs e)
+        public static void ClothesFloatFixer(object sender, EventArgs e)
         {
             try
             {
-                Assembly.Load("LazyDuchess.SmoothPatch");
-                IsSmoothpatchInstalled = true;
+                if (Clothes.fVisibleRows < 3)
+                {
+                    Clothes.fVisibleRows = 3;
+                }
+                if (Clothes.fVisibleColumns < 1)
+                {
+                    Clothes.fVisibleColumns = 1;
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                IsSmoothpatchInstalled = false;
+                ExceptionHandler.HandleException(ex, "ClothesFloatFixer");
             }
+
         }
     }
 }
