@@ -1,7 +1,9 @@
-﻿using Sims3.SimIFace;
+﻿using Sims3.Gameplay.Autonomy;
+using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
 using System;
+using System.Reflection;
 
 namespace Arro
 {
@@ -37,9 +39,12 @@ namespace Arro
 
         public static string notificationMessage = ""; //Base string for notification text when debugging is present
 
+        public static bool IsSmoothpatchInstalled;
+
         static CASListener()
         {
             World.sOnWorldLoadFinishedEventHandler += new EventHandler(OnWorldLoadFinished);
+            //World.sOnStartupAppEventHandler = new EventHandler(SmoothpatchCheck);
         }
         private static void OnWorldLoadFinished(object sender, EventArgs e)
         {
@@ -123,7 +128,7 @@ namespace Arro
                     {
                         notificationMessage = "Clothes";
                     }
-                }    
+                }
                 if (bShouldRepeat)
                 {
                     Simulator.AddObject(new Sims3.Gameplay.OneShotFunctionTask(new Sims3.Gameplay.Function(CASListener.MainStateListener), StopWatch.TickStyles.Seconds, fMainStateListenerSpeed));
@@ -143,6 +148,19 @@ namespace Arro
             public delegate float FloatGetter();
 
             public static FloatGetter getUIScale = () => 1f;
+        }
+
+        public static void SmoothpatchCheck(object sender, EventArgs e)
+        {
+            try
+            {
+                Assembly.Load("LazyDuchess.SmoothPatch");
+                IsSmoothpatchInstalled = true;
+            }
+            catch
+            {
+                IsSmoothpatchInstalled = false;
+            }
         }
     }
 }

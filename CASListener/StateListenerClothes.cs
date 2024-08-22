@@ -1,7 +1,9 @@
 ﻿using System;
+using Sims3.Gameplay;
 using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
+using Sims3.UI.CAS.CAP;
 using static Arro.CASListener;
 
 namespace Arro
@@ -10,6 +12,9 @@ namespace Arro
     {
         [Tunable]
         public static float fVisibleRows;
+
+        [Tunable]
+        public static float fVisibleColumns;
 
         public static void StateListenerClothes()
         {
@@ -36,15 +41,36 @@ namespace Arro
             try
             {
                 var VisibleRows = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows;
+                var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
                 Rect GridArea = CASClothingCategory.gSingleton.mClothingTypesGrid.Area;
-                Rect CASClothingHeight = CASClothing.gSingleton.Area;
+                if (fVisibleRows > 3)
+                {
+                    VisibleRows = (uint)fVisibleRows;
+                    GridArea.Height = 139f * fVisibleRows;
+                }
+                if (fVisibleColumns > 1)
+                {VisibleColumns = (uint)fVisibleColumns;
+                    GridArea.Width = 305f * fVisibleColumns + 15f;
+                }
+                CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows = VisibleRows;
+                CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns = VisibleColumns;
+                CASClothingCategory.gSingleton.mClothingTypesGrid.Area = GridArea;
+                SetCASClothingSize();
+                SetButtonState();
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, "SetClothesItemgrid");
+            }
+        }
+        public static void SetButtonState()
+        {
+            try
+            {
                 var DeleteButton = CASClothingCategory.gSingleton.mTrashButton;
                 var ShareButton = CASClothingCategory.gSingleton.mShareButton;
                 var SaveButton = CASClothingCategory.gSingleton.mSaveButton;
                 var DesignButton = CASClothingCategory.gSingleton.mDesignButton;
-                VisibleRows = (uint)fVisibleRows;
-                GridArea.Height = 814;
-                CASClothingHeight.Height = 951f;
                 DeleteButton.Visible = false;
                 ShareButton.Visible = false;
                 SaveButton.Visible = false;
@@ -53,13 +79,61 @@ namespace Arro
                 CASClothingCategory.gSingleton.mShareButton = ShareButton;
                 CASClothingCategory.gSingleton.mSaveButton = SaveButton;
                 CASClothingCategory.gSingleton.mDesignButton = DesignButton;
-                CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows = VisibleRows;
-                CASClothingCategory.gSingleton.mClothingTypesGrid.Area = GridArea;
-                CASClothing.gSingleton.Area = CASClothingHeight;
+                
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, "SetClothesItemgrid");
+                ExceptionHandler.HandleException(ex, "SetButtonState");
+            }
+        }
+        public static void  SetCASClothingSize()
+        {   
+            try
+            {
+                if (CASClothing.sClothingLayout != null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout == null)
+                {
+                    Rect CASClothingHeight = CASClothing.gSingleton.Area;
+                    if (fVisibleRows > 3)
+                    {
+                        CASClothingHeight.Height = 158.9f * fVisibleRows;
+                    }
+                    if (fVisibleColumns > 1)
+                    {
+                        CASClothingHeight.Width = 300f * fVisibleColumns + 109f;
+                    }
+                    CASClothing.gSingleton.Area = CASClothingHeight;
+                }
+                if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout != null && CAPAccessories.sCAPAccessoriesLayout == null)
+                {
+                    Rect CASDresserClothingHeight = CASDresserClothing.gSingleton.Area;
+                    if (fVisibleRows > 3)
+                    {
+                        CASDresserClothingHeight.Height = 158.9f * fVisibleRows;
+                    }
+                    if (fVisibleColumns > 1)
+                    {
+                        CASDresserClothingHeight.Width = 300f * fVisibleColumns + 109f;
+                        
+                    }
+                    CASDresserClothing.gSingleton.Area = CASDresserClothingHeight;
+                }
+                if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout != null)
+                {
+                    Rect CAPAccessoriesHeight = CAPAccessories.gSingleton.Area;
+                    if (fVisibleRows > 3)
+                    {
+                        CAPAccessoriesHeight.Height = 158.9f * fVisibleRows;
+                    }
+                    if (fVisibleColumns > 1)
+                    {
+                        CAPAccessoriesHeight.Width = 300f * fVisibleColumns + 109f;
+                    }
+                    CAPAccessories.gSingleton.Area = CAPAccessoriesHeight;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, "SetCASClothingSize");
             }
         }
     }
