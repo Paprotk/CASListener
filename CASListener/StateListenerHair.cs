@@ -2,11 +2,11 @@
 using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
-using static Arro.CASListener;
+using  Arro.CASListener;
 
 namespace Arro
 {
-    public class Hair
+    public class Hair : Task
     {
         [Tunable]
         public static float fVisibleRows;
@@ -14,7 +14,7 @@ namespace Arro
         [Tunable]
         public static float fVisibleColumns;
 
-        public static void StateListenerHair()
+        public override void Simulate()
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Arro
             try
             {
                 Rect area = CASPhysical.gSingleton.mLongPanel.Area;
-                area.Height = CASListener.fHairWindowSize * TinyUIFixForTS3Integration.getUIScale();
+                //area.Height = CASListener.fHairWindowSize * TinyUIFixForTS3Integration.getUIScale();
                 if (CASHair.sHairLayout is null)
                 {
                     //Do nothing
@@ -107,7 +107,7 @@ namespace Arro
             {
 
                 Rect area = CASPhysical.gSingleton.mShortPanel.Area;
-                area.Height = CASListener.fHairWindowSize * TinyUIFixForTS3Integration.getUIScale();
+                //area.Height = CASListener.fHairWindowSize * TinyUIFixForTS3Integration.getUIScale();
                 if (CASHair.sHairLayout is null)
                 {
                     //Do nothing

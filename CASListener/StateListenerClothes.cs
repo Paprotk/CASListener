@@ -4,11 +4,11 @@ using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
 using Sims3.UI.CAS.CAP;
-using static Arro.CASListener;
+using Arro.CASListener;
 
 namespace Arro
 {
-    public class Clothes
+    public class Clothes : Task
     {
         [Tunable]
         public static float fVisibleRows;
@@ -16,7 +16,7 @@ namespace Arro
         [Tunable]
         public static float fVisibleColumns;
 
-        public static void StateListenerClothes()
+        public override void Simulate()
         {
             try
             {

@@ -2,13 +2,13 @@
 using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
-using static Arro.CASListener;
+using Arro.CASListener;
 
 namespace Arro
 {
-    public class Face
+    public class Face : Task
     {
-        public static void StateListenerFace()
+        public override void Simulate()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Arro
             try
             {
                 Rect area = CASFacialDetails.gSingleton.mLongPanel.Area;
-                area.Height = CASListener.fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
+                //area.Height = CASListener.fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
                 CASFacialDetails.gSingleton.mLongPanel.Area = area;
             }
             catch (Exception ex)
@@ -54,7 +54,7 @@ namespace Arro
             try
             {
                 Rect area = CASFacialDetails.gSingleton.mShortPanel.Area;
-                area.Height = CASListener.fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
+                //area.Height = CASListener.fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
                 CASFacialDetails.gSingleton.mShortPanel.Area = area;
             }
             catch (Exception ex)
