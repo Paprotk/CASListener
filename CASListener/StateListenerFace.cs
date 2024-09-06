@@ -40,9 +40,12 @@ namespace Arro
         {
             try
             {
-                Rect area = CASFacialDetails.gSingleton.mLongPanel.Area;
-                area.Height = fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
-                CASFacialDetails.gSingleton.mLongPanel.Area = area;
+                if (CASFacialDetails.gSingleton.mLongPanel != null)
+                {
+                    Rect area = CASFacialDetails.gSingleton.mLongPanel.Area;
+                    area.Height = fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
+                    CASFacialDetails.gSingleton.mLongPanel.Area = area;
+                }
             }
             catch (Exception ex)
             {
@@ -54,9 +57,13 @@ namespace Arro
         {
             try
             {
-                Rect area = CASFacialDetails.gSingleton.mShortPanel.Area;
-                area.Height = fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
-                CASFacialDetails.gSingleton.mShortPanel.Area = area;
+                if (CASFacialDetails.gSingleton.mShortPanel != null)
+                {
+                    Rect area = CASFacialDetails.gSingleton.mShortPanel.Area;
+                    area.Height = fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
+                    CASFacialDetails.gSingleton.mShortPanel.Area = area;
+                }
+                
             }
             catch (Exception ex)
             {
