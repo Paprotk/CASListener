@@ -21,12 +21,7 @@ namespace Arro
             try
             {
                 var ClothesLayout = CASClothingCategory.sClothingCategoryLayout;
-
-                if (ClothesLayout == null)
-                {
-                    //Do nothing
-                }
-                else
+                if (ClothesLayout != null)
                 {
                     SetClothesItemgrid();
                 }

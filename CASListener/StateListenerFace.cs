@@ -8,6 +8,8 @@ namespace Arro
 {
     public class Face : Task
     {
+        [Tunable]
+        public static float fFaceWindowSize;
         public override void Simulate()
         {
             try
@@ -19,9 +21,8 @@ namespace Arro
                 var MolesLayout = CASMoles.sMolesLayout;
                 var MakeupLayout = CASMakeup.sMakeupLayout;
 
-                if (HeadEarsLayout == null && EyesLayout == null && NoseLayout == null && MouthLayout == null && MolesLayout == null && MakeupLayout == null)
+                if (HeadEarsLayout == null && EyesLayout == null && NoseLayout == null && MouthLayout == null && MakeupLayout == null)
                 {
-                    //Do nothing
                 }
                 else
                 {
@@ -40,7 +41,7 @@ namespace Arro
             try
             {
                 Rect area = CASFacialDetails.gSingleton.mLongPanel.Area;
-                //area.Height = CASListener.fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
+                area.Height = fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
                 CASFacialDetails.gSingleton.mLongPanel.Area = area;
             }
             catch (Exception ex)
@@ -54,7 +55,7 @@ namespace Arro
             try
             {
                 Rect area = CASFacialDetails.gSingleton.mShortPanel.Area;
-                //area.Height = CASListener.fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
+                area.Height = fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
                 CASFacialDetails.gSingleton.mShortPanel.Area = area;
             }
             catch (Exception ex)

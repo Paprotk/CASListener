@@ -44,7 +44,6 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ClothesTaskCreator.cs" />
     <Compile Include="StateListenerFace.cs" />
     <Compile Include="StateListenerClothes.cs" />
     <Compile Include="StateListenerHair.cs" />

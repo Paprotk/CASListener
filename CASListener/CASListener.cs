@@ -6,7 +6,9 @@ namespace Arro.CASListener
     {
         static Main()
         {
-            CASTaskCreator.Initialize();
+            Simulator.AddObject(new Clothes());
+            Simulator.AddObject(new Hair());
+            Simulator.AddObject(new Face());
         }
 
         [Tunable]
