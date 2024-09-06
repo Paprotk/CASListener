@@ -6,9 +6,9 @@ namespace Arro.CASListener
     {
         static Main()
         {
-            Simulator.AddObject(new Clothes());
             Simulator.AddObject(new Hair());
             Simulator.AddObject(new Face());
+            //Currently there is no support for columns and rows, but it's in works!
         }
 
         [Tunable]

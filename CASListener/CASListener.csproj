@@ -45,7 +45,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="StateListenerFace.cs" />
-    <Compile Include="StateListenerClothes.cs" />
     <Compile Include="StateListenerHair.cs" />
     <Compile Include="CASListener.cs" />
     <Compile Include="ExceptionHandler.cs" />
