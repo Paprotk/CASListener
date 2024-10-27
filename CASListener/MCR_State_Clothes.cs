@@ -16,8 +16,6 @@ namespace Arro.MCR
         [PersistableStatic(true)]
         public static float fVisibleColumns;
 
-        public static bool CanMCRClothes = false;
-
         public override void Simulate()
         {
             try
@@ -26,8 +24,12 @@ namespace Arro.MCR
 
                 if (ClothesLayout != null)
                 {
-                    CanMCRClothes = true;
+                    Main.CanMCRClothes = true;
                     SetClothesItemgrid();
+                }
+                else
+                {
+                    Main.CanMCRClothes = false;
                 }
             }
             catch (Exception ex)

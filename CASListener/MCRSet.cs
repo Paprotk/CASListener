@@ -1,8 +1,8 @@
-﻿using Sims3.Gameplay.Objects.Decorations;
-using Sims3.SimIFace;
+﻿using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
 using System;
+using System.Collections.Generic; // Make sure to include this for List<T>
 
 namespace Arro.MCR
 {
@@ -12,25 +12,45 @@ namespace Arro.MCR
         {
             try
             {
-                if (Clothes.CanMCRClothes)
+                if (Main.CanMCRClothes)
                 {
-                    string rows = StringInputDialog.Show("Rows", "Enter a number of rows:", "", true);
-                    float r;
-                    float.TryParse(rows, out r);
-                    if (r < 3)
+                    var VisibleRows = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows;
+                    var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
+                    string titleText = "Configure Clothes Grid";
+                    string promptText = "Enter the number of rows:";
+                    string secondPromptText = "Enter the number of columns:";
+                    string defaultEntryText = VisibleRows.ToString();
+                    string defaultSecondEntryText = VisibleColumns.ToString();
+                    string oKText = "OK";
+                    string cancelText = "Cancel";
+
+                    List<string> result = TwoStringInputDialog.Show(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, new Vector2(-1f, -1f), false);
+
+                    // Check if the dialog was canceled
+                    if (result != null && result.Count == 2)
                     {
-                        r = 3;
+                        float r;
+                        float.TryParse(result[0], out r);
+                        if (r < 3)
+                        {
+                            r = 3;
+                        }
+
+                        float c;
+                        float.TryParse(result[1], out c);
+                        if (c < 1)
+                        {
+                            c = 1;
+                        }
+
+                        Clothes.fVisibleRows = r;
+                        Clothes.fVisibleColumns = c;
+                        Clothes.SetClothesItemgrid();
                     }
-                    string cols = StringInputDialog.Show("Columns", "Enter a number of colums:", "", true);
-                    float c;
-                    float.TryParse(cols, out c);
-                    if (c < 1)
-                    {
-                        c = 1;
-                    }
-                    Clothes.fVisibleRows = r;
-                    Clothes.fVisibleColumns = c;
-                    Clothes.SetClothesItemgrid();
+                }
+                else
+                {
+                    Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format("You are not in Clothes category", StyledNotification.NotificationStyle.kGameMessageNegative));
                 }
             }
             catch (Exception ex)

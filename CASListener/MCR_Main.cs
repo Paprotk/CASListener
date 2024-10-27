@@ -29,6 +29,9 @@ namespace Arro.MCR
 
         [Tunable]
         private static bool kInstantiator;
+
+        public static bool CanMCRClothes = false;
+
         private static int Configure_cheat(object[] parameters)
         {
             try
