@@ -2,9 +2,9 @@
 using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
-using Arro.CASListener;
-
-namespace Arro
+using Arro.MCR;
+//Currently unused
+namespace Arro.MCR
 {
     public class Face : Task
     {

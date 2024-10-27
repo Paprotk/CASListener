@@ -44,11 +44,12 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="StateListenerClothes.cs" />
-    <Compile Include="StateListenerFace.cs" />
-    <Compile Include="StateListenerHair.cs" />
-    <Compile Include="CASListener.cs" />
-    <Compile Include="ExceptionHandler.cs" />
+    <Compile Include="MCRSet.cs" />
+    <Compile Include="MCR_State_Clothes.cs" />
+    <Compile Include="MCR_State_Face.cs" />
+    <Compile Include="MCR_State_Hair.cs" />
+    <Compile Include="MCR_Main.cs" />
+    <Compile Include="MCR_Ex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

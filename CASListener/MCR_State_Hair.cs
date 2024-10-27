@@ -1,9 +1,9 @@
 ﻿using System;
-using Arro.CASListener;
+using Arro.MCR;
 using Sims3.SimIFace;
 using Sims3.UI.CAS;
-
-namespace Arro
+//Currently unused
+namespace Arro.MCR
 {
     public class Hair : Task
     {

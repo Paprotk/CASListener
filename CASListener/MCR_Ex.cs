@@ -3,7 +3,7 @@ using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.UI;
 
-namespace Arro
+namespace Arro.MCR
 {
     public class ExceptionHandler
     {

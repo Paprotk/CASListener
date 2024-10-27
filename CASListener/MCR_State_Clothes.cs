@@ -4,17 +4,19 @@ using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
 using Sims3.UI.CAS.CAP;
-using Arro.CASListener;
+using Arro.MCR;
 
-namespace Arro
+namespace Arro.MCR
 {
     public class Clothes : Task
     {
-        [Tunable]
+        [PersistableStatic(true)]
         public static float fVisibleRows;
 
-        [Tunable]
+        [PersistableStatic(true)]
         public static float fVisibleColumns;
+
+        public static bool CanMCRClothes = false;
 
         public override void Simulate()
         {
@@ -22,12 +24,9 @@ namespace Arro
             {
                 var ClothesLayout = CASClothingCategory.sClothingCategoryLayout;
 
-                if (ClothesLayout == null)
+                if (ClothesLayout != null)
                 {
-                    //Do nothing
-                }
-                else
-                {
+                    CanMCRClothes = true;
                     SetClothesItemgrid();
                 }
             }
@@ -36,7 +35,7 @@ namespace Arro
                 ExceptionHandler.HandleException(ex, "StateListenerClothes");
             }
         }
-        public static void SetClothesItemgrid()
+        public static void SetClothesItemgrid() //This is responsible for itemgrid, not background size.
         {
             try
             {
@@ -63,7 +62,7 @@ namespace Arro
                 ExceptionHandler.HandleException(ex, "SetClothesItemgrid");
             }
         }
-        public static void SetButtonState()
+        public static void SetButtonState() //Disables buttons that are not needed.
         {
             try
             {
@@ -86,7 +85,7 @@ namespace Arro
                 ExceptionHandler.HandleException(ex, "SetButtonState");
             }
         }
-        public static void  SetCASClothingSize()
+        public static void  SetCASClothingSize() //This is responsible for setting window background size. 
         {   
             try
             {
@@ -95,7 +94,7 @@ namespace Arro
                     Rect CASClothingHeight = CASClothing.gSingleton.Area;
                     if (fVisibleRows > 3)
                     {
-                        CASClothingHeight.Height = (158.9f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
+                        CASClothingHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
                     }
                     if (fVisibleColumns > 1)
                     {
@@ -108,7 +107,7 @@ namespace Arro
                     Rect CASDresserClothingHeight = CASDresserClothing.gSingleton.Area;
                     if (fVisibleRows > 3)
                     {
-                        CASDresserClothingHeight.Height = (158.9f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
+                        CASDresserClothingHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
                     }
                     if (fVisibleColumns > 1)
                     {
@@ -121,7 +120,7 @@ namespace Arro
                     Rect CAPAccessoriesHeight = CAPAccessories.gSingleton.Area;
                     if (fVisibleRows > 3)
                     {
-                        CAPAccessoriesHeight.Height = (158.9f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
+                        CAPAccessoriesHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
                     }
                     if (fVisibleColumns > 1)
                     {
