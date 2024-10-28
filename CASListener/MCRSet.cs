@@ -44,6 +44,7 @@ namespace Arro.MCR
                             c = 1;
                         }
                         ShouldUpdate = true;
+                        Clothes.ShouldMoveDoneButton = true;
                         Clothes.fVisibleRows = r;
                         Clothes.fVisibleColumns = c;
                     }

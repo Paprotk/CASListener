@@ -9,7 +9,7 @@ namespace Arro.MCR
 {
     public class Main
     {
-        private static void OnStartupApp(object sender, EventArgs e)
+        private static void OnStartupApp(object sender, EventArgs e) //Register cheat and check for master controller
         {
             try
             {

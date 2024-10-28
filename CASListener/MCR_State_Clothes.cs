@@ -6,6 +6,8 @@ using Sims3.UI.CAS;
 using Sims3.UI.CAS.CAP;
 using Arro.MCR;
 using NRaas.MasterControllerSpace.CAS;
+using Sims3.Gameplay.Autonomy;
+using Sims3.Gameplay.Interfaces;
 
 namespace Arro.MCR
 {
@@ -17,6 +19,10 @@ namespace Arro.MCR
         [PersistableStatic(true)]
         public static float fVisibleColumns = 1;
 
+        public static bool ShouldMoveDoneButton = true;
+
+        public static uint PreviousVisibleColumns; 
+
         public override void Simulate()
         {
             try
@@ -27,10 +33,12 @@ namespace Arro.MCR
                 {
                     Main.CanMCRClothes = true;
                     SetClothesItemgrid();
-                }
+                    PreviousVisibleColumns = (uint)fVisibleColumns;
+    }
                 else
                 {
                     Main.CanMCRClothes = false;
+                    ShouldMoveDoneButton = true;
                 }
             }
             catch (Exception ex)
@@ -72,6 +80,8 @@ namespace Arro.MCR
                 }
                 SetCASClothingSize();
                 SetButtonState();
+                MoveDoneButton();
+                ShouldMoveDoneButton = false;
             }
             catch (Exception ex)
             {
@@ -94,13 +104,45 @@ namespace Arro.MCR
                 CASClothingCategory.gSingleton.mShareButton = ShareButton;
                 CASClothingCategory.gSingleton.mSaveButton = SaveButton;
                 CASClothingCategory.gSingleton.mDesignButton = DesignButton;
-                
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, "SetButtonState");
             }
         }
+
+        public static void MoveDoneButton()
+        {
+            try
+            {
+                Button DoneButton = CASClothing.gSingleton.GetChildByID(98278400U, true) as Button;
+
+                if (DoneButton != null && ShouldMoveDoneButton)
+                {
+                    // Define the starting position
+                    float startingPositionX = -8f; 
+                    float startingPositionY = 6f;   
+
+                    // Calculate the number of visible columns (replace with your actual logic)
+                    int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
+
+                    // Update the position of the DoneButton
+                    DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, "MoveDoneButton");
+            }
+        }
+
+        // Example method to determine the number of visible columns
+        private static int GetVisibleColumns()
+        {
+            var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
+            return (int)VisibleColumns;
+        }
+
         public static void  SetCASClothingSize() //This is responsible for setting window background size. 
         {   
             try
