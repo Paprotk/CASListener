@@ -137,23 +137,7 @@ namespace Arro.MCR
                         DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
                     }
                 }
-                if (CAPAccessories.gSingleton != null)
-                {
-                    Button DoneButton = CAPAccessories.gSingleton.GetChildByID(2095900161U, true) as Button;
 
-                    if (DoneButton != null && ShouldMoveDoneButton)
-                    {
-                        // Define the starting position
-                        float startingPositionX = 353f;
-                        float startingPositionY = 35f;
-
-                        // Calculate the number of visible columns (replace with your actual logic)
-                        int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
-
-                        // Update the position of the DoneButton
-                        DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
-                    }
-                }
                 if (CASDresserClothing.sClothingLayout != null)
                 {
                     Button DoneButton = CASDresserClothing.gSingleton.GetChildByID(98278400U, true) as Button;
@@ -163,6 +147,24 @@ namespace Arro.MCR
                         // Define the starting position
                         float startingPositionX = -8f;
                         float startingPositionY = 6f;
+
+                        // Calculate the number of visible columns (replace with your actual logic)
+                        int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
+
+                        // Update the position of the DoneButton
+                        DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
+                    }
+                }
+
+                if (CAPAccessories.gSingleton != null)
+                {
+                    Button DoneButton = CAPAccessories.gSingleton.GetChildByID(2095900161U, true) as Button;
+
+                    if (DoneButton != null && ShouldMoveDoneButton)
+                    {
+                        // Define the starting position
+                        float startingPositionX = 353f;
+                        float startingPositionY = 35f;
 
                         // Calculate the number of visible columns (replace with your actual logic)
                         int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
