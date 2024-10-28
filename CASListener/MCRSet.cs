@@ -62,3 +62,4 @@ namespace Arro.MCR
         public static bool ShouldUpdate = false;
     }
 }
+//Trying to make modal window with smaller text area size
