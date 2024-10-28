@@ -11,10 +11,10 @@ namespace Arro.MCR
     public class Clothes : Task
     {
         [PersistableStatic(true)]
-        public static float fVisibleRows;
+        public static float fVisibleRows = 3;
 
         [PersistableStatic(true)]
-        public static float fVisibleColumns;
+        public static float fVisibleColumns = 1;
 
         public override void Simulate()
         {
@@ -44,18 +44,24 @@ namespace Arro.MCR
                 var VisibleRows = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows;
                 var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
                 Rect GridArea = CASClothingCategory.gSingleton.mClothingTypesGrid.Area;
-                if (fVisibleRows > 3)
+                if (fVisibleRows >= 3)
                 {
                     VisibleRows = (uint)fVisibleRows;
                     GridArea.Height = (139f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
                 }
-                if (fVisibleColumns > 1)
-                {VisibleColumns = (uint)fVisibleColumns;
-                    GridArea.Width = (305f * fVisibleColumns + 15f) * TinyUIFixForTS3Integration.getUIScale();
+                if (fVisibleColumns >= 1)
+                {
+                    VisibleColumns = (uint)fVisibleColumns;
+                    GridArea.Width = (305f * fVisibleColumns + 20f) * TinyUIFixForTS3Integration.getUIScale();
                 }
-                CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows = VisibleRows;
                 CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns = VisibleColumns;
+                CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows = VisibleRows;
                 CASClothingCategory.gSingleton.mClothingTypesGrid.Area = GridArea;
+                if (RCConfigure.ShouldUpdate)
+                {
+                    CASClothingCategory.gSingleton.PopulateGrid();
+                    RCConfigure.ShouldUpdate = false;
+                }
                 SetCASClothingSize();
                 SetButtonState();
             }
@@ -94,11 +100,11 @@ namespace Arro.MCR
                 if (CASClothing.sClothingLayout != null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout == null)
                 {
                     Rect CASClothingHeight = CASClothing.gSingleton.Area;
-                    if (fVisibleRows > 3)
+                    if (fVisibleRows >= 3)
                     {
                         CASClothingHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
                     }
-                    if (fVisibleColumns > 1)
+                    if (fVisibleColumns >= 1)
                     {
                         CASClothingHeight.Width = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
                     }
@@ -107,11 +113,11 @@ namespace Arro.MCR
                 if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout != null && CAPAccessories.sCAPAccessoriesLayout == null)
                 {
                     Rect CASDresserClothingHeight = CASDresserClothing.gSingleton.Area;
-                    if (fVisibleRows > 3)
+                    if (fVisibleRows >= 3)
                     {
                         CASDresserClothingHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
                     }
-                    if (fVisibleColumns > 1)
+                    if (fVisibleColumns >= 1)
                     {
                         CASDresserClothingHeight.Width = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
                     }
@@ -120,11 +126,11 @@ namespace Arro.MCR
                 if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout != null)
                 {
                     Rect CAPAccessoriesHeight = CAPAccessories.gSingleton.Area;
-                    if (fVisibleRows > 3)
+                    if (fVisibleRows >= 3)
                     {
                         CAPAccessoriesHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
                     }
-                    if (fVisibleColumns > 1)
+                    if (fVisibleColumns >= 1)
                     {
                         CAPAccessoriesHeight.Width = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
                     }

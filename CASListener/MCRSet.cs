@@ -1,4 +1,6 @@
-﻿using Sims3.SimIFace;
+﻿using Sims3.Gameplay.Interfaces;
+using Sims3.Gameplay.Objects;
+using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
 using System;
@@ -30,21 +32,20 @@ namespace Arro.MCR
                     {
                         float r;
                         float.TryParse(result[0], out r);
-                        if (r < 3)
+                        if (r < 3 || r == 3)
                         {
                             r = 3;
                         }
 
                         float c;
                         float.TryParse(result[1], out c);
-                        if (c < 1)
+                        if (c < 1 || c == 1)
                         {
                             c = 1;
                         }
-
+                        ShouldUpdate = true;
                         Clothes.fVisibleRows = r;
                         Clothes.fVisibleColumns = c;
-                        Clothes.SetClothesItemgrid();
                     }
                 }
                 else
@@ -57,5 +58,6 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "Configure");
             }
         }
+        public static bool ShouldUpdate = false;
     }
 }
