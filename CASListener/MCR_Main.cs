@@ -2,6 +2,8 @@
 using Sims3.SimIFace;
 using OneShotFunctionTask = Sims3.Gameplay.OneShotFunctionTask;
 using System;
+using System.Reflection;
+using Sims3.Gameplay.Objects;
 
 namespace Arro.MCR
 {
@@ -12,6 +14,17 @@ namespace Arro.MCR
             try
             {
                 Commands.sGameCommands.Register("mcr", "Usage: Type MCR to edit the number of rows and columns.", Commands.CommandType.General, new CommandHandler(Configure_cheat));
+
+                AppDomain currentDomain = AppDomain.CurrentDomain;
+                Assembly[] assems = currentDomain.GetAssemblies();
+                foreach (Assembly assembly in assems)
+                {
+                    if (assembly.GetName().Name == "NRaasMasterController")
+                    {
+                        IsNraasMCInstalled = true;
+                        break;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -31,6 +44,8 @@ namespace Arro.MCR
         private static bool kInstantiator;
 
         public static bool CanMCRClothes = false;
+
+        public static bool IsNraasMCInstalled;
 
         private static int Configure_cheat(object[] parameters)
         {

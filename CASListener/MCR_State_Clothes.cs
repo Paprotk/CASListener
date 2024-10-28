@@ -5,6 +5,7 @@ using Sims3.UI;
 using Sims3.UI.CAS;
 using Sims3.UI.CAS.CAP;
 using Arro.MCR;
+using NRaas.MasterControllerSpace.CAS;
 
 namespace Arro.MCR
 {
@@ -57,9 +58,16 @@ namespace Arro.MCR
                 CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns = VisibleColumns;
                 CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows = VisibleRows;
                 CASClothingCategory.gSingleton.mClothingTypesGrid.Area = GridArea;
-                if (RCConfigure.ShouldUpdate)
+                if (RCConfigure.ShouldUpdate) //This refreshes grid
                 {
-                    CASClothingCategory.gSingleton.PopulateGrid();
+                    if (Main.IsNraasMCInstalled)
+                    {
+                        CASClothingCategoryEx.PopulateGrid();
+                    }
+                    else
+                    {
+                        CASClothingCategory.gSingleton.PopulateGrid();
+                    }
                     RCConfigure.ShouldUpdate = false;
                 }
                 SetCASClothingSize();
