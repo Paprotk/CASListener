@@ -2,7 +2,7 @@
 using Sims3.UI;
 using Sims3.UI.CAS;
 using System;
-using System.Collections.Generic; // Make sure to include this for List<T>
+using System.Collections.Generic;
 
 namespace Arro.MCR
 {
@@ -25,7 +25,6 @@ namespace Arro.MCR
                     string cancelText = "Cancel";
 
                     List<string> result = TwoStringInputDialog.Show(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, new Vector2(-1f, -1f), false);
-
                     // Check if the dialog was canceled
                     if (result != null && result.Count == 2)
                     {
