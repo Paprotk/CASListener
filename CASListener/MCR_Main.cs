@@ -24,8 +24,13 @@ namespace Arro.MCR
                         nraasAssembly = assembly;
                         break;
                     }
+                    if (assembly.GetName().Name == "LazyDuchess.SmoothPatch")
+                    {
+                        IsSmoothPatchInstalled = true;
+                        smoothpatchAssembly = assembly;
+                        break;
+                    }
                 }
-
             }
             catch (Exception ex)
             {
@@ -49,8 +54,10 @@ namespace Arro.MCR
         public static bool CanMCRHair = false;
 
         public static bool IsNraasMCInstalled = false;
+        public static bool IsSmoothPatchInstalled = false;
 
         public static Assembly nraasAssembly;
+        public static Assembly smoothpatchAssembly;
         private static int Configure_cheat(object[] parameters)
         {
             try

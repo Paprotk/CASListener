@@ -1,4 +1,5 @@
-﻿using Sims3.Gameplay.Interfaces;
+﻿using Arro.MCR;
+using Sims3.Gameplay.Interfaces;
 using Sims3.Gameplay.Objects;
 using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
@@ -6,10 +7,11 @@ using Sims3.UI;
 using Sims3.UI.CAS;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Arro.MCR
 {
-    public static class RCConfigure
+    public class RCConfigure
     {
         public static void Configure()
         {
@@ -24,7 +26,7 @@ namespace Arro.MCR
                     string secondPromptText = Localization.LocalizeString("Arro/MCR/Local:3", new object[0]);
                     string defaultEntryText = VisibleRows.ToString();
                     string defaultSecondEntryText = VisibleColumns.ToString();
-                    string oKText = "OK";
+                    string oKText = "Ok";
                     string cancelText = Localization.LocalizeString("Ui/Caption/QuitDialog:Cancel", new object[0]);
 
                     List<string> result = TwoStringInputDialog.Show(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, new Vector2(-1f, -1f), false);
@@ -44,6 +46,11 @@ namespace Arro.MCR
                         {
                             columns = 1;
                         }
+                        if (Main.IsSmoothPatchInstalled && !Main.IsNraasMCInstalled && columns > 1) //This is done for compatibility
+                        {
+                            columns = 1;
+                            SimpleMessageDialog.Show("Error", "You have Smooth Patch installed and currently it's not compatible with setting more than one column.");
+                        }
                         if (rows != Clothes.fVisibleRows || columns != Clothes.fVisibleColumns)
                         {
                             ShouldUpdate = true;
@@ -58,6 +65,7 @@ namespace Arro.MCR
                     string NotificationInfo = Localization.LocalizeString("Arro/MCR/Local:4", new object[0]);
                     Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format(NotificationInfo, StyledNotification.NotificationStyle.kGameMessageNegative));
                 }
+
             }
             catch (Exception ex)
             {

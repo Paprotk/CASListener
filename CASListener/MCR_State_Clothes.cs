@@ -66,7 +66,7 @@ namespace Arro.MCR
                 {
                     if (Main.IsNraasMCInstalled)
                     {
-                        new Clothes().InvokeNraasPopulateGrid();
+                        new Clothes().InvokeNraasPopulateGrid(); //If NRaasMC is installed then use reflection to invoke method without referencing it in script
                     }
                     else
                     {
