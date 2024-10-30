@@ -56,9 +56,6 @@
     <Reference Include="mscorlib">
       <HintPath>..\..\DLLS\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="NRaasMasterController">
-      <HintPath>..\..\..\..\Desktop\ILDAsm\NRaasMasterController.dll</HintPath>
-    </Reference>
     <Reference Include="ScriptCore">
       <HintPath>..\..\DLLS\ScriptCore.dll</HintPath>
     </Reference>

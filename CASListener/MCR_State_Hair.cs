@@ -16,19 +16,28 @@ namespace Arro.MCR
         {
             try
             {
-                var HairLayout = CASHair.sHairLayout;
-                var EyebrowsLayout = CASEyebrows.sEyesLayout;
-                var BeardLayout = CASBeard.sBeardLayout;
-                var BodyHairLayout = CASBodyHair.sBodyHairLayout;
-
-                if (HairLayout == null && EyebrowsLayout == null && BeardLayout == null && BodyHairLayout == null)
+                if (CASPhysical.gSingleton != null)
                 {
-                    //Do nothing
+                    Main.CanMCRHair = true;
+
+                    var HairLayout = CASHair.sHairLayout;
+                    var EyebrowsLayout = CASEyebrows.sEyesLayout;
+                    var BeardLayout = CASBeard.sBeardLayout;
+                    var BodyHairLayout = CASBodyHair.sBodyHairLayout;
+
+                    if (HairLayout == null && EyebrowsLayout == null && BeardLayout == null && BodyHairLayout == null)
+                    {
+                        //Do nothing
+                    }
+                    else
+                    {
+                        SetHairSizeLong();
+                        SetHairSizeShort();
+                    }
                 }
                 else
                 {
-                    SetHairSizeLong();
-                    SetHairSizeShort();
+                    Main.CanMCRHair = false;
                 }
             }
             catch (Exception ex)

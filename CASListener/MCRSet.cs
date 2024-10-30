@@ -31,23 +31,26 @@ namespace Arro.MCR
                     // Check if the dialog was canceled
                     if (result != null && result.Count == 2)
                     {
-                        float r;
-                        float.TryParse(result[0], out r);
-                        if (r < 3 || r == 3)
+                        float rows;
+                        float.TryParse(result[0], out rows);
+                        if (rows < 3 || rows == 3)
                         {
-                            r = 3;
-                        }
+                            rows = 3;
+                        }  
 
-                        float c;
-                        float.TryParse(result[1], out c);
-                        if (c < 1 || c == 1)
+                        float columns;
+                        float.TryParse(result[1], out columns);
+                        if (columns < 1 || columns == 1)
                         {
-                            c = 1;
+                            columns = 1;
                         }
-                        ShouldUpdate = true;
-                        Clothes.ShouldMoveDoneButton = true;
-                        Clothes.fVisibleRows = r;
-                        Clothes.fVisibleColumns = c;
+                        if (rows != Clothes.fVisibleRows || columns != Clothes.fVisibleColumns)
+                        {
+                            ShouldUpdate = true;
+                            Clothes.ShouldMoveDoneButton = true;
+                            Clothes.fVisibleRows = rows;
+                            Clothes.fVisibleColumns = columns;
+                        }
                     }
                 }
                 else

@@ -1,13 +1,9 @@
 ﻿using System;
-using Sims3.Gameplay;
+using System.Reflection;
 using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
 using Sims3.UI.CAS.CAP;
-using Arro.MCR;
-using NRaas.MasterControllerSpace.CAS;
-using Sims3.Gameplay.Autonomy;
-using Sims3.Gameplay.Interfaces;
 
 namespace Arro.MCR
 {
@@ -70,7 +66,7 @@ namespace Arro.MCR
                 {
                     if (Main.IsNraasMCInstalled)
                     {
-                        CASClothingCategoryEx.PopulateGrid();
+                        new Clothes().InvokeNraasPopulateGrid();
                     }
                     else
                     {
@@ -121,8 +117,6 @@ namespace Arro.MCR
                 if (CASClothing.gSingleton != null)
                 {
                     Button DoneButton = CASClothing.gSingleton.GetChildByID(98278400U, true) as Button;
-
-                    //Button DoneButton = CASClothing.gSingleton.GetChildByID(98278400U, true) as Button;
 
                     if (DoneButton != null && ShouldMoveDoneButton)
                     {
@@ -181,7 +175,7 @@ namespace Arro.MCR
         }
 
         // Example method to determine the number of visible columns
-        private static int GetVisibleColumns()
+        public static int GetVisibleColumns()
         {
             var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
             return (int)VisibleColumns;
@@ -236,5 +230,40 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "SetCASClothingSize");
             }
         }
+        public void InvokeNraasPopulateGrid()
+        {
+            if (!Main.IsNraasMCInstalled || Main.nraasAssembly == null)
+                return;
+
+            try
+            {
+                // Find the target type within the assembly
+                Type targetType = Main.nraasAssembly.GetType("NRaas.MasterControllerSpace.CAS.CASClothingCategoryEx");
+                if (targetType == null)
+                {
+                    return;
+                }
+
+                // Find and invoke the PopulateGrid method
+                MethodInfo populateGridMethod = targetType.GetMethod("PopulateGrid", BindingFlags.NonPublic | BindingFlags.Static);
+                if (populateGridMethod != null)
+                {
+                    populateGridMethod.Invoke(null, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, "InvokeNraasPopulateGrid");
+            }
+        }
+
     }
 }
+
+//Vector2 doneButtonPosition = DoneButton.Position;
+//// Create a message with the position
+//string message = string.Format("DoneButton Position: X = {0}, Y = {1}", doneButtonPosition.x, doneButtonPosition.y);
+//// Show the notification
+//Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format(message, StyledNotification.NotificationStyle.kGameMessageNegative));
+
+//This is for vector2 position

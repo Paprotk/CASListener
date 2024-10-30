@@ -3,7 +3,6 @@ using Sims3.SimIFace;
 using OneShotFunctionTask = Sims3.Gameplay.OneShotFunctionTask;
 using System;
 using System.Reflection;
-using Sims3.Gameplay.Objects;
 
 namespace Arro.MCR
 {
@@ -22,9 +21,11 @@ namespace Arro.MCR
                     if (assembly.GetName().Name == "NRaasMasterController")
                     {
                         IsNraasMCInstalled = true;
+                        nraasAssembly = assembly;
                         break;
                     }
                 }
+
             }
             catch (Exception ex)
             {
@@ -44,9 +45,12 @@ namespace Arro.MCR
         private static bool kInstantiator;
 
         public static bool CanMCRClothes = false;
+        public static bool CanMCRFace = false;
+        public static bool CanMCRHair = false;
 
-        public static bool IsNraasMCInstalled;
+        public static bool IsNraasMCInstalled = false;
 
+        public static Assembly nraasAssembly;
         private static int Configure_cheat(object[] parameters)
         {
             try

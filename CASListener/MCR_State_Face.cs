@@ -10,25 +10,36 @@ namespace Arro.MCR
     {
         [Tunable]
         public static float fFaceWindowSize;
+
         public override void Simulate()
         {
             try
             {
-                var HeadEarsLayout = CASHeadEars.sHeadEarsLayout;
-                var EyesLayout = CASEyes.sEyesLayout;
-                var NoseLayout = CASNose.sNoseLayout;
-                var MouthLayout = CASMouth.sMouthLayout;
-                var MolesLayout = CASMoles.sMolesLayout;
-                var MakeupLayout = CASMakeup.sMakeupLayout;
-
-                if (HeadEarsLayout == null && EyesLayout == null && NoseLayout == null && MouthLayout == null && MakeupLayout == null)
+                if (CASFacialDetails.gSingleton != null)
                 {
+                    Main.CanMCRFace = true;
+
+                    var HeadEarsLayout = CASHeadEars.sHeadEarsLayout;
+                    var EyesLayout = CASEyes.sEyesLayout;
+                    var NoseLayout = CASNose.sNoseLayout;
+                    var MouthLayout = CASMouth.sMouthLayout;
+                    var MolesLayout = CASMoles.sMolesLayout;
+                    var MakeupLayout = CASMakeup.sMakeupLayout;
+
+                    if (HeadEarsLayout == null && EyesLayout == null && NoseLayout == null && MouthLayout == null && MakeupLayout == null)
+                    {
+                    }
+                    else
+                    {
+                        SetFaceSizeLong();
+                        SetFaceSizeShort();
+                    }
                 }
                 else
                 {
-                    SetFaceSizeLong();
-                    SetFaceSizeShort();
+                    Main.CanMCRFace = false;
                 }
+
             }
             catch (Exception ex)
             {
