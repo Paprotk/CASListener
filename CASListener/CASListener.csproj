@@ -115,6 +115,7 @@
     <None Include="Strings\STBLizeALL.bat" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Strings\localization_gen.py" />
     <Content Include="Strings\S3_220557DA_00000000_004B0483878BC555_Arro_MCR_StringsStrings_ENG_US%25%25+STBL.txt" />
     <Content Include="Strings\S3_220557DA_00000000_014B0483878BC555_Arro_MCR_StringsStrings_CHI_CN%25%25+STBL.txt" />
     <Content Include="Strings\S3_220557DA_00000000_024B0483878BC555_Arro_MCR_StringsStrings_TAI_CN%25%25+STBL.txt" />
