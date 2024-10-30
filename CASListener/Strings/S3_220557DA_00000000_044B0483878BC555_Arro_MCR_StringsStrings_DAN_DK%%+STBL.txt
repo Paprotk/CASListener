@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+<KEY>Arro/MCR/Local:1</KEY>
+<STR>Konfigurer gitter</STR>
+
+<KEY>Arro/MCR/Local:2</KEY>
+<STR>Indtast antallet af rækker:</STR>
+
+<KEY>Arro/MCR/Local:3</KEY>
+<STR>Indtast antallet af kolonner:</STR>
+
+<KEY>Arro/MCR/Local:4</KEY>
+<STR>Indtast CAS underkategori for at redigere gitteret</STR>
+
+</TEXT>

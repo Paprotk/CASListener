@@ -87,5 +87,58 @@
       <HintPath>..\..\DLLS\UI.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Strings\S3_220557DA_00000000_004B0483878BC555_Arro_MCR_StringsStrings_ENG_US%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_014B0483878BC555_Arro_MCR_StringsStrings_CHI_CN%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_024B0483878BC555_Arro_MCR_StringsStrings_TAI_CN%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_034B0483878BC555_Arro_MCR_StringsStrings_CZE_CZ%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_044B0483878BC555_Arro_MCR_StringsStrings_DAN_DK%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_054B0483878BC555_Arro_MCR_StringsStrings_DUT_NL%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_064B0483878BC555_Arro_MCR_StringsStrings_FIN_FI%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_074B0483878BC555_Arro_MCR_StringsStrings_FRE_FR%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_084B0483878BC555_Arro_MCR_StringsStrings_GER_DE%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_094B0483878BC555_Arro_MCR_StringsStrings_EL_GR%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_0A4B0483878BC555_Arro_MCR_StringsStrings_HUN_HU%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_0B4B0483878BC555_Arro_MCR_StringsStrings_ITA_IT%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_0C4B0483878BC555_Arro_MCR_StringsStrings_JPN_JN%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_0D4B0483878BC555_Arro_MCR_StringsStrings_KOR_KR%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_0E4B0483878BC555_Arro_MCR_StringsStrings_NOR_NO%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_0F4B0483878BC555_Arro_MCR_StringsStrings_POL_PL%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_104B0483878BC555_Arro_MCR_StringsStrings_POR_PT%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_114B0483878BC555_Arro_MCR_StringsStrings_POR_BR%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_124B0483878BC555_Arro_MCR_StringsStrings_RUS_RU%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_134B0483878BC555_Arro_MCR_StringsStrings_SPA_ES%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_144B0483878BC555_Arro_MCR_StringsStrings_SPA_MX%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_154B0483878BC555_Arro_MCR_StringsStrings_SWE_SE%25%25+STBL.stbl" />
+    <None Include="Strings\S3_220557DA_00000000_164B0483878BC555_Arro_MCR_StringsStrings_THA_TH%25%25+STBL.stbl" />
+    <None Include="Strings\STBLizeALL.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Strings\S3_220557DA_00000000_004B0483878BC555_Arro_MCR_StringsStrings_ENG_US%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_014B0483878BC555_Arro_MCR_StringsStrings_CHI_CN%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_024B0483878BC555_Arro_MCR_StringsStrings_TAI_CN%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_034B0483878BC555_Arro_MCR_StringsStrings_CZE_CZ%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_044B0483878BC555_Arro_MCR_StringsStrings_DAN_DK%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_054B0483878BC555_Arro_MCR_StringsStrings_DUT_NL%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_064B0483878BC555_Arro_MCR_StringsStrings_FIN_FI%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_074B0483878BC555_Arro_MCR_StringsStrings_FRE_FR%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_084B0483878BC555_Arro_MCR_StringsStrings_GER_DE%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_094B0483878BC555_Arro_MCR_StringsStrings_EL_GR%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_0A4B0483878BC555_Arro_MCR_StringsStrings_HUN_HU%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_0B4B0483878BC555_Arro_MCR_StringsStrings_ITA_IT%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_0C4B0483878BC555_Arro_MCR_StringsStrings_JPN_JN%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_0D4B0483878BC555_Arro_MCR_StringsStrings_KOR_KR%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_0E4B0483878BC555_Arro_MCR_StringsStrings_NOR_NO%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_0F4B0483878BC555_Arro_MCR_StringsStrings_POL_PL%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_104B0483878BC555_Arro_MCR_StringsStrings_POR_PT%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_114B0483878BC555_Arro_MCR_StringsStrings_POR_BR%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_124B0483878BC555_Arro_MCR_StringsStrings_RUS_RU%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_134B0483878BC555_Arro_MCR_StringsStrings_SPA_ES%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_144B0483878BC555_Arro_MCR_StringsStrings_SPA_MX%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_154B0483878BC555_Arro_MCR_StringsStrings_SWE_SE%25%25+STBL.txt" />
+    <Content Include="Strings\S3_220557DA_00000000_164B0483878BC555_Arro_MCR_StringsStrings_THA_TH%25%25+STBL.txt" />
+    <Content Include="Strings\STBLize.exe" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

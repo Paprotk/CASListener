@@ -1,5 +1,6 @@
 ﻿using Sims3.Gameplay.Interfaces;
 using Sims3.Gameplay.Objects;
+using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
@@ -18,13 +19,13 @@ namespace Arro.MCR
                 {
                     var VisibleRows = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows;
                     var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
-                    string titleText = "Configure Clothes Grid";
-                    string promptText = "Enter the number of rows:";
-                    string secondPromptText = "Enter the number of columns:";
+                    string titleText = Localization.LocalizeString("Arro/MCR/Local:1", new object[0]);
+                    string promptText = Localization.LocalizeString("Arro/MCR/Local:2", new object[0]);
+                    string secondPromptText = Localization.LocalizeString("Arro/MCR/Local:3", new object[0]);
                     string defaultEntryText = VisibleRows.ToString();
                     string defaultSecondEntryText = VisibleColumns.ToString();
                     string oKText = "OK";
-                    string cancelText = "Cancel";
+                    string cancelText = Localization.LocalizeString("Ui/Caption/QuitDialog:Cancel", new object[0]);
 
                     List<string> result = TwoStringInputDialog.Show(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, new Vector2(-1f, -1f), false);
                     // Check if the dialog was canceled
@@ -51,7 +52,8 @@ namespace Arro.MCR
                 }
                 else
                 {
-                    Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format("You are not in Clothes category", StyledNotification.NotificationStyle.kGameMessageNegative));
+                    string NotificationInfo = Localization.LocalizeString("Arro/MCR/Local:4", new object[0]);
+                    Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format(NotificationInfo, StyledNotification.NotificationStyle.kGameMessageNegative));
                 }
             }
             catch (Exception ex)

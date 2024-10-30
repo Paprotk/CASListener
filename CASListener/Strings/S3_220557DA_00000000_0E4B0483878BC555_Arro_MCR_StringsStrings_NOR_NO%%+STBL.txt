@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+<KEY>Arro/MCR/Local:1</KEY>
+<STR>Konfigurer rutenett</STR>
+
+<KEY>Arro/MCR/Local:2</KEY>
+<STR>Angi antall rader:</STR>
+
+<KEY>Arro/MCR/Local:3</KEY>
+<STR>Angi antall kolonner:</STR>
+
+<KEY>Arro/MCR/Local:4</KEY>
+<STR>Angi CAS underkategori for å redigere rutenettet</STR>
+
+</TEXT>

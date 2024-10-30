@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+<KEY>Arro/MCR/Local:1</KEY>
+<STR>ตั้งค่าตาราง</STR>
+
+<KEY>Arro/MCR/Local:2</KEY>
+<STR>กรุณาใส่จำนวนแถว:</STR>
+
+<KEY>Arro/MCR/Local:3</KEY>
+<STR>กรุณาใส่จำนวนคอลัมน์:</STR>
+
+<KEY>Arro/MCR/Local:4</KEY>
+<STR>กรุณาใส่หมวดหมู่ย่อย CAS เพื่อแก้ไขตาราง</STR>
+
+</TEXT>

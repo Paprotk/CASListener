@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+<KEY>Arro/MCR/Local:1</KEY>
+<STR>配置网格</STR>
+
+<KEY>Arro/MCR/Local:2</KEY>
+<STR>输入行数：</STR>
+
+<KEY>Arro/MCR/Local:3</KEY>
+<STR>输入列数：</STR>
+
+<KEY>Arro/MCR/Local:4</KEY>
+<STR>进入CAS子类别以编辑网格</STR>
+
+</TEXT>

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+<KEY>Arro/MCR/Local:1</KEY>
+<STR>Configura la griglia</STR>
+
+<KEY>Arro/MCR/Local:2</KEY>
+<STR>Inserisci il numero di righe:</STR>
+
+<KEY>Arro/MCR/Local:3</KEY>
+<STR>Inserisci il numero di colonne:</STR>
+
+<KEY>Arro/MCR/Local:4</KEY>
+<STR>Inserisci la sottocategoria CAS per modificare la griglia</STR>
+
+</TEXT>

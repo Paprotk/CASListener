@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+<KEY>Arro/MCR/Local:1</KEY>
+<STR>Rács konfigurálása</STR>
+
+<KEY>Arro/MCR/Local:2</KEY>
+<STR>Adja meg a sorok számát:</STR>
+
+<KEY>Arro/MCR/Local:3</KEY>
+<STR>Adja meg az oszlopok számát:</STR>
+
+<KEY>Arro/MCR/Local:4</KEY>
+<STR>Adja meg a CAS alkategóriát a rács szerkesztéséhez</STR>
+
+</TEXT>

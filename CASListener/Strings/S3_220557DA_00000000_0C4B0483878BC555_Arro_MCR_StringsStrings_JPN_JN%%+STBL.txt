@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+<KEY>Arro/MCR/Local:1</KEY>
+<STR>グリッドの設定</STR>
+
+<KEY>Arro/MCR/Local:2</KEY>
+<STR>行数を入力してください：</STR>
+
+<KEY>Arro/MCR/Local:3</KEY>
+<STR>列数を入力してください：</STR>
+
+<KEY>Arro/MCR/Local:4</KEY>
+<STR>グリッドを編集するためのCASサブカテゴリを入力してください</STR>
+
+</TEXT>

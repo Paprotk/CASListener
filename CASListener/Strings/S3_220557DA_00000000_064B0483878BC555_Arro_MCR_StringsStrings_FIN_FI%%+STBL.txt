@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+<KEY>Arro/MCR/Local:1</KEY>
+<STR>Konfiguroi ruudukko</STR>
+
+<KEY>Arro/MCR/Local:2</KEY>
+<STR>Syötä rivien määrä:</STR>
+
+<KEY>Arro/MCR/Local:3</KEY>
+<STR>Syötä sarakkeiden määrä:</STR>
+
+<KEY>Arro/MCR/Local:4</KEY>
+<STR>Syötä CAS-alakategoria ruudun muokkaamiseksi</STR>
+
+</TEXT>

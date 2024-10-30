@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+<KEY>Arro/MCR/Local:1</KEY>
+<STR>Configurer la grille</STR>
+
+<KEY>Arro/MCR/Local:2</KEY>
+<STR>Entrez le nombre de lignes :</STR>
+
+<KEY>Arro/MCR/Local:3</KEY>
+<STR>Entrez le nombre de colonnes :</STR>
+
+<KEY>Arro/MCR/Local:4</KEY>
+<STR>Entrez la sous-catégorie CAS pour éditer la grille</STR>
+
+</TEXT>
