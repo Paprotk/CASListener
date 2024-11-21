@@ -10,14 +10,16 @@ namespace Arro.MCR
     public class Clothes : Task
     {
         [PersistableStatic(true)]
-        public static float fVisibleRows = 3;
+        public static float fVisibleRows = 6;
 
         [PersistableStatic(true)]
-        public static float fVisibleColumns = 1;
+        public static float fVisibleColumns = 2;
 
         public static bool ShouldMoveDoneButton = true;
 
-        public static uint PreviousVisibleColumns; 
+        public static uint PreviousVisibleColumns;
+
+        public static bool SPDisabled = false;
 
         public override void Simulate()
         {
@@ -49,31 +51,17 @@ namespace Arro.MCR
                 var VisibleRows = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows;
                 var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
                 Rect GridArea = CASClothingCategory.gSingleton.mClothingTypesGrid.Area;
-                if (fVisibleRows >= 3)
+                if (fVisibleRows >= 3) //Integration with smoothpatch is done via ArroMCRSP
                 {
                     VisibleRows = (uint)fVisibleRows;
                     GridArea.Height = (139f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
                 }
-                if (fVisibleColumns >= 1)
-                {
-                    VisibleColumns = (uint)fVisibleColumns;
-                    GridArea.Width = (305f * fVisibleColumns + 20f) * TinyUIFixForTS3Integration.getUIScale();
-                }
+                VisibleColumns = (uint)fVisibleColumns;
+                GridArea.Width = (305f * fVisibleColumns + 20f) * TinyUIFixForTS3Integration.getUIScale();
                 CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns = VisibleColumns;
                 CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows = VisibleRows;
                 CASClothingCategory.gSingleton.mClothingTypesGrid.Area = GridArea;
-                if (RCConfigure.ShouldUpdate) //This refreshes grid
-                {
-                    if (Main.IsNraasMCInstalled)
-                    {
-                        new Clothes().InvokeNraasPopulateGrid(); //If NRaasMC is installed then use reflection to invoke method without referencing it in script
-                    }
-                    else
-                    {
-                        CASClothingCategory.gSingleton.PopulateGrid();
-                    }
-                    RCConfigure.ShouldUpdate = false;
-                }
+                RefreshGrid();
                 SetCASClothingSize();
                 SetButtonState();
                 if (ShouldMoveDoneButton)
@@ -85,6 +73,21 @@ namespace Arro.MCR
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, "SetClothesItemgrid");
+            }
+        }
+        public static void RefreshGrid()
+        {
+            if (Config.ShouldUpdate) //This refreshes grid
+            {
+                if (Main.IsNraasMCInstalled)
+                {
+                    new Clothes().InvokeNraasPopulateGrid(); //If NRaasMC is installed then use reflection to invoke method without referencing it in project
+                }
+                else
+                {
+                    CASClothingCategory.gSingleton.PopulateGrid();
+                }
+                Config.ShouldUpdate = false;
             }
         }
         public static void SetButtonState() //Disables buttons that are not needed.
@@ -124,7 +127,7 @@ namespace Arro.MCR
                         float startingPositionX = -8f;
                         float startingPositionY = 6f;
 
-                        // Calculate the number of visible columns (replace with your actual logic)
+                        // Calculate the number of visible columns
                         int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
 
                         // Update the position of the DoneButton
@@ -142,7 +145,7 @@ namespace Arro.MCR
                         float startingPositionX = -8f;
                         float startingPositionY = 6f;
 
-                        // Calculate the number of visible columns (replace with your actual logic)
+                        // Calculate the number of visible columns
                         int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
 
                         // Update the position of the DoneButton
@@ -160,7 +163,7 @@ namespace Arro.MCR
                         float startingPositionX = 353f;
                         float startingPositionY = 35f;
 
-                        // Calculate the number of visible columns (replace with your actual logic)
+                        // Calculate the number of visible columns
                         int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
 
                         // Update the position of the DoneButton
@@ -256,7 +259,60 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "InvokeNraasPopulateGrid");
             }
         }
+        public void InvokeDisableSp()
+        {
+            if (!Main.IsSmoothPatchInstalled || Main.smoothpatchAssembly == null)
+                return;
 
+            try
+            {
+                // Find the target type within the assembly
+                Type targetType = Main.smoothpatchAssembly.GetType("LazyDuchess.SmoothPatch.ClothingPerformance");
+                if (targetType == null)
+                {
+                    return;
+                }
+
+                // Find and invoke the OnWorldQuit method
+                MethodInfo unhookMethod = targetType.GetMethod("OnWorldQuit", BindingFlags.NonPublic | BindingFlags.Static);
+                if (unhookMethod != null)
+                {
+                    unhookMethod.Invoke(null, new object[] { null, null });
+                    SPDisabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, "InvokeDisableSp");
+            }
+        }
+        public void InvokeEnableSp()
+        {
+            if (!Main.IsSmoothPatchInstalled || Main.smoothpatchAssembly == null)
+                return;
+
+            try
+            {
+                // Find the target type within the assembly
+                Type targetType = Main.smoothpatchAssembly.GetType("LazyDuchess.SmoothPatch.ClothingPerformance");
+                if (targetType == null)
+                {
+                    return;
+                }
+
+                // Find and invoke the OnWorldLoad method
+                MethodInfo hookMethod = targetType.GetMethod("OnWorldLoad", BindingFlags.NonPublic | BindingFlags.Static);
+                if (hookMethod != null)
+                {
+                    hookMethod.Invoke(null, new object[] { null, null });
+                    SPDisabled = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, "InvokeEnableSp");
+            }
+        }
     }
 }
 

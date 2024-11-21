@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace Arro.MCR
 {
-    public class RCConfigure
+    public class Config
     {
         public static void Configure()
         {
@@ -46,11 +46,6 @@ namespace Arro.MCR
                         {
                             columns = 1;
                         }
-                        if (Main.IsSmoothPatchInstalled && !Main.IsNraasMCInstalled && columns > 1) //This is done for compatibility
-                        {
-                            columns = 1;
-                            SimpleMessageDialog.Show("Error", "You have Smooth Patch installed and currently it's not compatible with setting more than one column.");
-                        }
                         if (rows != Clothes.fVisibleRows || columns != Clothes.fVisibleColumns)
                         {
                             ShouldUpdate = true;
@@ -65,7 +60,6 @@ namespace Arro.MCR
                     string NotificationInfo = Localization.LocalizeString("Arro/MCR/Local:4", new object[0]);
                     Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format(NotificationInfo, StyledNotification.NotificationStyle.kGameMessageNegative));
                 }
-
             }
             catch (Exception ex)
             {
@@ -75,4 +69,3 @@ namespace Arro.MCR
         public static bool ShouldUpdate = false;
     }
 }
-//Trying to make modal window with smaller text area size
