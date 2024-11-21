@@ -5,8 +5,6 @@ using System;
 using System.Reflection;
 using Sims3.UI.CAS;
 using Sims3.UI;
-using Sims3.Gameplay.Objects.Decorations;
-using Sims3.Gameplay;
 
 namespace Arro.MCR
 {
