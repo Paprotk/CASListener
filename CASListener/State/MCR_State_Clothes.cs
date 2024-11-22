@@ -2,7 +2,6 @@
 using Sims3.UI;
 using Sims3.UI.CAS;
 using Sims3.UI.CAS.CAP;
-using Sims3.UI.Hud;
 using System;
 using System.Reflection;
 
