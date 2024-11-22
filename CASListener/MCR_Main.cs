@@ -17,18 +17,9 @@ namespace Arro.MCR
             World.sOnWorldQuitEventHandler += new EventHandler(OnWorldQuit);
         }
 
-        private static void OnStartupApp(object sender, EventArgs e) //Register cheat and check for master controller
+        private static void OnStartupApp(object sender, EventArgs e) 
         {
-            try
-            {
-                Commands.sGameCommands.Register("mcr", "Usage: Type MCR to edit the number of rows and columns.", Commands.CommandType.General, new CommandHandler(Configure_cheat));
-                Commands.sGameCommands.Register("refreshgrid", "Usage: Type refreshgrid to refresh the grid", Commands.CommandType.General, new CommandHandler(RefreshGrid));
-                CheckForMods();
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, "OnStartupApp");
-            }
+            CheckForMods();
         }
 
         private static void OnWorldLoadFinished(object sender, EventArgs e)
@@ -128,12 +119,14 @@ namespace Arro.MCR
         {
             if (newState == Sims3.UI.Responder.GameSubState.CASFullMode || newState == Sims3.UI.Responder.GameSubState.CASMirrorMode || newState == Sims3.UI.Responder.GameSubState.CASTackMode || newState == Sims3.UI.Responder.GameSubState.CASDresserMode || newState == Sims3.UI.Responder.GameSubState.CASTattooMode || newState == Sims3.UI.Responder.GameSubState.CASStylistMode || newState == Sims3.UI.Responder.GameSubState.CASCollarMode || newState == Sims3.UI.Responder.GameSubState.CASSurgeryFaceMode || newState == Sims3.UI.Responder.GameSubState.CASSurgeryBodyMode)
             {
+                Cheats("register");
                 Main.ClothesGuid = Simulator.AddObject(new Clothes());
                 //Main.HairGuid = Simulator.AddObject(new Hair());
                 //Main.FaceGuid = Simulator.AddObject(new Face());
             }
             else if (Main.ClothesGuid != null) // && Main.HairGuid != null && Main.FaceGuid != null
             {
+                Cheats("unregister");
                 Simulator.DestroyObject(Main.ClothesGuid);
                 //Simulator.DestroyObject(Main.HairGuid);
                 //Simulator.DestroyObject(Main.FaceGuid);
@@ -142,6 +135,20 @@ namespace Arro.MCR
         private static ObjectGuid ClothesGuid;
         //private static ObjectGuid HairGuid;
         //private static ObjectGuid FaceGuid;
+        private static void Cheats(string register)
+        {
+            if (register == "register")
+            {
+                Commands.sGameCommands.Register("mcr", "Usage: Type MCR to edit the number of rows and columns.", Commands.CommandType.General, new CommandHandler(Configure_cheat));
+                Commands.sGameCommands.Register("refreshgrid", "Usage: Type refreshgrid to refresh the grid", Commands.CommandType.General, new CommandHandler(RefreshGrid));
+            }
+            else
+            {
+                Commands.sGameCommands.Unregister("refreshgrid");
+                CommandSystem.UnregisterCommand("mcr");
+            }
+
+        }
     }
     public static class TinyUIFixForTS3Integration
     {
@@ -149,5 +156,6 @@ namespace Arro.MCR
 
         public static FloatGetter getUIScale = () => 1f;
     }
+
 }
 //CTRL+K+C COMMENT CLTR+K+U UNCOMMENT

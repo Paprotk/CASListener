@@ -35,14 +35,14 @@ namespace Arro.MCR
                     {
                         float rows;
                         float.TryParse(result[0], out rows);
-                        if (rows < 3 || rows == 3)
+                        if (rows < 3)
                         {
                             rows = 3;
                         }  
 
                         float columns;
                         float.TryParse(result[1], out columns);
-                        if (columns < 1 || columns == 1)
+                        if (columns < 1)
                         {
                             columns = 1;
                         }
