@@ -1,7 +1,6 @@
-﻿using System;
-using Arro.MCR;
-using Sims3.SimIFace;
+﻿using Sims3.SimIFace;
 using Sims3.UI.CAS;
+using System;
 //Currently unused
 namespace Arro.MCR
 {
@@ -18,7 +17,7 @@ namespace Arro.MCR
             {
                 if (CASPhysical.gSingleton != null)
                 {
-                    Main.CanMCRHair = true;
+                    Main.canMCRHair = true;
 
                     var HairLayout = CASHair.sHairLayout;
                     var EyebrowsLayout = CASEyebrows.sEyesLayout;
@@ -37,7 +36,7 @@ namespace Arro.MCR
                 }
                 else
                 {
-                    Main.CanMCRHair = false;
+                    Main.canMCRHair = false;
                 }
             }
             catch (Exception ex)

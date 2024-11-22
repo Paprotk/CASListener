@@ -1,9 +1,10 @@
-﻿using System;
-using System.Reflection;
-using Sims3.SimIFace;
+﻿using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
 using Sims3.UI.CAS.CAP;
+using Sims3.UI.Hud;
+using System;
+using System.Reflection;
 
 namespace Arro.MCR
 {
@@ -15,11 +16,13 @@ namespace Arro.MCR
         [PersistableStatic(true)]
         public static float fVisibleColumns = 2;
 
-        public static bool ShouldMoveDoneButton = true;
+        public static bool shouldMoveDoneButton = true;
 
-        public static uint PreviousVisibleColumns;
+        public static uint previousVisibleColumns;
 
-        public static bool SPDisabled = false;
+        public static bool spDisabled = false;
+
+        public static string clothesState;
 
         public override void Simulate()
         {
@@ -29,19 +32,38 @@ namespace Arro.MCR
 
                 if (ClothesLayout != null)
                 {
-                    Main.CanMCRClothes = true;
-                    SetClothesItemgrid();
-                    PreviousVisibleColumns = (uint)fVisibleColumns;
-    }
+                    Main.canMCRClothes = true;
+                    OnTick();
+                    previousVisibleColumns = (uint)fVisibleColumns;
+                }
                 else
                 {
-                    Main.CanMCRClothes = false;
-                    ShouldMoveDoneButton = true;
+                    Main.canMCRClothes = false;
+                    shouldMoveDoneButton = true;
                 }
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, "StateListenerClothes");
+            }
+        }
+        public static void OnTick()
+        {
+            try
+            {
+                SetClothesItemgrid();
+                RefreshGrid();
+                SetCASClothingSize();
+                SetButtonState();
+                if (shouldMoveDoneButton)
+                {
+                    MoveDoneButton();
+                }
+                shouldMoveDoneButton = false;
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, "OnTick_Clothes");
             }
         }
         public static void SetClothesItemgrid() //This is responsible for itemgrid, not background size.
@@ -61,14 +83,6 @@ namespace Arro.MCR
                 CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns = VisibleColumns;
                 CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows = VisibleRows;
                 CASClothingCategory.gSingleton.mClothingTypesGrid.Area = GridArea;
-                RefreshGrid();
-                SetCASClothingSize();
-                SetButtonState();
-                if (ShouldMoveDoneButton)
-                {
-                    MoveDoneButton();
-                }
-                ShouldMoveDoneButton = false;
             }
             catch (Exception ex)
             {
@@ -77,9 +91,9 @@ namespace Arro.MCR
         }
         public static void RefreshGrid()
         {
-            if (Config.ShouldUpdate) //This refreshes grid
+            if (Config.shouldUpdate) //This refreshes grid
             {
-                if (Main.IsNraasMCInstalled)
+                if (Main.isNraasMCInstalled)
                 {
                     new Clothes().InvokeNraasPopulateGrid(); //If NRaasMC is installed then use reflection to invoke method without referencing it in project
                 }
@@ -87,41 +101,41 @@ namespace Arro.MCR
                 {
                     CASClothingCategory.gSingleton.PopulateGrid();
                 }
-                Config.ShouldUpdate = false;
+                Config.shouldUpdate = false;
             }
         }
         public static void SetButtonState() //Disables buttons that are not needed.
         {
             try
             {
-                var DeleteButton = CASClothingCategory.gSingleton.mTrashButton;
-                var ShareButton = CASClothingCategory.gSingleton.mShareButton;
-                var SaveButton = CASClothingCategory.gSingleton.mSaveButton;
-                var DesignButton = CASClothingCategory.gSingleton.mDesignButton;
-                DeleteButton.Visible = false;
-                ShareButton.Visible = false;
-                SaveButton.Visible = false;
-                DesignButton.Visible = false;
-                CASClothingCategory.gSingleton.mTrashButton = DeleteButton;
-                CASClothingCategory.gSingleton.mShareButton = ShareButton;
-                CASClothingCategory.gSingleton.mSaveButton = SaveButton;
-                CASClothingCategory.gSingleton.mDesignButton = DesignButton;
+                var buttons = new[]
+                {
+                     CASClothingCategory.gSingleton.mTrashButton,
+                     CASClothingCategory.gSingleton.mShareButton,
+                     CASClothingCategory.gSingleton.mSaveButton,
+                     CASClothingCategory.gSingleton.mDesignButton
+                };
+                foreach (var button in buttons)
+                {
+                    button.Visible = false;
+                }
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, "SetButtonState");
             }
         }
-
+        public static Button DoneButton;
         public static void MoveDoneButton()
         {
             try
             {
                 if (CASClothing.gSingleton != null)
                 {
-                    Button DoneButton = CASClothing.gSingleton.GetChildByID(98278400U, true) as Button;
+                    DoneButton = CASClothing.gSingleton.GetChildByID(98278400U, true) as Button;
+                    DoneButton.Click -= CASClothing.gSingleton.OnDoneButtonClick;
 
-                    if (DoneButton != null && ShouldMoveDoneButton)
+                    if (DoneButton != null && shouldMoveDoneButton)
                     {
                         // Define the starting position
                         float startingPositionX = -8f;
@@ -137,9 +151,10 @@ namespace Arro.MCR
 
                 if (CASDresserClothing.sClothingLayout != null)
                 {
-                    Button DoneButton = CASDresserClothing.gSingleton.GetChildByID(98278400U, true) as Button;
+                    DoneButton = CASDresserClothing.gSingleton.GetChildByID(98278400U, true) as Button;
+                    DoneButton.Click -= CASDresserClothing.gSingleton.OnDoneButtonClick;
 
-                    if (DoneButton != null && ShouldMoveDoneButton)
+                    if (DoneButton != null && shouldMoveDoneButton)
                     {
                         // Define the starting position
                         float startingPositionX = -8f;
@@ -155,9 +170,10 @@ namespace Arro.MCR
 
                 if (CAPAccessories.gSingleton != null)
                 {
-                    Button DoneButton = CAPAccessories.gSingleton.GetChildByID(2095900161U, true) as Button;
+                    DoneButton = CAPAccessories.gSingleton.GetChildByID(2095900161U, true) as Button;
+                    DoneButton.Click -= CAPAccessories.gSingleton.OnDoneButtonClick;
 
-                    if (DoneButton != null && ShouldMoveDoneButton)
+                    if (DoneButton != null && shouldMoveDoneButton)
                     {
                         // Define the starting position
                         float startingPositionX = 353f;
@@ -170,27 +186,73 @@ namespace Arro.MCR
                         DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
                     }
                 }
+                DoneButton.MouseUp += Clothes.OnDoneClick;
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, "MoveDoneButton");
             }
         }
+        public static void OnDoneClick(WindowBase sender, UIMouseEventArgs args)
+        {
+            if (args.MouseKey == MouseKeys.kMouseRight)
+            {
+                Simulator.AddObject(new OneShotFunctionTask(Config.Configure, StopWatch.TickStyles.Seconds, 0.1f));
+                return;
+            }
+            switch (clothesState)
+            {
+                case "CASClothing":
+                    CASController.Singleton.SetCurrentState(
+                        new CASState(CASTopState.CreateASim, CASMidState.Summary, CASPhysicalState.None, CASClothingState.None)
+                    );
+                    args.Handled = true;
+                    break;
 
-        // Example method to determine the number of visible columns
+                case "CASDresserClothing":
+                    CASController.Singleton.SetCurrentState(
+                        new CASState(CASTopState.Dresser, CASMidState.Summary, CASPhysicalState.None, CASClothingState.None)
+                    );
+                    args.Handled = true;
+                    break;
+
+                case "CAPAccessories":
+                    CASMode casmode = Responder.Instance.CASModel.CASMode;
+                    if (casmode != CASMode.Full)
+                    {
+                        switch (casmode)
+                        {
+                            case CASMode.Collar:
+                                CASController.Singleton.SetCurrentState(CASState.CollarSummary);
+                                break;
+                            case CASMode.Tack:
+                                CASController.Singleton.SetCurrentState(CASState.TackSummary);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        CASController.Singleton.SetCurrentState(CASState.PetSummary);
+                    }
+                    args.Handled = true;
+                    break;
+            }
+        }
+
         public static int GetVisibleColumns()
         {
             var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
             return (int)VisibleColumns;
         }
 
-        public static void  SetCASClothingSize() //This is responsible for setting window background size. 
-        {   
+        public static void SetCASClothingSize() //This is responsible for setting window background size. 
+        {
             try
             {
                 if (CASClothing.sClothingLayout != null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout == null)
                 {
                     Rect CASClothingHeight = CASClothing.gSingleton.Area;
+                    clothesState = "CASClothing";
                     if (fVisibleRows >= 3)
                     {
                         CASClothingHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
@@ -203,6 +265,7 @@ namespace Arro.MCR
                 }
                 if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout != null && CAPAccessories.sCAPAccessoriesLayout == null)
                 {
+                    clothesState = "CASDresserClothing";
                     Rect CASDresserClothingHeight = CASDresserClothing.gSingleton.Area;
                     if (fVisibleRows >= 3)
                     {
@@ -216,6 +279,7 @@ namespace Arro.MCR
                 }
                 if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout != null)
                 {
+                    clothesState = "CAPAccessories";
                     Rect CAPAccessoriesHeight = CAPAccessories.gSingleton.Area;
                     if (fVisibleRows >= 3)
                     {
@@ -235,7 +299,7 @@ namespace Arro.MCR
         }
         public void InvokeNraasPopulateGrid()
         {
-            if (!Main.IsNraasMCInstalled || Main.nraasAssembly == null)
+            if (!Main.isNraasMCInstalled || Main.nraasAssembly == null)
                 return;
 
             try
@@ -261,7 +325,7 @@ namespace Arro.MCR
         }
         public void InvokeDisableSp()
         {
-            if (!Main.IsSmoothPatchInstalled || Main.smoothpatchAssembly == null)
+            if (!Main.isSmoothPatchInstalled || Main.smoothpatchAssembly == null)
                 return;
 
             try
@@ -278,7 +342,7 @@ namespace Arro.MCR
                 if (unhookMethod != null)
                 {
                     unhookMethod.Invoke(null, new object[] { null, null });
-                    SPDisabled = true;
+                    spDisabled = true;
                 }
             }
             catch (Exception ex)
@@ -288,7 +352,7 @@ namespace Arro.MCR
         }
         public void InvokeEnableSp()
         {
-            if (!Main.IsSmoothPatchInstalled || Main.smoothpatchAssembly == null)
+            if (!Main.isSmoothPatchInstalled || Main.smoothpatchAssembly == null)
                 return;
 
             try
@@ -305,7 +369,7 @@ namespace Arro.MCR
                 if (hookMethod != null)
                 {
                     hookMethod.Invoke(null, new object[] { null, null });
-                    SPDisabled = false;
+                    spDisabled = false;
                 }
             }
             catch (Exception ex)

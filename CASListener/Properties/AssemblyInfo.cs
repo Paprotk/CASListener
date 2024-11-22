@@ -1,9 +1,8 @@
 ﻿#region Using directives
 
-using System;
+using Sims3.SimIFace;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Sims3.SimIFace;
 
 #endregion
 

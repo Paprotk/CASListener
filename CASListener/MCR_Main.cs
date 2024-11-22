@@ -1,15 +1,21 @@
-﻿using Sims3.Gameplay.Core;
+﻿#define DEBUG
+using Sims3.Gameplay.Core;
 using Sims3.SimIFace;
-using OneShotFunctionTask = Sims3.Gameplay.OneShotFunctionTask;
-using System;
-using System.Reflection;
-using Sims3.UI.CAS;
 using Sims3.UI;
+using Sims3.UI.CAS;
+using System;
+using System.Diagnostics;
+using System.Reflection;
+using OneShotFunctionTask = Sims3.Gameplay.OneShotFunctionTask;
 
 namespace Arro.MCR
 {
     public class Main
     {
+
+        [Tunable]
+        private static bool kInstantiator;
+
         static Main()
         {
             World.sOnStartupAppEventHandler += new EventHandler(OnStartupApp);
@@ -17,7 +23,7 @@ namespace Arro.MCR
             World.sOnWorldQuitEventHandler += new EventHandler(OnWorldQuit);
         }
 
-        private static void OnStartupApp(object sender, EventArgs e) 
+        private static void OnStartupApp(object sender, EventArgs e)
         {
             CheckForMods();
         }
@@ -56,19 +62,6 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "OnWorldQuit");
             }
         }
-
-        [Tunable]
-        private static bool kInstantiator;
-
-        public static bool CanMCRClothes = false;
-        public static bool CanMCRFace = false;
-        public static bool CanMCRHair = false;
-
-        public static bool IsNraasMCInstalled = false;
-        public static bool IsSmoothPatchInstalled = false;
-
-        public static Assembly nraasAssembly;
-        public static Assembly smoothpatchAssembly;
         private static int Configure_cheat(object[] parameters)
         {
             try
@@ -95,6 +88,12 @@ namespace Arro.MCR
                 return 0;
             }
         }
+
+        public static bool isNraasMCInstalled = false;
+        public static bool isSmoothPatchInstalled = false;
+        public static Assembly nraasAssembly;
+        public static Assembly smoothpatchAssembly;
+
         private static void CheckForMods()
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
@@ -103,18 +102,22 @@ namespace Arro.MCR
             {
                 if (assembly.GetName().Name == "NRaasMasterController")
                 {
-                    IsNraasMCInstalled = true;
+                    isNraasMCInstalled = true;
                     nraasAssembly = assembly;
                     break;
                 }
                 if (assembly.GetName().Name == "LazyDuchess.SmoothPatch")
                 {
-                    IsSmoothPatchInstalled = true;
+                    isSmoothPatchInstalled = true;
                     smoothpatchAssembly = assembly;
                     break;
                 }
             }
         }
+        public static bool canMCRClothes = false;
+        public static bool canMCRFace = false;
+        public static bool canMCRHair = false;
+
         internal static void OnGameStateChanged(Sims3.UI.Responder.GameSubState previousState, Sims3.UI.Responder.GameSubState newState)
         {
             if (newState == Sims3.UI.Responder.GameSubState.CASFullMode || newState == Sims3.UI.Responder.GameSubState.CASMirrorMode || newState == Sims3.UI.Responder.GameSubState.CASTackMode || newState == Sims3.UI.Responder.GameSubState.CASDresserMode || newState == Sims3.UI.Responder.GameSubState.CASTattooMode || newState == Sims3.UI.Responder.GameSubState.CASStylistMode || newState == Sims3.UI.Responder.GameSubState.CASCollarMode || newState == Sims3.UI.Responder.GameSubState.CASSurgeryFaceMode || newState == Sims3.UI.Responder.GameSubState.CASSurgeryBodyMode)
@@ -135,19 +138,17 @@ namespace Arro.MCR
         private static ObjectGuid ClothesGuid;
         //private static ObjectGuid HairGuid;
         //private static ObjectGuid FaceGuid;
-        private static void Cheats(string register)
+        [Conditional("DEBUG")]
+        private static void Cheats(string action)
         {
-            if (register == "register")
+            if (action == "register")
             {
                 Commands.sGameCommands.Register("mcr", "Usage: Type MCR to edit the number of rows and columns.", Commands.CommandType.General, new CommandHandler(Configure_cheat));
                 Commands.sGameCommands.Register("refreshgrid", "Usage: Type refreshgrid to refresh the grid", Commands.CommandType.General, new CommandHandler(RefreshGrid));
+                return;
             }
-            else
-            {
-                Commands.sGameCommands.Unregister("refreshgrid");
-                CommandSystem.UnregisterCommand("mcr");
-            }
-
+            Commands.sGameCommands.Unregister("mcr");
+            Commands.sGameCommands.Unregister("refreshgrid");
         }
     }
     public static class TinyUIFixForTS3Integration

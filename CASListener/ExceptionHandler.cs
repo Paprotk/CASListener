@@ -1,7 +1,7 @@
-﻿using System;
-using Sims3.Gameplay.Utilities;
+﻿using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.UI;
+using System;
 
 namespace Arro.MCR
 {

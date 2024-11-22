@@ -1,8 +1,6 @@
-﻿using System;
-using Sims3.SimIFace;
-using Sims3.UI;
+﻿using Sims3.SimIFace;
 using Sims3.UI.CAS;
-using Arro.MCR;
+using System;
 //Currently unused
 namespace Arro.MCR
 {
@@ -17,7 +15,7 @@ namespace Arro.MCR
             {
                 if (CASFacialDetails.gSingleton != null)
                 {
-                    Main.CanMCRFace = true;
+                    Main.canMCRFace = true;
 
                     var HeadEarsLayout = CASHeadEars.sHeadEarsLayout;
                     var EyesLayout = CASEyes.sEyesLayout;
@@ -37,7 +35,7 @@ namespace Arro.MCR
                 }
                 else
                 {
-                    Main.CanMCRFace = false;
+                    Main.canMCRFace = false;
                 }
 
             }
@@ -74,7 +72,7 @@ namespace Arro.MCR
                     area.Height = fFaceWindowSize * TinyUIFixForTS3Integration.getUIScale();
                     CASFacialDetails.gSingleton.mShortPanel.Area = area;
                 }
-                
+
             }
             catch (Exception ex)
             {

@@ -1,13 +1,9 @@
-﻿using Arro.MCR;
-using Sims3.Gameplay.Interfaces;
-using Sims3.Gameplay.Objects;
-using Sims3.Gameplay.Utilities;
+﻿using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Arro.MCR
 {
@@ -17,8 +13,13 @@ namespace Arro.MCR
         {
             try
             {
-                if (Main.CanMCRClothes)
+                if (Main.canMCRClothes)
                 {
+                    if (isDialogActive)
+                    {
+                        return;
+                    }
+                    isDialogActive = true;
                     var VisibleRows = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows;
                     var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
                     string titleText = Localization.LocalizeString("Arro/MCR/Local:1", new object[0]);
@@ -38,7 +39,7 @@ namespace Arro.MCR
                         if (rows < 3)
                         {
                             rows = 3;
-                        }  
+                        }
 
                         float columns;
                         float.TryParse(result[1], out columns);
@@ -48,12 +49,13 @@ namespace Arro.MCR
                         }
                         if (rows != Clothes.fVisibleRows || columns != Clothes.fVisibleColumns)
                         {
-                            ShouldUpdate = true;
-                            Clothes.ShouldMoveDoneButton = true;
+                            shouldUpdate = true;
+                            Clothes.shouldMoveDoneButton = true;
                             Clothes.fVisibleRows = rows;
                             Clothes.fVisibleColumns = columns;
                         }
                     }
+                    isDialogActive = false;
                 }
                 else
                 {
@@ -66,6 +68,7 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "Configure");
             }
         }
-        public static bool ShouldUpdate = false;
+        public static bool shouldUpdate = false;
+        public static bool isDialogActive = false;
     }
 }
