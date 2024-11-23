@@ -54,7 +54,7 @@ namespace Arro.MCR
                 {
                     Simulator.DestroyObject(Main.ClothesGuid);
                     //Simulator.DestroyObject(Main.HairGuid);
-                    //Simulator.DestroyObject(Main.FaceGuid);
+                    Simulator.DestroyObject(Main.FaceGuid);
                 }
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace Arro.MCR
         {
             try
             {
-                Simulator.AddObject(new OneShotFunctionTask(Config.Configure, StopWatch.TickStyles.Seconds, 1f));
+                Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Seconds, 1f));
                 return 1;
             }
             catch (Exception ex)
@@ -125,19 +125,19 @@ namespace Arro.MCR
                 Cheats("register");
                 Main.ClothesGuid = Simulator.AddObject(new Clothes());
                 //Main.HairGuid = Simulator.AddObject(new Hair());
-                //Main.FaceGuid = Simulator.AddObject(new Face());
+                Main.FaceGuid = Simulator.AddObject(new Face());
             }
             else if (Main.ClothesGuid != null) // && Main.HairGuid != null && Main.FaceGuid != null
             {
                 Cheats("unregister");
                 Simulator.DestroyObject(Main.ClothesGuid);
                 //Simulator.DestroyObject(Main.HairGuid);
-                //Simulator.DestroyObject(Main.FaceGuid);
+                Simulator.DestroyObject(Main.FaceGuid);
             }
         }
         private static ObjectGuid ClothesGuid;
         //private static ObjectGuid HairGuid;
-        //private static ObjectGuid FaceGuid;
+        private static ObjectGuid FaceGuid;
         [Conditional("DEBUG")]
         private static void Cheats(string action)
         {

@@ -10,10 +10,10 @@ namespace Arro.MCR
     public class Clothes : Task
     {
         [PersistableStatic(true)]
-        public static float fVisibleRows = 6;
+        public static float fVisibleRows = 3;
 
         [PersistableStatic(true)]
-        public static float fVisibleColumns = 2;
+        public static float fVisibleColumns = 1;
 
         public static bool shouldMoveDoneButton = true;
 
@@ -21,7 +21,7 @@ namespace Arro.MCR
 
         public static bool spDisabled = false;
 
-        public static string clothesState;
+        public static string currentLayout;
 
         public override void Simulate()
         {
@@ -50,9 +50,10 @@ namespace Arro.MCR
         {
             try
             {
+                GetCurrentLayout();
                 SetClothesItemgrid();
                 RefreshGrid();
-                SetCASClothingSize();
+                SetCASClothingBackgroundSize();
                 SetButtonState();
                 if (shouldMoveDoneButton)
                 {
@@ -65,7 +66,22 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "OnTick_Clothes");
             }
         }
-        public static void SetClothesItemgrid() //This is responsible for itemgrid, not background size.
+        public static void GetCurrentLayout()
+        {
+            if (CASClothing.sClothingLayout != null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout == null)
+            {
+                currentLayout = "CASClothing";
+            }
+            else if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout != null && CAPAccessories.sCAPAccessoriesLayout == null)
+            {
+                currentLayout = "CASDresserClothing";
+            }
+            else if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout != null)
+            {
+                currentLayout = "CAPAccessories";
+            }
+        }
+        public static void SetClothesItemgrid()
         {
             try
             {
@@ -90,17 +106,16 @@ namespace Arro.MCR
         }
         public static void RefreshGrid()
         {
-            if (Config.shouldUpdate) //This refreshes grid
+            if (Configure.shouldUpdate) //This refreshes grid
             {
                 if (Main.isNraasMCInstalled)
                 {
                     new Clothes().InvokeNraasPopulateGrid(); //If NRaasMC is installed then use reflection to invoke method without referencing it in project
+                    Configure.shouldUpdate = false;
+                    return;
                 }
-                else
-                {
-                    CASClothingCategory.gSingleton.PopulateGrid();
-                }
-                Config.shouldUpdate = false;
+                CASClothingCategory.gSingleton.PopulateGrid();
+                Configure.shouldUpdate = false;
             }
         }
         public static void SetButtonState() //Disables buttons that are not needed.
@@ -129,61 +144,33 @@ namespace Arro.MCR
         {
             try
             {
-                if (CASClothing.gSingleton != null)
+                float startingPositionX;
+                float startingPositionY;
+                float fVisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
+
+                switch (currentLayout)
                 {
-                    DoneButton = CASClothing.gSingleton.GetChildByID(98278400U, true) as Button;
-                    DoneButton.Click -= CASClothing.gSingleton.OnDoneButtonClick;
-
-                    if (DoneButton != null && shouldMoveDoneButton)
-                    {
-                        // Define the starting position
-                        float startingPositionX = -8f;
-                        float startingPositionY = 6f;
-
-                        // Calculate the number of visible columns
-                        int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
-
-                        // Update the position of the DoneButton
+                    case "CASClothing":
+                        DoneButton = CASClothing.gSingleton.GetChildByID(98278400U, true) as Button;
+                        DoneButton.Click -= CASClothing.gSingleton.OnDoneButtonClick;
+                        startingPositionX = -8f;
+                        startingPositionY = 6f;
                         DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
-                    }
-                }
-
-                if (CASDresserClothing.sClothingLayout != null)
-                {
-                    DoneButton = CASDresserClothing.gSingleton.GetChildByID(98278400U, true) as Button;
-                    DoneButton.Click -= CASDresserClothing.gSingleton.OnDoneButtonClick;
-
-                    if (DoneButton != null && shouldMoveDoneButton)
-                    {
-                        // Define the starting position
-                        float startingPositionX = -8f;
-                        float startingPositionY = 6f;
-
-                        // Calculate the number of visible columns
-                        int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
-
-                        // Update the position of the DoneButton
+                        break;
+                    case "CASDresserClothing":
+                        DoneButton = CASDresserClothing.gSingleton.GetChildByID(98278400U, true) as Button;
+                        DoneButton.Click -= CASDresserClothing.gSingleton.OnDoneButtonClick;
+                        startingPositionX = -8f;
+                        startingPositionY = 6f;
                         DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
-                    }
-                }
-
-                if (CAPAccessories.gSingleton != null)
-                {
-                    DoneButton = CAPAccessories.gSingleton.GetChildByID(2095900161U, true) as Button;
-                    DoneButton.Click -= CAPAccessories.gSingleton.OnDoneButtonClick;
-
-                    if (DoneButton != null && shouldMoveDoneButton)
-                    {
-                        // Define the starting position
-                        float startingPositionX = 353f;
-                        float startingPositionY = 35f;
-
-                        // Calculate the number of visible columns
-                        int fVisibleColumns = GetVisibleColumns(); // This method should return the number of visible columns
-
-                        // Update the position of the DoneButton
+                        break;
+                    case "CAPAccessories":
+                        DoneButton = CAPAccessories.gSingleton.GetChildByID(2095900161U, true) as Button;
+                        DoneButton.Click -= CAPAccessories.gSingleton.OnDoneButtonClick;
+                        startingPositionX = 353f;
+                        startingPositionY = 35f;
                         DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
-                    }
+                        break;
                 }
                 DoneButton.MouseUp += Clothes.OnDoneClick;
             }
@@ -196,10 +183,10 @@ namespace Arro.MCR
         {
             if (args.MouseKey == MouseKeys.kMouseRight)
             {
-                Simulator.AddObject(new OneShotFunctionTask(Config.Configure, StopWatch.TickStyles.Seconds, 0.1f));
+                Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Seconds, 0.1f));
                 return;
             }
-            switch (clothesState)
+            switch (currentLayout)
             {
                 case "CASClothing":
                     CASController.Singleton.SetCurrentState(
@@ -238,57 +225,35 @@ namespace Arro.MCR
             }
         }
 
-        public static int GetVisibleColumns()
-        {
-            var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
-            return (int)VisibleColumns;
-        }
-
-        public static void SetCASClothingSize() //This is responsible for setting window background size. 
+        public static void SetCASClothingBackgroundSize()
         {
             try
             {
-                if (CASClothing.sClothingLayout != null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout == null)
+                Rect rect;
+                float backgroundHeight = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
+                float backgroundWidth = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
+                switch (currentLayout)
                 {
-                    Rect CASClothingHeight = CASClothing.gSingleton.Area;
-                    clothesState = "CASClothing";
-                    if (fVisibleRows >= 3)
-                    {
-                        CASClothingHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
-                    }
-                    if (fVisibleColumns >= 1)
-                    {
-                        CASClothingHeight.Width = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
-                    }
-                    CASClothing.gSingleton.Area = CASClothingHeight;
-                }
-                if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout != null && CAPAccessories.sCAPAccessoriesLayout == null)
-                {
-                    clothesState = "CASDresserClothing";
-                    Rect CASDresserClothingHeight = CASDresserClothing.gSingleton.Area;
-                    if (fVisibleRows >= 3)
-                    {
-                        CASDresserClothingHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
-                    }
-                    if (fVisibleColumns >= 1)
-                    {
-                        CASDresserClothingHeight.Width = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
-                    }
-                    CASDresserClothing.gSingleton.Area = CASDresserClothingHeight;
-                }
-                if (CASClothing.sClothingLayout == null && CASDresserClothing.sClothingLayout == null && CAPAccessories.sCAPAccessoriesLayout != null)
-                {
-                    clothesState = "CAPAccessories";
-                    Rect CAPAccessoriesHeight = CAPAccessories.gSingleton.Area;
-                    if (fVisibleRows >= 3)
-                    {
-                        CAPAccessoriesHeight.Height = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
-                    }
-                    if (fVisibleColumns >= 1)
-                    {
-                        CAPAccessoriesHeight.Width = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
-                    }
-                    CAPAccessories.gSingleton.Area = CAPAccessoriesHeight;
+                    case "CASClothing":
+                        rect = CASClothing.gSingleton.Area;
+                        rect.Height = backgroundHeight;
+                        rect.Width = backgroundWidth;
+                        CASClothing.gSingleton.Area = rect;
+                        break;
+
+                    case "CASDresserClothing":
+                        rect = CASDresserClothing.gSingleton.Area;
+                        rect.Height = backgroundHeight;
+                        rect.Width = backgroundWidth;
+                        CASDresserClothing.gSingleton.Area = rect;
+                        break;
+
+                    case "CAPAccessories":
+                        rect = CAPAccessories.gSingleton.Area;
+                        rect.Height = backgroundHeight;
+                        rect.Width = backgroundWidth;
+                        CAPAccessories.gSingleton.Area = rect;
+                        break;
                 }
             }
             catch (Exception ex)
@@ -351,9 +316,6 @@ namespace Arro.MCR
         }
         public void InvokeEnableSp()
         {
-            if (!Main.isSmoothPatchInstalled || Main.smoothpatchAssembly == null)
-                return;
-
             try
             {
                 // Find the target type within the assembly
