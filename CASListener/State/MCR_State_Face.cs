@@ -1,10 +1,7 @@
-﻿using Sims3.Gameplay.ObjectComponents;
-using Sims3.SimIFace;
+﻿using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
-using Sims3.UI.CAS.CAP;
 using System;
-using System.Reflection;
 
 
 namespace Arro.MCR
@@ -23,7 +20,6 @@ namespace Arro.MCR
         public static string currentLayout;
         public static string currentLayoutState;
         public static Button doneButton;
-        public static bool shouldupdate = true;
 
         public override void Simulate()
         {
@@ -32,13 +28,7 @@ namespace Arro.MCR
                 if (CASFacialDetails.gSingleton != null)
                 {
                     OnTick();
-                    Main.canMCRFace = true;
                 }
-                else
-                {
-                    Main.canMCRFace = false;
-                }
-
             }
             catch (Exception ex)
             {
@@ -63,7 +53,7 @@ namespace Arro.MCR
         {
             if (CASHeadEars.gSingleton != null)
             {
-                currentLayout = "CASHeadEars"; // Get the type of the instance
+                currentLayout = "CASHeadEars";
                 currentLayoutState = CASHeadEars.gSingleton.mBasicsPanel.Visible ? "basics" : "advanced";
             }
             else if (CASEyes.gSingleton != null)
@@ -84,12 +74,17 @@ namespace Arro.MCR
             else if (CASMoles.gSingleton != null)
             {
                 currentLayout = "CASMoles";
-                currentLayoutState = "basics";
+                currentLayoutState = "other";
             }
             else if (CASMakeup.gSingleton != null)
             {
                 currentLayout = "CASMakeup";
-                currentLayoutState = "basics";
+                currentLayoutState = "other";
+            }
+            else if (CASTattoo.gSingleton != null)
+            {
+                currentLayout = "CASTattoo";
+                currentLayoutState = "other";
             }
         }
 
@@ -100,53 +95,127 @@ namespace Arro.MCR
                 switch (currentLayout)
                 {
                     case "CASHeadEars":
-                        var VisibleRows = CASHeadEars.gSingleton.mPresetsGrid.VisibleRows;
-                        var VisibleColumns = CASHeadEars.gSingleton.mPresetsGrid.VisibleColumns;
-                        //var backgroundImage = CASHeadEars.gSingleton.GetChildByID(344323677U, true) as Drawmas;
-                        Rect GridArea = CASHeadEars.gSingleton.mPresetsGrid.Area;
-                        VisibleRows = (uint)fVisibleRows;
-                        GridArea.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-                        VisibleColumns = (uint)fVisibleColumns;
-                        GridArea.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
-                        CASHeadEars.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
-                        CASHeadEars.gSingleton.mPresetsGrid.VisibleRows = VisibleRows;
-                        CASHeadEars.gSingleton.mPresetsGrid.Area = GridArea;
+                        if (currentLayoutState == "basics")
+                        {
+                            var VisibleRows = CASHeadEars.gSingleton.mPresetsGrid.VisibleRows;
+                            var VisibleColumns = CASHeadEars.gSingleton.mPresetsGrid.VisibleColumns;
+                            //var backgroundImage = CASHeadEars.gSingleton.GetChildByID(98278400U, 255510366U, true) as Window;
+                            //backgroundImage.Visible = false;
+                            Rect GridArea = CASHeadEars.gSingleton.mPresetsGrid.Area;
+                            VisibleRows = (uint)fVisibleRows;
+                            GridArea.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
+                            VisibleColumns = (uint)fVisibleColumns;
+                            GridArea.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
+                            CASHeadEars.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
+                            CASHeadEars.gSingleton.mPresetsGrid.VisibleRows = VisibleRows;
+                            CASHeadEars.gSingleton.mPresetsGrid.Area = GridArea;
+                        }
+                        else if (currentLayoutState == "advanced")
+                        {
+                            if (CASHeadEars.gSingleton.mMiscGrid != null)
+                            {
+                            }
+                            else if (CASHeadEars.gSingleton.mChinGrid != null)
+                            {
+                            }
+                            else if (CASHeadEars.gSingleton.mJawGrid != null)
+                            {
+                            }
+                            else if (CASHeadEars.gSingleton.mCheekGrid != null)
+                            {
+                            }
+                            else if (CASHeadEars.gSingleton.mEarGrid != null)
+                            {
+                            }
+                        }
                         break;
+
                     case "CASEyes":
-                        var VisibleRows1 = CASEyes.gSingleton.mPresetsGrid.VisibleRows;
-                        var VisibleColumns1 = CASEyes.gSingleton.mPresetsGrid.VisibleColumns;
-                        Rect GridArea1 = CASEyes.gSingleton.mPresetsGrid.Area;
-                        VisibleRows1 = (uint)fVisibleRows;
-                        GridArea1.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-                        VisibleColumns1 = (uint)fVisibleColumns;
-                        GridArea1.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
-                        CASEyes.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns1;
-                        CASEyes.gSingleton.mPresetsGrid.VisibleRows = VisibleRows1;
-                        CASEyes.gSingleton.mPresetsGrid.Area = GridArea1;
+                        if (currentLayoutState == "basics")
+                        {
+                            //var VisibleRows = CASEyes.gSingleton.mPresetsGrid.VisibleRows;
+                            //var VisibleColumns = CASEyes.gSingleton.mPresetsGrid.VisibleColumns;
+                            //Rect GridArea = CASEyes.gSingleton.mPresetsGrid.Area;
+                            //VisibleRows = (uint)fVisibleRows;
+                            //GridArea.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
+                            //VisibleColumns = (uint)fVisibleColumns;
+                            //GridArea1.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
+                            //CASEyes.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
+                            //CASEyes.gSingleton.mPresetsGrid.VisibleRows = VisibleRows;
+                            //CASEyes.gSingleton.mPresetsGrid.Area = GridArea;
+                        }
+                        else if (currentLayoutState == "advanced")
+                        {
+                            if (CASEyes.gSingleton.mMiscGrid != null)
+                            {
+                            }
+                            else if (CASEyes.gSingleton.mEyeShapeGrid != null)
+                            {
+                            }
+                            else if (CASEyes.gSingleton.mEyeLidGrid != null)
+                            {
+                            }
+                            else if (CASEyes.gSingleton.mBrowGrid != null)
+                            {
+                            }
+                        }
                         break;
                     case "CASNose":
-                        var VisibleRows2 = CASNose.gSingleton.mPresetsGrid.VisibleRows;
-                        var VisibleColumns2 = CASNose.gSingleton.mPresetsGrid.VisibleColumns;
-                        Rect GridArea2 = CASNose.gSingleton.mPresetsGrid.Area;
-                        VisibleRows2 = (uint)fVisibleRows;
-                        GridArea2.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-                        VisibleColumns = (uint)fVisibleColumns;
-                        GridArea2.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
-                        CASNose.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
-                        CASNose.gSingleton.mPresetsGrid.VisibleRows = VisibleRows2;
-                        CASNose.gSingleton.mPresetsGrid.Area = GridArea2;
+                        if (currentLayoutState == "basics")
+                        {
+                            var VisibleRows = CASNose.gSingleton.mPresetsGrid.VisibleRows;
+                            var VisibleColumns = CASNose.gSingleton.mPresetsGrid.VisibleColumns;
+                            Rect GridArea = CASNose.gSingleton.mPresetsGrid.Area;
+                            VisibleRows = (uint)fVisibleRows;
+                            GridArea.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
+                            VisibleColumns = (uint)fVisibleColumns;
+                            GridArea.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
+                            CASNose.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
+                            CASNose.gSingleton.mPresetsGrid.VisibleRows = VisibleRows;
+                            CASNose.gSingleton.mPresetsGrid.Area = GridArea;
+                        }
+                        else if (currentLayoutState == "advanced")
+                        {
+                            if (CASNose.gSingleton.mMiscGrid != null)
+                            {
+                            }
+                            else if (CASNose.gSingleton.mNostrilGrid != null)
+                            {
+                            }
+                            else if (CASNose.gSingleton.mTipGrid != null)
+                            {
+                            }
+                            else if (CASNose.gSingleton.mBridgeGrid != null)
+                            {
+                            }
+                        }
                         break;
                     case "CASMouth":
-                        var VisibleRows3 = CASMouth.gSingleton.mPresetsGrid.VisibleRows;
-                        var VisibleColumns3 = CASMouth.gSingleton.mPresetsGrid.VisibleColumns;
-                        Rect GridArea3 = CASMouth.gSingleton.mPresetsGrid.Area;
-                        VisibleRows3 = (uint)fVisibleRows;
-                        GridArea3.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-                        VisibleColumns = (uint)fVisibleColumns;
-                        GridArea3.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
-                        CASMouth.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
-                        CASMouth.gSingleton.mPresetsGrid.VisibleRows = VisibleRows3;
-                        CASMouth.gSingleton.mPresetsGrid.Area = GridArea3;
+                        if (currentLayoutState == "basics")
+                        {
+                            var VisibleRows = CASMouth.gSingleton.mPresetsGrid.VisibleRows;
+                            var VisibleColumns = CASMouth.gSingleton.mPresetsGrid.VisibleColumns;
+                            Rect GridArea = CASMouth.gSingleton.mPresetsGrid.Area;
+                            VisibleRows = (uint)fVisibleRows;
+                            GridArea.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
+                            VisibleColumns = (uint)fVisibleColumns;
+                            GridArea.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
+                            CASMouth.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
+                            CASMouth.gSingleton.mPresetsGrid.VisibleRows = VisibleRows;
+                            CASMouth.gSingleton.mPresetsGrid.Area = GridArea;
+                        }
+                        else if (currentLayoutState == "advanced")
+                        {
+                            if (CASMouth.gSingleton.mMiscGrid != null)
+                            {
+                            }
+                            else if (CASMouth.gSingleton.mLowerGrid != null)
+                            {
+                            }
+                            else if (CASMouth.gSingleton.mUpperGrid != null)
+                            {
+                            }
+                        }
                         break;
 
                 }
@@ -161,26 +230,55 @@ namespace Arro.MCR
             try
             {
                 Rect rect;
-               // float backgroundWidth = (136.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
-                //float backgroundHeight = (145.33f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-
-                if (CASFacialDetails.gSingleton.mShortPanel != null && shouldupdate)
+                if (CASFacialDetails.gSingleton.mShortPanel != null)
                 {
+                    float backgroundWidth = (100f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
+                    float backgroundHeight = (100f * fVisibleRows + 148f) * TinyUIFixForTS3Integration.getUIScale();
+                    float sliderBackgroundHeight = (100f * fVisibleSliders + 200f) * TinyUIFixForTS3Integration.getUIScale();
+
                     if (currentLayoutState == "basics")
                     {
                         rect = CASFacialDetails.gSingleton.mShortPanel.Area;
-                        rect.Width += 136;
-                        //rect.Height = backgroundHeight;
+                        rect.Width = backgroundWidth;
+                        rect.Height = backgroundHeight;
                         CASFacialDetails.gSingleton.mShortPanel.Area = rect;
                     }
                     else if (currentLayoutState == "advanced")
                     {
                         rect = CASFacialDetails.gSingleton.mShortPanel.Area;
-                        rect.Width += 136;
-                        //rect.Height = backgroundHeight;
+                        rect.Width = 409f;
+                        rect.Height = sliderBackgroundHeight;
                         CASFacialDetails.gSingleton.mShortPanel.Area = rect;
                     }
-                    shouldupdate = false;
+                    else if (currentLayout == "CASMoles")
+                    {
+                        rect = CASFacialDetails.gSingleton.mShortPanel.Area;
+                        rect.Width = 409f;
+                        rect.Height = 448f;
+                        CASFacialDetails.gSingleton.mShortPanel.Area = rect;
+                    }
+                }
+                else if (CASFacialDetails.gSingleton.mLongPanel != null)
+                {
+                    float backgroundWidth = (100f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
+                    if (currentLayout == "CASEyes")
+                    {
+                        rect = CASFacialDetails.gSingleton.mLongPanel.Area;
+                        rect.Width = backgroundWidth;
+                        CASFacialDetails.gSingleton.mLongPanel.Area = rect;
+                    }
+                    else if (currentLayout == "CASMakeup")
+                    {
+                        rect = CASFacialDetails.gSingleton.mLongPanel.Area;
+                        rect.Width = backgroundWidth;
+                        CASFacialDetails.gSingleton.mLongPanel.Area = rect;
+                    }
+                    else if (currentLayout == "CASTatto")
+                    {
+                        rect = CASFacialDetails.gSingleton.mLongPanel.Area;
+                        rect.Width = backgroundWidth;
+                        CASFacialDetails.gSingleton.mLongPanel.Area = rect;
+                    }
                 }
             }
             catch (Exception ex)
@@ -188,7 +286,27 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "SetCASFaceBackgroundSize");
             }
         }
-
+        public static void MoveDoneButton()
+        {
+            try
+            {
+                doneButton = CASFacialDetails.gSingleton.GetChildByID(98278400U, true) as Button;
+                doneButton.Click -= CASFacialDetails.gSingleton.OnDoneButtonClick;
+                doneButton.MouseUp += OnDoneClick;
+                float startingPositionX = 353f;
+                float startingPositionY = 35f;
+                if (currentLayoutState == "basics")
+                {
+                    doneButton.Position = new Vector2(startingPositionX + (100f * (fVisibleColumns - 3)), startingPositionY);
+                    return;
+                }
+                doneButton.Position = new Vector2(startingPositionX, startingPositionY);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, "MoveDoneButton");
+            }
+        }
         public static void OnDoneClick(WindowBase sender, UIMouseEventArgs args)
         {
             if (args.MouseKey == MouseKeys.kMouseRight)
@@ -211,25 +329,6 @@ namespace Arro.MCR
             }
             CASController.Singleton.SetCurrentState(new CASState(topState, CASMidState.Summary, CASPhysicalState.None, CASClothingState.None));
             args.Handled = true;
-
-        }
-        public static void MoveDoneButton()
-        {
-            try
-            {
-                float startingPositionX;
-                float startingPositionY;
-                doneButton = CASFacialDetails.gSingleton.GetChildByID(98278400U, true) as Button;
-                doneButton.Click -= CASFacialDetails.gSingleton.OnDoneButtonClick;
-                startingPositionX = 353f;
-                startingPositionY = 35f;
-                doneButton.Position = new Vector2(startingPositionX + (100f * (fVisibleColumns - 3)), startingPositionY);
-                doneButton.MouseUp += OnDoneClick;
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, "MoveDoneButton");
-            }
         }
     }
 }

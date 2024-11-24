@@ -6,10 +6,11 @@ namespace Arro.MCR
 {
     public class Hair : Task
     {
-        [Tunable]
-        public static float fHairWindowSize;
-        [Tunable]
-        public static float fHairColorsPosition;
+        [PersistableStatic(true)]
+        public static float fVisibleRows = 4;
+
+        [PersistableStatic(true)]
+        public static float fVisibleColumns = 4;
 
         public override void Simulate()
         {
@@ -17,86 +18,23 @@ namespace Arro.MCR
             {
                 if (CASPhysical.gSingleton != null)
                 {
-                    Main.canMCRHair = true;
-
-                    var HairLayout = CASHair.sHairLayout;
-                    var EyebrowsLayout = CASEyebrows.sEyesLayout;
-                    var BeardLayout = CASBeard.sBeardLayout;
-                    var BodyHairLayout = CASBodyHair.sBodyHairLayout;
-
-                    if (HairLayout == null && EyebrowsLayout == null && BeardLayout == null && BodyHairLayout == null)
-                    {
-                        //Do nothing
-                    }
-                    else
-                    {
-                        SetHairSizeLong();
-                        SetHairSizeShort();
-                    }
-                }
-                else
-                {
-                    Main.canMCRHair = false;
+                    OnTick();
                 }
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, "StateListenerHair");
             }
-
-
         }
-
-        public static void SetHairSizeLong()
+        public static void OnTick()
         {
             try
             {
-                if (CASPhysical.gSingleton.mLongPanel != null)
-                {
-                    Rect area = CASPhysical.gSingleton.mLongPanel.Area;
-                    area.Height = fHairWindowSize * TinyUIFixForTS3Integration.getUIScale();
-//                    if (CASHair.sHairLayout is null)
-//                    {
-//                        //Do nothing
-//                    }
-//                    else
-//                    {
-//                        CASHair.gSingleton.mHairColorPanel.Position = new Vector2(CASHair.gSingleton.mHairColorPanel.Position.x, fHairColorsPosition * TinyUIFixForTS3Integration.getUIScale());
-//                    }
-//                    CASPhysical.gSingleton.mLongPanel.Area = area;
-                }
-
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, "SetHairSizeLong");
+                ExceptionHandler.HandleException(ex, "OnTick_Hair");
             }
-
-        }
-        public static void SetHairSizeShort()
-        {
-            try
-            {
-                if (CASPhysical.gSingleton.mShortPanel != null)
-                {
-                    Rect area = CASPhysical.gSingleton.mShortPanel.Area;
-                    area.Height = fHairWindowSize * TinyUIFixForTS3Integration.getUIScale();
-//                    if (CASHair.sHairLayout is null)
-//                    {
-//                        //Do nothing
-//                    }
-//                    else
-//                    {
-//                        CASHair.gSingleton.mHairColorPanel.Position = new Vector2(CASHair.gSingleton.mHairColorPanel.Position.x, fHairColorsPosition * TinyUIFixForTS3Integration.getUIScale());
-//                    }
-//                    CASPhysical.gSingleton.mShortPanel.Area = area;
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, "SetHairSizeLong");
-            }
-
         }
     }
 }

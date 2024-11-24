@@ -79,7 +79,9 @@ namespace Arro.MCR
         {
             try
             {
-                CASClothingCategory.gSingleton.PopulateGrid();
+                ExceptionHandler notificationExample = new ExceptionHandler();
+
+                notificationExample.ShowButtonNotification(); // This will invoke the notification
                 return 1;
             }
             catch (Exception ex)
@@ -114,9 +116,6 @@ namespace Arro.MCR
                 }
             }
         }
-        public static bool canMCRClothes = false;
-        public static bool canMCRFace = false;
-        public static bool canMCRHair = false;
 
         internal static void OnGameStateChanged(Sims3.UI.Responder.GameSubState previousState, Sims3.UI.Responder.GameSubState newState)
         {

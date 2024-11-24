@@ -15,8 +15,6 @@ namespace Arro.MCR
         [PersistableStatic(true)]
         public static float fVisibleColumns = 1;
 
-        public static bool shouldMoveDoneButton = true;
-
         public static uint previousVisibleColumns;
 
         public static bool spDisabled = false;
@@ -31,14 +29,8 @@ namespace Arro.MCR
 
                 if (ClothesLayout != null)
                 {
-                    Main.canMCRClothes = true;
                     OnTick();
                     previousVisibleColumns = (uint)fVisibleColumns;
-                }
-                else
-                {
-                    Main.canMCRClothes = false;
-                    shouldMoveDoneButton = true;
                 }
             }
             catch (Exception ex)
@@ -55,11 +47,8 @@ namespace Arro.MCR
                 RefreshGrid();
                 SetCASClothingBackgroundSize();
                 SetButtonState();
-                if (shouldMoveDoneButton)
-                {
-                    MoveDoneButton();
-                }
-                shouldMoveDoneButton = false;
+                MoveDoneButton();
+
             }
             catch (Exception ex)
             {
