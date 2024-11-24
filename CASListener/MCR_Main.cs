@@ -79,9 +79,7 @@ namespace Arro.MCR
         {
             try
             {
-                ExceptionHandler notificationExample = new ExceptionHandler();
-
-                notificationExample.ShowButtonNotification(); // This will invoke the notification
+                throw new InvalidOperationException("Forced exception for testing purposes.");
                 return 1;
             }
             catch (Exception ex)

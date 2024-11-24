@@ -9,8 +9,6 @@ namespace Arro.MCR
     {
         public static string functionErrorName;
         public static Exception exception;
-        public static bool notificationShown;
-        public StyledNotification currentNotification;
 
         public static void WriteErrorXMLFile(string fileName, Exception errorToPrint)
         {
@@ -30,34 +28,23 @@ namespace Arro.MCR
             exception = ex;
             ExceptionHandler buttonNotification = new ExceptionHandler();
             buttonNotification.ShowButtonNotification(); // This will invoke the notification
-            notificationShown = true;
         }
         public void ShowButtonNotification()
         {
-            if (notificationShown)
-            {
-                return;
-            }
             string titleText = "Error occurred while executing " + functionErrorName + ". Click button below to save exception info to The Sims 3 folder.";
             StyledNotification.Format format = new StyledNotification.Format(
                 titleText, // Notification text
-                "Save exception info", // Button text
+                "=^..^=", // Button text
                 ButtonCallback,
                 StyledNotification.NotificationStyle.kSystemMessage
             );
-            currentNotification = StyledNotification.Show(format, "arro_error_icon");
-            notificationShown = true;
+            format.mCloseOnCallback = true;
+            StyledNotification.Show(format, "arro_error_icon");
         }
         public void ButtonCallback()
         {
             ExceptionHandler.WriteErrorXMLFile(functionErrorName + "_error", exception);
-            CloseNotification();
-            notificationShown = false;
             return;
-        }
-        private void CloseNotification()
-        {
-            currentNotification.CloseNow(); // Close the currently shown notification
         }
     }
 }
