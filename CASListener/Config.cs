@@ -1,8 +1,6 @@
-﻿using Sims3.Gameplay.Objects.Decorations;
-using Sims3.Gameplay.Utilities;
+﻿using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.UI;
-using Sims3.UI.CAS;
 using System;
 using System.Collections.Generic;
 
@@ -14,10 +12,8 @@ namespace Arro.MCR
         {
             try
             {
-                if (isDialogActive)
-                {
-                    return;
-                }
+                if (isDialogActive) return;
+
                 isDialogActive = true;
                 string titleText = Localization.LocalizeString("Arro/MCR/Local:1", new object[0]);
                 string promptText = Localization.LocalizeString("Arro/MCR/Local:2", new object[0]);
@@ -31,22 +27,28 @@ namespace Arro.MCR
                 // Check if the dialog was canceled
                 if (result != null && result.Count == 2)
                 {
-                    float rows;
-                    float.TryParse(result[0], out rows);
+                    float.TryParse(result[0], out float rows);
                     if (rows < 3)
                     {
                         rows = 3;
                     }
+                    else if (rows > 16)
+                    {
+                        rows = 16;
+                    }
 
-                    float columns;
-                    float.TryParse(result[1], out columns);
+                    float.TryParse(result[1], out float columns);
                     if (columns < 1)
                     {
                         columns = 1;
                     }
+                    else if (columns > 16)
+                    {
+                        columns = 16;
+                    }
                     if (rows != MCR.Clothes.fVisibleRows || columns != MCR.Clothes.fVisibleColumns)
                     {
-                        shouldUpdate = true;
+                        CASHook.SetBool(false, false, false);
                         MCR.Clothes.fVisibleRows = rows;
                         MCR.Clothes.fVisibleColumns = columns;
                     }
@@ -55,7 +57,7 @@ namespace Arro.MCR
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, "Configure");
+                ExceptionHandler.HandleException(ex, "ConfigureClothes");
             }
         }
         public static void Face()
@@ -108,60 +110,7 @@ namespace Arro.MCR
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, "Configure");
-            }
-        }
-        public static void Hair()
-        {
-            try
-            {
-                if (isDialogActive)
-                {
-                    return;
-                }
-                isDialogActive = true;
-                string titleText = Localization.LocalizeString("Arro/MCR/Local:1", new object[0]);
-                string promptText = Localization.LocalizeString("Arro/MCR/Local:2", new object[0]);
-                string secondPromptText = Localization.LocalizeString("Arro/MCR/Local:3", new object[0]);
-                string defaultEntryText = MCR.Hair.fVisibleRows.ToString();
-                string defaultSecondEntryText = MCR.Hair.fVisibleColumns.ToString();
-                string oKText = "Ok";
-                string cancelText = Localization.LocalizeString("Ui/Caption/QuitDialog:Cancel", new object[0]);
-
-                List<string> result = TwoStringInputDialog.Show(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, new Vector2(-1f, -1f), false);
-                // Check if the dialog was canceled
-                if (result != null && result.Count == 2)
-                {
-                    float rows;
-                    float.TryParse(result[0], out rows);
-                    if (rows < 3)
-                    {
-                        rows = 3;
-                    }
-
-                    float columns;
-                    float.TryParse(result[1], out columns);
-                    if (columns < 1)
-                    {
-                        columns = 1;
-                    }
-                    if (rows != MCR.Clothes.fVisibleRows || columns != MCR.Clothes.fVisibleColumns)
-                    {
-                        shouldUpdate = true;
-                        MCR.Clothes.fVisibleRows = rows;
-                        MCR.Clothes.fVisibleColumns = columns;
-                    }
-                    isDialogActive = false;
-                }
-                else
-                {
-                    string NotificationInfo = Localization.LocalizeString("Arro/MCR/Local:4", new object[0]);
-                    Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format(NotificationInfo, StyledNotification.NotificationStyle.kGameMessageNegative));
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, "Configure");
+                ExceptionHandler.HandleException(ex, "ConfigureFace");
             }
         }
         public static bool shouldUpdate = false;

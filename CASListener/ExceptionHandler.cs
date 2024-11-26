@@ -2,16 +2,23 @@
 using Sims3.SimIFace;
 using Sims3.UI;
 using System;
-using System.Collections.Generic;
 
 namespace Arro.MCR
 {
     public class ExceptionHandler
     {
-        public static string functionErrorName;
-        public static Exception exception;
-        private static List<string> reportedErrors = new List<string>();
+        // This will store a reference to the error data needed in the callback.
+        private readonly string _functionErrorName;
+        private readonly Exception _exception;
 
+        // Constructor to initialize error details.
+        public ExceptionHandler(string functionName, Exception ex)
+        {
+            _functionErrorName = functionName;
+            _exception = ex;
+        }
+
+        // Write the error details to an XML file.
         public static void WriteErrorXMLFile(string fileName, Exception errorToPrint)
         {
             uint num = 0u;
@@ -25,48 +32,35 @@ namespace Arro.MCR
             }
         }
 
+        // This method is called when an exception is thrown.
         public static void HandleException(Exception ex, string functionName)
         {
-            functionErrorName = functionName;
-            exception = ex;
-
-            // Generate a unique signature for the exception
-            string errorSignature = $"{functionName}|{ex.Message}|{ex.StackTrace}";
-
-            // Check if this error has already been reported
-            if (reportedErrors.Contains(errorSignature))
-            {
-                return; // Suppress duplicate notification
-            }
-
-            // Add the error signature to the list of reported errors
-            reportedErrors.Add(errorSignature);
-
-            // Show the notification
-            ExceptionHandler buttonNotification = new ExceptionHandler();
-            buttonNotification.ShowButtonNotification();
+            // Create a new ExceptionHandler instance with the specific error details.
+            var handler = new ExceptionHandler(functionName, ex);
+            handler.ShowButtonNotification();
         }
 
+        // Show the notification with a button to save the error.
         public void ShowButtonNotification()
         {
-            string titleText = "Error occurred while executing " + functionErrorName + ". Click button below to save exception info to The Sims 3 folder.";
+            string titleText = "Error occurred while executing " + _functionErrorName + ". Click the button below to save exception info to The Sims 3 folder.";
             StyledNotification.Format format = new StyledNotification.Format(
-                titleText, // Notification text
-                "=^..^=", // Button text
+                titleText,
+                "=^..^=",
                 ButtonCallback,
                 StyledNotification.NotificationStyle.kSystemMessage
-            );
-            format.mCloseOnCallback = true;
+            )
+            {
+                mCloseOnCallback = true
+            };
             StyledNotification.Show(format, "arro_error_icon");
         }
 
-        public void ButtonCallback()
+        // The callback method for the button. Saves the error to an XML file.
+        private void ButtonCallback()
         {
-            // Save the error details to file
-            ExceptionHandler.WriteErrorXMLFile(functionErrorName + "_error", exception);
-
-            // Clear the List to allow re-notification for the same error
-            reportedErrors.Clear();
+            // Use the instance-specific error data to save it.
+            WriteErrorXMLFile(_functionErrorName + "_error", _exception);
         }
     }
 }

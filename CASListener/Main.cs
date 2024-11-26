@@ -1,10 +1,9 @@
-﻿#define DEBUG
-using Sims3.Gameplay.Core;
+﻿using Sims3.Gameplay.Core;
+using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.UI;
 using Sims3.UI.CAS;
 using System;
-using System.Diagnostics;
 using System.Reflection;
 using OneShotFunctionTask = Sims3.Gameplay.OneShotFunctionTask;
 
@@ -50,11 +49,9 @@ namespace Arro.MCR
         {
             try
             {
-                if (Main.ClothesGuid != null) // && Main.HairGuid != null && Main.FaceGuid != null
+                if (Main.CASHook != null)
                 {
-                    Simulator.DestroyObject(Main.ClothesGuid);
-                    //Simulator.DestroyObject(Main.HairGuid);
-                    Simulator.DestroyObject(Main.FaceGuid);
+                    Simulator.DestroyObject(Main.CASHook);
                 }
             }
             catch (Exception ex)
@@ -62,11 +59,32 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "OnWorldQuit");
             }
         }
+
+        public static string casState = "none";
         private static int Configure_cheat(object[] parameters)
         {
             try
             {
-                Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Seconds, 1f));
+                if (CASClothingCategory.gSingleton == null && CASFacialDetails.gSingleton == null && CASPhysical.gSingleton == null)
+                {
+                    casState = "null";
+                }
+                switch (casState)
+                {
+                    case ("null"):
+                        string NotificationInfo = Localization.LocalizeString("Arro/MCR/Local:4", new object[0]);
+                        StyledNotification.Show(new StyledNotification.Format(NotificationInfo, StyledNotification.NotificationStyle.kGameMessageNegative));
+                        break;
+                    case ("CASClothingCategory"):
+                        Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Milliseconds, 1f));
+                        break;
+                    case ("CASFacialDetails"):
+                        Simulator.AddObject(new OneShotFunctionTask(Configure.Face, StopWatch.TickStyles.Milliseconds, 1f));
+                        break;
+                    case ("CASPhysical"):
+                        //Simulator.AddObject(new OneShotFunctionTask(Configure.Hair, StopWatch.TickStyles.Milliseconds, 1f));
+                        break;
+                }
                 return 1;
             }
             catch (Exception ex)
@@ -75,12 +93,11 @@ namespace Arro.MCR
                 return 0;
             }
         }
-        private static int RefreshGrid(object[] parameters)
+        private static int ForceException(object[] parameters)
         {
             try
             {
                 throw new InvalidOperationException("Forced exception for testing purposes.");
-                return 1;
             }
             catch (Exception ex)
             {
@@ -120,32 +137,26 @@ namespace Arro.MCR
             if (newState == Sims3.UI.Responder.GameSubState.CASFullMode || newState == Sims3.UI.Responder.GameSubState.CASMirrorMode || newState == Sims3.UI.Responder.GameSubState.CASTackMode || newState == Sims3.UI.Responder.GameSubState.CASDresserMode || newState == Sims3.UI.Responder.GameSubState.CASTattooMode || newState == Sims3.UI.Responder.GameSubState.CASStylistMode || newState == Sims3.UI.Responder.GameSubState.CASCollarMode || newState == Sims3.UI.Responder.GameSubState.CASSurgeryFaceMode || newState == Sims3.UI.Responder.GameSubState.CASSurgeryBodyMode)
             {
                 Cheats("register");
-                Main.ClothesGuid = Simulator.AddObject(new Clothes());
-                //Main.HairGuid = Simulator.AddObject(new Hair());
-                Main.FaceGuid = Simulator.AddObject(new Face());
+                Main.CASHook = Simulator.AddObject(new CASHook());
             }
-            else if (Main.ClothesGuid != null) // && Main.HairGuid != null && Main.FaceGuid != null
+            else if (Main.CASHook != null)
             {
                 Cheats("unregister");
-                Simulator.DestroyObject(Main.ClothesGuid);
-                //Simulator.DestroyObject(Main.HairGuid);
-                Simulator.DestroyObject(Main.FaceGuid);
+                Simulator.DestroyObject(Main.CASHook);
             }
         }
-        private static ObjectGuid ClothesGuid;
-        //private static ObjectGuid HairGuid;
-        private static ObjectGuid FaceGuid;
-        [Conditional("DEBUG")]
+        public static ObjectGuid CASHook;
+
         private static void Cheats(string action)
         {
             if (action == "register")
             {
                 Commands.sGameCommands.Register("mcr", "Usage: Type MCR to edit the number of rows and columns.", Commands.CommandType.General, new CommandHandler(Configure_cheat));
-                Commands.sGameCommands.Register("refreshgrid", "Usage: Type refreshgrid to refresh the grid", Commands.CommandType.General, new CommandHandler(RefreshGrid));
+                Commands.sGameCommands.Register("exception", "Usage: Type refreshgrid to refresh the grid", Commands.CommandType.General, new CommandHandler(ForceException));
                 return;
             }
             Commands.sGameCommands.Unregister("mcr");
-            Commands.sGameCommands.Unregister("refreshgrid");
+            Commands.sGameCommands.Unregister("exception");
         }
     }
     public static class TinyUIFixForTS3Integration

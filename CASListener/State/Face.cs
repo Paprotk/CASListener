@@ -6,13 +6,13 @@ using System;
 
 namespace Arro.MCR
 {
-    public class Face : Task
+    public class Face
     {
         [PersistableStatic(true)]
-        public static float fVisibleRows = 4;
+        public static float fVisibleRows = 3;
 
         [PersistableStatic(true)]
-        public static float fVisibleColumns = 4;
+        public static float fVisibleColumns = 3;
 
         [PersistableStatic(true)]
         public static float fVisibleSliders = 3;
@@ -21,21 +21,7 @@ namespace Arro.MCR
         public static string currentLayoutState;
         public static Button doneButton;
 
-        public override void Simulate()
-        {
-            try
-            {
-                if (CASFacialDetails.gSingleton != null)
-                {
-                    OnTick();
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, "StateListenerFace");
-            }
-        }
-        public static void OnTick()
+        public static void Hook()
         {
             try
             {
@@ -59,7 +45,7 @@ namespace Arro.MCR
             else if (CASEyes.gSingleton != null)
             {
                 currentLayout = "CASEyes";
-                currentLayoutState = CASEyes.gSingleton.mBasicsPanel.Visible ? "basics" : "advanced";
+                currentLayoutState = CASEyes.gSingleton.mBasicsPanel.Visible ? "other" : "advanced";
             }
             else if (CASNose.gSingleton != null)
             {
@@ -232,9 +218,10 @@ namespace Arro.MCR
                 Rect rect;
                 if (CASFacialDetails.gSingleton.mShortPanel != null)
                 {
-                    float backgroundWidth = (100f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
+                    float baseWidth = 409f;
+                    float backgroundWidth = (baseWidth + (109f * (fVisibleColumns - 3))) * TinyUIFixForTS3Integration.getUIScale();
                     float backgroundHeight = (100f * fVisibleRows + 148f) * TinyUIFixForTS3Integration.getUIScale();
-                    float sliderBackgroundHeight = (100f * fVisibleSliders + 200f) * TinyUIFixForTS3Integration.getUIScale();
+                    float sliderBackgroundHeight = (100f * fVisibleSliders + 210f) * TinyUIFixForTS3Integration.getUIScale();
 
                     if (currentLayoutState == "basics")
                     {
@@ -311,7 +298,7 @@ namespace Arro.MCR
         {
             if (args.MouseKey == MouseKeys.kMouseRight)
             {
-                Simulator.AddObject(new OneShotFunctionTask(Configure.Face, StopWatch.TickStyles.Seconds, 0.1f));
+                Simulator.AddObject(new OneShotFunctionTask(Configure.Face, StopWatch.TickStyles.Milliseconds, 1f));
                 return;
             }
             CASTopState topState = CASTopState.CreateASim;
