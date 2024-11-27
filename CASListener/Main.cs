@@ -90,18 +90,6 @@ namespace Arro.MCR
                 return 0;
             }
         }
-        private static int ForceException(object[] parameters)
-        {
-            try
-            {
-                throw new InvalidOperationException("Forced exception for testing purposes.");
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, "ForceException");
-                return 0;
-            }
-        }
 
         public static bool isNraasMCInstalled = false;
         public static bool isSmoothPatchInstalled = false;
@@ -149,11 +137,9 @@ namespace Arro.MCR
             if (action == "register")
             {
                 Commands.sGameCommands.Register("mcr", "Usage: Type MCR to edit the number of rows and columns.", Commands.CommandType.General, new CommandHandler(Configure_cheat));
-                //Commands.sGameCommands.Register("exception", "Usage: Type refreshgrid to refresh the grid", Commands.CommandType.General, new CommandHandler(ForceException));
                 return;
             }
             Commands.sGameCommands.Unregister("mcr");
-            //Commands.sGameCommands.Unregister("exception");
         }
     }
     public static class TinyUIFixForTS3Integration

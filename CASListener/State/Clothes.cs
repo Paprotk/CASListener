@@ -81,12 +81,12 @@ namespace Arro.MCR
         {
             if (Main.isNraasMCInstalled)
             {
-                new Clothes().InvokeNraasPopulateGrid(); //If NRaasMC is installed then use reflection to invoke method without referencing it in project
+                new Clothes().InvokeNraasPopulateGrid();
                 return;
             }
             CASClothingCategory.gSingleton.PopulateGrid();
         }
-        public static void SetButtonVisibility() //Disables buttons that are not needed.
+        public static void SetButtonVisibility()
         {
             try
             {
@@ -158,7 +158,7 @@ namespace Arro.MCR
                     Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Milliseconds, 1f));
                     return;
                 }
-                if (args.MouseKey == MouseKeys.kMouseRight)
+                else if (args.MouseKey == MouseKeys.kMouseRight)
                 {
                     Simulator.AddObject(new OneShotFunctionTask(() =>
                     {
@@ -238,11 +238,3 @@ namespace Arro.MCR
         }
     }
 }
-
-//Vector2 doneButtonPosition = DoneButton.Position;
-//// Create a message with the position
-//string message = string.Format("DoneButton Position: X = {0}, Y = {1}", doneButtonPosition.x, doneButtonPosition.y);
-//// Show the notification
-//Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format(message, StyledNotification.NotificationStyle.kGameMessageNegative));
-
-//This is for vector2 position
