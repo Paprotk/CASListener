@@ -30,7 +30,7 @@ namespace Arro.MCR
                 SetClothingBackgroundSize();
                 SetButtonVisibility();
                 MoveDoneButton();
-                CASClothingCategory.OnClothingGridFinishedPopulating += EnableButton;
+                EnableButton();
             }
             catch (Exception ex)
             {
@@ -83,7 +83,6 @@ namespace Arro.MCR
             if (Main.isNraasMCInstalled)
             {
                 new Clothes().InvokeNraasPopulateGrid(); //If NRaasMC is installed then use reflection to invoke method without referencing it in project
-                //shouldUpdateClothes = false;
                 return;
             }
             CASClothingCategory.gSingleton.PopulateGrid();
@@ -145,12 +144,12 @@ namespace Arro.MCR
         {
             mConfigureButton = CASClothingCategory.gSingleton.mShareButton;
             mConfigureButton.Position = new Vector2(CASClothingCategory.gSingleton.mTrashButton.Position.x + 10f, CASClothingCategory.gSingleton.mSortButton.Position.y - 13f);
-            string tooltipText = Localization.LocalizeString("Arro/MCR/Local:1", new object[0]);
-            mConfigureButton.TooltipText = tooltipText;
+            mConfigureButton.TooltipText = Localization.LocalizeString("Arro/MCR/Local:1", new object[0]);
             mConfigureButton.Click -= CASClothingCategory.gSingleton.OnShareButtonClick;
-            mConfigureButton.MouseUp += OnSortClick;
+            mConfigureButton.MouseUp -= OnGridClick;
+            mConfigureButton.MouseUp += OnGridClick;
         }
-        public static void OnSortClick(WindowBase sender, UIMouseEventArgs args)
+        public static void OnGridClick(WindowBase sender, UIMouseEventArgs args)
         {
             try
             {
@@ -158,6 +157,12 @@ namespace Arro.MCR
                 {
                     Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Milliseconds, 1f));
                     return;
+                }
+                if (args.MouseKey == MouseKeys.kMouseRight)
+                {
+                    fVisibleRows = 3;
+                    fVisibleColumns = 1;
+                    CASHook.SetBool(false, false, false);
                 }
             }
             catch (Exception ex)
@@ -168,6 +173,7 @@ namespace Arro.MCR
         public static void EnableButton()
         {
             mConfigureButton.Enabled = true;
+            Simulator.AddObject(new OneShotFunctionTask(EnableButton, StopWatch.TickStyles.Seconds, 1f));
         }
 
         public static void SetClothingBackgroundSize()
