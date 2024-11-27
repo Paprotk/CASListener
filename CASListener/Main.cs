@@ -65,25 +65,22 @@ namespace Arro.MCR
         {
             try
             {
-                if (CASClothingCategory.gSingleton == null && CASFacialDetails.gSingleton == null && CASPhysical.gSingleton == null)
+                if (MCR.CASHook.isClothesProcessing == true)
                 {
-                    casState = "null";
+                    Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Milliseconds, 1f));
                 }
-                switch (casState)
+                else if (MCR.CASHook.isFaceProcessing)
                 {
-                    case ("null"):
-                        string NotificationInfo = Localization.LocalizeString("Arro/MCR/Local:EnterCASSubcategoryToEditGrid", new object[0]);
-                        StyledNotification.Show(new StyledNotification.Format(NotificationInfo, StyledNotification.NotificationStyle.kGameMessageNegative));
-                        break;
-                    case ("CASClothingCategory"):
-                        Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Milliseconds, 1f));
-                        break;
-                    case ("CASFacialDetails"):
-                        Simulator.AddObject(new OneShotFunctionTask(Configure.Face, StopWatch.TickStyles.Milliseconds, 1f));
-                        break;
-                    case ("CASPhysical"):
-                        //Simulator.AddObject(new OneShotFunctionTask(Configure.Hair, StopWatch.TickStyles.Milliseconds, 1f));
-                        break;
+                    //Simulator.AddObject(new OneShotFunctionTask(Configure.Face, StopWatch.TickStyles.Milliseconds, 1f));
+                }
+                else if (MCR.CASHook.isHairProcessing)
+                {
+                    //Simulator.AddObject(new OneShotFunctionTask(Configure.Hair, StopWatch.TickStyles.Milliseconds, 1f));
+                }
+                else
+                {
+                    string NotificationInfo = Localization.LocalizeString("Arro/MCR/Local:EnterCASSubcategoryToEditGrid", new object[0]);
+                    StyledNotification.Show(new StyledNotification.Format(NotificationInfo, StyledNotification.NotificationStyle.kGameMessageNegative));
                 }
                 return 1;
             }
@@ -101,7 +98,7 @@ namespace Arro.MCR
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, "RefreshGrid");
+                ExceptionHandler.HandleException(ex, "ForceException");
                 return 0;
             }
         }
@@ -152,11 +149,11 @@ namespace Arro.MCR
             if (action == "register")
             {
                 Commands.sGameCommands.Register("mcr", "Usage: Type MCR to edit the number of rows and columns.", Commands.CommandType.General, new CommandHandler(Configure_cheat));
-                Commands.sGameCommands.Register("exception", "Usage: Type refreshgrid to refresh the grid", Commands.CommandType.General, new CommandHandler(ForceException));
+                //Commands.sGameCommands.Register("exception", "Usage: Type refreshgrid to refresh the grid", Commands.CommandType.General, new CommandHandler(ForceException));
                 return;
             }
             Commands.sGameCommands.Unregister("mcr");
-            Commands.sGameCommands.Unregister("exception");
+            //Commands.sGameCommands.Unregister("exception");
         }
     }
     public static class TinyUIFixForTS3Integration
@@ -167,4 +164,3 @@ namespace Arro.MCR
     }
 
 }
-//CTRL+K+C COMMENT CLTR+K+U UNCOMMENT
