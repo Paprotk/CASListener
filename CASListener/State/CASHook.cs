@@ -22,12 +22,12 @@ namespace Arro.MCR
             else if (!isFaceProcessing && CASFacialDetails.gSingleton != null)
             {
                 SetBool(false, true, false);
-                Face.Hook();
+                //Face.Hook();
             }
             else if (!isHairProcessing && CASPhysical.gSingleton != null)
             {
                 SetBool(false, false, true);
-                Hair.Hook();
+                //Hair.Hook();
             }
             else if (CASClothing.gSingleton == null && CASDresserClothing.gSingleton == null && CAPAccessories.gSingleton == null && CASFacialDetails.gSingleton == null && CASPhysical.gSingleton == null)
             {

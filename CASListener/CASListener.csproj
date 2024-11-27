@@ -140,9 +140,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DLLS\UI.dll</HintPath>
+    <Reference Include="UIPUBLIC">
+      <HintPath>..\..\DLLS\UIPUBLIC.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
