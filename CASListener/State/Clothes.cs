@@ -149,6 +149,7 @@ namespace Arro.MCR
             mConfigureButton.MouseUp -= OnGridClick;
             mConfigureButton.MouseUp += OnGridClick;
         }
+
         public static void OnGridClick(WindowBase sender, UIMouseEventArgs args)
         {
             try
@@ -160,14 +161,17 @@ namespace Arro.MCR
                 }
                 if (args.MouseKey == MouseKeys.kMouseRight)
                 {
-                    fVisibleRows = 3;
-                    fVisibleColumns = 1;
-                    CASHook.SetBool(false, false, false);
+                    if (fVisibleRows != 3 && fVisibleColumns != 1)
+                    {
+                        fVisibleRows = 3;
+                        fVisibleColumns = 1;
+                        CASHook.SetBool(false, false, false);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, "OnSortClick");
+                ExceptionHandler.HandleException(ex, "OnGridClick");
             }
         }
         public static void EnableButton()
