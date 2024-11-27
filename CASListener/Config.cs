@@ -15,12 +15,12 @@ namespace Arro.MCR
                 if (isDialogActive) return;
 
                 isDialogActive = true;
-                string titleText = Localization.LocalizeString("Arro/MCR/Local:1", new object[0]);
-                string promptText = Localization.LocalizeString("Arro/MCR/Local:2", new object[0]);
-                string secondPromptText = Localization.LocalizeString("Arro/MCR/Local:3", new object[0]);
+                string titleText = Localization.LocalizeString("Arro/MCR/Local:ConfigureGrid", new object[0]);
+                string promptText = Localization.LocalizeString("Arro/MCR/Local:RowCount", new object[0]);
+                string secondPromptText = Localization.LocalizeString("Arro/MCR/Local:ColumnCount", new object[0]);
                 string defaultEntryText = MCR.Clothes.fVisibleRows.ToString();
                 string defaultSecondEntryText = MCR.Clothes.fVisibleColumns.ToString();
-                string oKText = "Ok";
+                string oKText = Localization.LocalizeString("Ui/Caption/Global:Accept", new object[0]);
                 string cancelText = Localization.LocalizeString("Ui/Caption/QuitDialog:Cancel", new object[0]);
 
                 List<string> result = TwoStringInputDialog.Show(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, new Vector2(-1f, -1f), false);
@@ -69,12 +69,12 @@ namespace Arro.MCR
                     return;
                 }
                 isDialogActive = true;
-                string titleText = Localization.LocalizeString("Arro/MCR/Local:1", new object[0]);
+                string titleText = Localization.LocalizeString("Arro/MCR/Local:ConfigureGrid", new object[0]);
                 string[] promptText = new string[]
                 {
-                    Localization.LocalizeString("Arro/MCR/Local:2", new object[0]),
-                    Localization.LocalizeString("Arro/MCR/Local:3", new object[0]),
-                    "Set slider count",
+                    Localization.LocalizeString("Arro/MCR/Local:RowCount", new object[0]),
+                    Localization.LocalizeString("Arro/MCR/Local:ColumnCount", new object[0]),
+                    Localization.LocalizeString("Arro/MCR/Local:SliderCount", new object[0]),
                 };
                 string[] defaultEntryText = new string[]
                 {

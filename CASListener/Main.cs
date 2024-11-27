@@ -72,7 +72,7 @@ namespace Arro.MCR
                 switch (casState)
                 {
                     case ("null"):
-                        string NotificationInfo = Localization.LocalizeString("Arro/MCR/Local:4", new object[0]);
+                        string NotificationInfo = Localization.LocalizeString("Arro/MCR/Local:EnterCASSubcategoryToEditGrid", new object[0]);
                         StyledNotification.Show(new StyledNotification.Format(NotificationInfo, StyledNotification.NotificationStyle.kGameMessageNegative));
                         break;
                     case ("CASClothingCategory"):

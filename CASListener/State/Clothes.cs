@@ -19,7 +19,6 @@ namespace Arro.MCR
 
         public static string currentLayout;
 
-        //public static bool shouldUpdateClothes = true;
         public static void Hook()
         {
             try
@@ -34,7 +33,7 @@ namespace Arro.MCR
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, "OnTick_Clothes");
+                ExceptionHandler.HandleException(ex, "Clothes.Hook");
             }
         }
         public static void GetCurrentLayout()
@@ -144,7 +143,7 @@ namespace Arro.MCR
         {
             mConfigureButton = CASClothingCategory.gSingleton.mShareButton;
             mConfigureButton.Position = new Vector2(CASClothingCategory.gSingleton.mTrashButton.Position.x + 10f, CASClothingCategory.gSingleton.mSortButton.Position.y - 13f);
-            mConfigureButton.TooltipText = Localization.LocalizeString("Arro/MCR/Local:1", new object[0]);
+            mConfigureButton.TooltipText = Localization.LocalizeString("Arro/MCR/Local:ConfigureGrid", new object[0]);
             mConfigureButton.Click -= CASClothingCategory.gSingleton.OnShareButtonClick;
             mConfigureButton.MouseUp -= OnGridClick;
             mConfigureButton.MouseUp += OnGridClick;
@@ -161,12 +160,21 @@ namespace Arro.MCR
                 }
                 if (args.MouseKey == MouseKeys.kMouseRight)
                 {
-                    if (fVisibleRows != 3 && fVisibleColumns != 1)
+                    Simulator.AddObject(new OneShotFunctionTask(() =>
                     {
-                        fVisibleRows = 3;
-                        fVisibleColumns = 1;
-                        CASHook.SetBool(false, false, false);
-                    }
+                        bool Continue = TwoButtonDialog.Show(
+                            Localization.LocalizeString("Arro/MCR/Local:DoYouWantToResetGrid", new object[0]),
+                            Localization.LocalizeString("Ui/Caption/Global:Yes", new object[0]),
+                            Localization.LocalizeString("Ui/Caption/Global:No", new object[0])
+                        );
+
+                        if (Continue)
+                        {
+                            fVisibleRows = 3;
+                            fVisibleColumns = 1;
+                            CASHook.SetBool(false, false, false);
+                        }
+                    }, StopWatch.TickStyles.Milliseconds, 1f));
                 }
             }
             catch (Exception ex)
@@ -216,16 +224,12 @@ namespace Arro.MCR
         {
             try
             {
-                // Find the target type within the assembly
                 Type targetType = Main.nraasAssembly.GetType("NRaas.MasterControllerSpace.CAS.CASClothingCategoryEx");
-                if (targetType == null)
+                if (targetType != null)
                 {
-                    return;
+                    MethodInfo populateGridMethod = targetType.GetMethod("PopulateGrid", BindingFlags.NonPublic | BindingFlags.Static);
+                    populateGridMethod?.Invoke(null, null);
                 }
-
-                // Find and invoke the PopulateGrid method
-                MethodInfo populateGridMethod = targetType.GetMethod("PopulateGrid", BindingFlags.NonPublic | BindingFlags.Static);
-                populateGridMethod?.Invoke(null, null);
             }
             catch (Exception ex)
             {
