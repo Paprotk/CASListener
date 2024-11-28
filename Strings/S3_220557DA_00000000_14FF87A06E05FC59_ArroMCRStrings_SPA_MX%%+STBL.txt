@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Configurar la cuadrícula</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Introduce el número de filas:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Introduce el número de columnas:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Introduce el número de deslizadores:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Accede a la subcategoría CAS para editar la cuadrícula.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>¿Quieres restablecer el diseño de la cuadrícula?</STR>
+    
+</TEXT>

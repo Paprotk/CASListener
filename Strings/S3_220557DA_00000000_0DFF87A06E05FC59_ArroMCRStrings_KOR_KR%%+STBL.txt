@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>그리드 구성</STR>
+	
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>행 수를 입력하세요:</STR>
+	
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>열 수를 입력하세요:</STR>
+	
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>슬라이더 수를 입력하세요:</STR>
+	
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>그리드를 편집하려면 CAS 하위 카테고리로 이동하세요.</STR>
+	
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>그리드 구성을 재설정하시겠습니까?</STR>
+	
+</TEXT>

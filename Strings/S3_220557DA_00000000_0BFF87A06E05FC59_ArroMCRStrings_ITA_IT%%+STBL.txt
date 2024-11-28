@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Configura la griglia</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Inserisci il numero di righe:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Inserisci il numero di colonne:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Inserisci il numero di cursori:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Accedi alla sottocategoria CAS per modificare la griglia.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Vuoi ripristinare il layout della griglia?</STR>
+    
+</TEXT>

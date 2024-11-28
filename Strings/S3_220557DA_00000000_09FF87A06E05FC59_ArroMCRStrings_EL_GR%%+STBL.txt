@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Διαμόρφωση πλέγματος</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Εισάγετε τον αριθμό των γραμμών:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Εισάγετε τον αριθμό των στηλών:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Εισάγετε τον αριθμό των ρυθμιστικών:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Μεταβείτε στην υποκατηγορία CAS για να επεξεργαστείτε το πλέγμα.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Θέλετε να επαναφέρετε την διάταξη του πλέγματος;</STR>
+    
+</TEXT>

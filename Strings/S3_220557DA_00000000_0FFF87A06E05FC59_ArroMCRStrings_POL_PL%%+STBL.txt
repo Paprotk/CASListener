@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Konfiguruj siatkę</STR>
+	
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Wprowadź liczbę wierszy:</STR>
+	
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Wprowadź liczbę kolumn:</STR>
+	
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Wprowadź liczbę suwaków:</STR>
+	
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Wprowadź podkategorię CAS, aby edytować siatkę.</STR>
+	
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Czy chcesz zresetować układ siatki?</STR>
+	
+</TEXT>

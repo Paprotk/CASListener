@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Määritä ruudukko</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Syötä rivien määrä:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Syötä sarakkeiden määrä:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Syötä liukusäätimien määrä:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Siirry CAS-alakategoriaan muokataksesi ruudukkoa.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Haluatko nollata ruudukon asettelun?</STR>
+    
+</TEXT>

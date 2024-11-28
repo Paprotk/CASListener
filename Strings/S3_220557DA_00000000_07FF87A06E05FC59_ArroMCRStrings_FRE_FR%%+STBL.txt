@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Configurer la grille</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Entrez le nombre de lignes :</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Entrez le nombre de colonnes :</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Entrez le nombre de curseurs :</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Accédez à la sous-catégorie CAS pour modifier la grille.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Voulez-vous réinitialiser la disposition de la grille ?</STR>
+    
+</TEXT>

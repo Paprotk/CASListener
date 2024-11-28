@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>กำหนดค่าตาราง</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>กรอกจำนวนแถว:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>กรอกจำนวนคอลัมน์:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>กรอกจำนวนสไลเดอร์:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>เข้าสู่หมวดย่อย CAS เพื่อแก้ไขตาราง</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>คุณต้องการรีเซ็ตเค้าโครงตารางหรือไม่?</STR>
+    
+</TEXT>

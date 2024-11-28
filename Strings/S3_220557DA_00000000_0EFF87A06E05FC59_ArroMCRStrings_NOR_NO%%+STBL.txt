@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Konfigurer rutenett</STR>
+	
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Angi antall rader:</STR>
+	
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Angi antall kolonner:</STR>
+	
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Angi antall skyveknapper:</STR>
+	
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Gå til CAS-underdelen for å redigere rutenettet.</STR>
+	
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Vil du tilbakestille rutenettoppsettet?</STR>
+	
+</TEXT>

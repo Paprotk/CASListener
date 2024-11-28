@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Rács beállítása</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Adja meg a sorok számát:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Adja meg az oszlopok számát:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Adja meg a csúszkák számát:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Lépjen be a CAS alkategóriába a rács szerkesztéséhez.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Vissza szeretné állítani a rács elrendezését?</STR>
+    
+</TEXT>

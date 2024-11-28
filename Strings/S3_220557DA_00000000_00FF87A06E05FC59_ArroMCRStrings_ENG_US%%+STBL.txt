@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Configure grid</STR>
+	
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Enter row count:</STR>
+	
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Enter column count:</STR>
+	
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Enter slider count:</STR>
+	
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Enter CAS subcategory to edit grid.</STR>
+	
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Do you want to reset grid arrangement?</STR>
+	
+</TEXT>

@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Configurar grelha</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Introduza o número de linhas:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Introduza o número de colunas:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Introduza o número de deslizadores:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Entre na subcategoria CAS para editar a grelha.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Deseja redefinir o layout da grelha?</STR>
+    
+</TEXT>
