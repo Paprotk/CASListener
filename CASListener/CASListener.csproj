@@ -87,8 +87,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="UIPUBLIC">
-      <HintPath>..\..\DLLS\UIPUBLIC.dll</HintPath>
+    <Reference Include="UI">
+      <HintPath>..\..\DLLS\UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />
