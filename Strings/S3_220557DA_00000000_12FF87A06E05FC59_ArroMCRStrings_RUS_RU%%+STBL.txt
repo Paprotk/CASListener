@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Настроить сетку</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Введите количество строк:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Введите количество столбцов:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Введите количество ползунков:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Перейдите в подкатегорию CAS, чтобы отредактировать сетку.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Хотите сбросить макет сетки?</STR>
+    
+</TEXT>

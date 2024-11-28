@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Configurar grade</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Digite o número de linhas:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Digite o número de colunas:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Digite o número de deslizadores:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Acesse a subcategoria CAS para editar a grade.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Você deseja redefinir o layout da grade?</STR>
+    
+</TEXT>

@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>グリッドを設定</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>行数を入力してください：</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>列数を入力してください：</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>スライダーの数を入力してください：</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>グリッドを編集するにはCASサブカテゴリに移動してください。</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>グリッドレイアウトをリセットしますか？</STR>
+    
+</TEXT>

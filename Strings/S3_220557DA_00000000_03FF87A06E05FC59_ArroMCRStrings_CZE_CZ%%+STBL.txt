@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Konfigurovat mřížku</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Zadejte počet řádků:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Zadejte počet sloupců:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Zadejte počet posuvníků:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Vstupte do podkategorie CAS pro úpravu mřížky.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Chcete resetovat rozložení mřížky?</STR>
+    
+</TEXT>

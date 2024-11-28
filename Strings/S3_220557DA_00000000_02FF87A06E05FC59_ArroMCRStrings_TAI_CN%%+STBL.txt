@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>配置網格</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>請輸入行數：</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>請輸入列數：</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>請輸入滑塊數量：</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>進入CAS子類別以編輯網格。</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>您是否要重設網格佈局？</STR>
+    
+</TEXT>

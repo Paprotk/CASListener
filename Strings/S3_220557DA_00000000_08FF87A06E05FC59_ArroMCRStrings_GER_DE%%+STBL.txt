@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Gitter konfigurieren</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Geben Sie die Anzahl der Zeilen ein:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Geben Sie die Anzahl der Spalten ein:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Geben Sie die Anzahl der Schieberegler ein:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Gehen Sie in die CAS-Unterkategorie, um das Gitter zu bearbeiten.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Möchten Sie das Gitterlayout zurücksetzen?</STR>
+    
+</TEXT>

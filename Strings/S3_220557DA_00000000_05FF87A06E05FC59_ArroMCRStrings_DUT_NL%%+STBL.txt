@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Configureer raster</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Voer het aantal rijen in:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Voer het aantal kolommen in:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Voer het aantal schuifregelaars in:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Ga naar de CAS-subcategorie om het raster te bewerken.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Wilt u de rasterlay-out opnieuw instellen?</STR>
+    
+</TEXT>

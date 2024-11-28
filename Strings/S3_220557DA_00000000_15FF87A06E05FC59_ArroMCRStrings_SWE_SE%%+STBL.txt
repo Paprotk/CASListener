@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<TEXT>
+
+    <KEY>Arro/MCR/Local:ConfigureGrid</KEY>
+    <STR>Konfigurera gitter</STR>
+    
+    <KEY>Arro/MCR/Local:RowCount</KEY>
+    <STR>Ange antalet rader:</STR>
+    
+    <KEY>Arro/MCR/Local:ColumnCount</KEY>
+    <STR>Ange antalet kolumner:</STR>
+    
+    <KEY>Arro/MCR/Local:SliderCount</KEY>
+    <STR>Ange antalet reglage:</STR>
+    
+    <KEY>Arro/MCR/Local:EnterCASSubcategoryToEditGrid</KEY>
+    <STR>Gå till CAS-undergkategori för att redigera gitter.</STR>
+    
+    <KEY>Arro/MCR/Local:DoYouWantToResetGrid</KEY>
+    <STR>Vill du återställa gitterlayouten?</STR>
+    
+</TEXT>
