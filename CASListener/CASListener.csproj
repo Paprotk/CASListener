@@ -48,6 +48,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CustomInputDialog.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="State\CASHook.cs" />
     <Compile Include="State\Clothes.cs" />
@@ -87,8 +88,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="UI">
-      <HintPath>..\..\DLLS\UI.dll</HintPath>
+    <Reference Include="UIPUBLIC">
+      <HintPath>..\..\DLLS\UIPUBLIC.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

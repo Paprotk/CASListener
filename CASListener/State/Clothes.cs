@@ -29,7 +29,6 @@ namespace Arro.MCR
                 SetClothingBackgroundSize();
                 SetButtonVisibility();
                 MoveDoneButton();
-                EnableButton();
             }
             catch (Exception ex)
             {
@@ -145,8 +144,8 @@ namespace Arro.MCR
             mConfigureButton.Position = new Vector2(CASClothingCategory.gSingleton.mTrashButton.Position.x + 10f, CASClothingCategory.gSingleton.mSortButton.Position.y - 13f);
             mConfigureButton.TooltipText = Localization.LocalizeString("Arro/MCR/Local:ConfigureGrid", new object[0]);
             mConfigureButton.Click -= CASClothingCategory.gSingleton.OnShareButtonClick;
-            mConfigureButton.MouseUp -= OnGridClick;
-            mConfigureButton.MouseUp += OnGridClick;
+            mConfigureButton.MouseUp += (sender, args) => OnGridClick(sender, args);
+            mConfigureButton.Tick += (sender, args) => EnableButton(sender, args);
         }
 
         public static void OnGridClick(WindowBase sender, UIMouseEventArgs args)
@@ -182,10 +181,9 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "OnGridClick");
             }
         }
-        public static void EnableButton()
+        private static void EnableButton(WindowBase sender, UIEventArgs eventArgs)
         {
             mConfigureButton.Enabled = true;
-            Simulator.AddObject(new OneShotFunctionTask(EnableButton, StopWatch.TickStyles.Seconds, 1f));
         }
 
         public static void SetClothingBackgroundSize()

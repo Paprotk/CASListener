@@ -2,7 +2,6 @@
 using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.UI;
-using Sims3.UI.CAS;
 using System;
 using System.Reflection;
 using OneShotFunctionTask = Sims3.Gameplay.OneShotFunctionTask;
