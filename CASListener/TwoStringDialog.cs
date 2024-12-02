@@ -21,10 +21,11 @@ namespace Arro.MCR
         {
             if (ModalDialog.EnableModalDialogs)
             {
-                using (TwoStringDialogMCR dateInputDialog = new TwoStringDialogMCR(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, position, verifyFilename))
+                using (TwoStringDialogMCR mcrTwoStringInputDialog = new TwoStringDialogMCR(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, position, verifyFilename))
                 {
-                    dateInputDialog.StartModal();
-                    return dateInputDialog.Result;
+                    Audio.StartSound("ui_window_drop");
+                    mcrTwoStringInputDialog.StartModal();
+                    return mcrTwoStringInputDialog.Result;
                 }
             }
             return null;
@@ -55,6 +56,7 @@ namespace Arro.MCR
             mEntryTextEdit.MaxTextLength = 2U;
             mEntryTextEdit.TextValidate += TextValidateNumeric;
             mSecondEntryTextEdit.TextValidate += TextValidateNumeric;
+            mModalDialogWindow.TriggerDown += OnTriggerDown;
         }
 
         private void TextValidateNumeric(WindowBase sender, UITextValidateEventArgs eventArgs)
@@ -63,6 +65,22 @@ namespace Arro.MCR
             if (eventArgs.TextChange.Length != 0 && !int.TryParse(eventArgs.TextChange, out num))
             {
                 eventArgs.TextValidated = false;
+            }
+        }
+        private void OnTriggerDown(WindowBase sender, UITriggerEventArgs eventArgs)
+        {
+            switch ((ModalDialog.Triggers)eventArgs.TriggerCode)
+            {
+                case ModalDialog.Triggers.kOKTrigger:
+                    Audio.StartSound("ui_secondary_button");
+                    OnTriggerOk();
+                    eventArgs.Handled = true;
+                    break;
+                case ModalDialog.Triggers.kCancelTrigger:
+                    Audio.StartSound("ui_secondary_button");
+                    OnTriggerCancel();
+                    eventArgs.Handled = true;
+                    break;
             }
         }
 

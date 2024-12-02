@@ -38,7 +38,6 @@ namespace Arro.MCR
                 new Vector2(-1f, -1f), false
                 );
 
-
                 if (result != null && result.Count == 2)
                 {
                     float.TryParse(result[0], out float rows);
