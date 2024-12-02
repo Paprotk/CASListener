@@ -7,9 +7,9 @@ C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\bin\Debug\
 C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\bin\Debug\Sims3GameplaySystems.dll
 C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\bin\Debug\Sims3MetaData.dll
 C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\bin\Debug\Sims3StoreObjects.dll
+C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\bin\Debug\UIPUBLIC.dll
 C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\obj\Debug\CASListener.csproj.AssemblyReference.cache
 C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\obj\Debug\CASListener.csproj.CoreCompileInputs.cache
 C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\obj\Debug\CASListe.C567AB1F.Up2Date
 C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\obj\Debug\ArroMCR.dll
 C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\obj\Debug\ArroMCR.pdb
-C:\Users\Arek\Documents\SharpDevelop Projects\CASListener\CASListener\bin\Debug\UIPUBLIC.dll

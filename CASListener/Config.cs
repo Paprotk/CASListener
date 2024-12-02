@@ -3,6 +3,7 @@ using Sims3.SimIFace;
 using System;
 using System.Collections.Generic;
 
+
 namespace Arro.MCR
 {
     public class Configure
@@ -26,16 +27,17 @@ namespace Arro.MCR
 
                 isDialogActive = true;
 
-                List<string> result = CustomTwoStringInputDialog.Show(
-                    Localization.LocalizeString("Arro/MCR/Local:ConfigureGrid", new object[0]),
-                    Localization.LocalizeString("Arro/MCR/Local:RowCount", new object[0]),
-                    Localization.LocalizeString("Arro/MCR/Local:ColumnCount", new object[0]),
-                    MCR.Clothes.fVisibleRows.ToString(),
-                    MCR.Clothes.fVisibleColumns.ToString(),
-                    Localization.LocalizeString("Ui/Caption/Global:Accept", new object[0]),
-                    Localization.LocalizeString("Ui/Caption/QuitDialog:Cancel", new object[0]),
-                    new Vector2(-1f, -1f), false
-                    );
+                List<string> result = TwoStringDialogMCR.Show(
+                Localization.LocalizeString("Arro/MCR/Local:ConfigureGrid", new object[0]),
+                Localization.LocalizeString("Arro/MCR/Local:RowCount", new object[0]),
+                Localization.LocalizeString("Arro/MCR/Local:ColumnCount", new object[0]),
+                MCR.Clothes.fVisibleRows.ToString(),
+                MCR.Clothes.fVisibleColumns.ToString(),
+                Localization.LocalizeString("Ui/Caption/Global:Accept", new object[0]),
+                Localization.LocalizeString("Ui/Caption/QuitDialog:Cancel", new object[0]),
+                new Vector2(-1f, -1f), false
+                );
+
 
                 if (result != null && result.Count == 2)
                 {
