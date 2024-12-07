@@ -70,7 +70,7 @@ namespace Arro.MCR
                 }
                 else if (MCR.CASHook.isFaceProcessing)
                 {
-                    //Simulator.AddObject(new OneShotFunctionTask(Configure.Face, StopWatch.TickStyles.Milliseconds, 1f));
+                    Simulator.AddObject(new OneShotFunctionTask(Configure.Face, StopWatch.TickStyles.Milliseconds, 1f));
                 }
                 else if (MCR.CASHook.isHairProcessing)
                 {

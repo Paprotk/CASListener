@@ -1,5 +1,7 @@
-﻿using Sims3.Gameplay.Utilities;
+﻿using Sims3.Gameplay.Objects.Decorations;
+using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
+using Sims3.UI;
 using System;
 using System.Collections.Generic;
 
@@ -59,6 +61,40 @@ namespace Arro.MCR
             {
                 ExceptionHandler.HandleException(ex, "ConfigureClothes");
             }
+        }
+        public static void Face()
+        {
+            try
+            {
+                string titleText = Localization.LocalizeString("Arro/MCR/Local:ConfigureGrid", new object[0]);
+                string[] promptText = new string[]
+                {
+                    Localization.LocalizeString("Arro/MCR/Local:RowCount", new object[0]),
+                    Localization.LocalizeString("Arro/MCR/Local:ColumnCount", new object[0]),
+                    Localization.LocalizeString("Arro/MCR/Local:SliderCount", new object[0]),
+                };
+                string[] defaultEntryText = new string[]
+                {
+                    Arro.MCR.Face.fVisibleRows.ToString(),
+                    Arro.MCR.Face.fVisibleColumns.ToString(),
+                    Arro.MCR.Face.fVisibleSliders.ToString()
+                };
+
+                string[] result = ThreeStringInputDialog.Show(titleText, promptText, defaultEntryText, true);
+
+                Arro.MCR.Face.fVisibleRows = ParseInput(result[0]);
+                Arro.MCR.Face.fVisibleColumns = ParseInput(result[1]);
+                Arro.MCR.Face.fVisibleSliders = ParseInput(result[2]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, "ConfigureFace");
+            }
+        }
+
+        private static int ParseInput(string input)
+        {
+            return string.IsNullOrEmpty(input) ? 0 : int.TryParse(input, out int result) ? result : 0;
         }
     }
 }
