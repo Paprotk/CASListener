@@ -93,7 +93,7 @@ namespace Arro.MCR
                 {
                   CASClothingCategory.gSingleton.mTrashButton,
                   CASClothingCategory.gSingleton.mSaveButton,
-                  CASClothingCategory.gSingleton.mDesignButton
+                  CASClothingCategory.gSingleton.mDesignButton,
                 };
                 foreach (var button in buttons)
                 {
@@ -120,19 +120,19 @@ namespace Arro.MCR
                         DoneButton = CASClothing.gSingleton.GetChildByID(98278400U, true) as Button;
                         startingPositionX = -8f;
                         startingPositionY = 6f;
-                        DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
+                        DoneButton.Position = new Vector2(startingPositionX + (300 * TinyUIFixForTS3Integration.getUIScale() * (fVisibleColumns - 1)), startingPositionY);
                         break;
                     case "CASDresserClothing":
                         DoneButton = CASDresserClothing.gSingleton.GetChildByID(98278400U, true) as Button;
                         startingPositionX = -8f;
                         startingPositionY = 6f;
-                        DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
+                        DoneButton.Position = new Vector2(startingPositionX + (300 * TinyUIFixForTS3Integration.getUIScale() * (fVisibleColumns - 1)), startingPositionY);
                         break;
                     case "CAPAccessories":
                         DoneButton = CAPAccessories.gSingleton.GetChildByID(2095900161U, true) as Button;
                         startingPositionX = 353f;
                         startingPositionY = 35f;
-                        DoneButton.Position = new Vector2(startingPositionX + (300 * (fVisibleColumns - 1)), startingPositionY);
+                        DoneButton.Position = new Vector2(startingPositionX + (300 * TinyUIFixForTS3Integration.getUIScale() * (fVisibleColumns - 1)), startingPositionY);
                         break;
                 }
             }
@@ -141,7 +141,7 @@ namespace Arro.MCR
         public static void ShareButtonHook()
         {
             mConfigureButton = CASClothingCategory.gSingleton.mShareButton;
-            mConfigureButton.Position = new Vector2(CASClothingCategory.gSingleton.mTrashButton.Position.x + 10f, CASClothingCategory.gSingleton.mSortButton.Position.y - 13f);
+            mConfigureButton.Position = new Vector2(CASClothingCategory.gSingleton.mTrashButton.Position.x + 10f * TinyUIFixForTS3Integration.getUIScale(), CASClothingCategory.gSingleton.mSortButton.Position.y - 13f * TinyUIFixForTS3Integration.getUIScale());
             mConfigureButton.TooltipText = Localization.LocalizeString("Arro/MCR/Local:ConfigureGrid", new object[0]);
             mConfigureButton.Click -= CASClothingCategory.gSingleton.OnShareButtonClick;
             mConfigureButton.MouseUp += (sender, args) => OnGridClick(sender, args);

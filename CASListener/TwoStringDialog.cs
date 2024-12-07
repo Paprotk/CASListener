@@ -57,6 +57,11 @@ namespace Arro.MCR
             mEntryTextEdit.TextValidate += TextValidateNumeric;
             mSecondEntryTextEdit.TextValidate += TextValidateNumeric;
             mModalDialogWindow.TriggerDown += OnTriggerDown;
+            Button resetButton = mModalDialogWindow.GetChildByID(98291479U, true) as Button;
+            resetButton.Click += (sender, e) => { mEntryTextEdit.Caption = "3"; mSecondEntryTextEdit.Caption = "1"; };
+            string strippedResetText = Localization.LocalizeString("Gameplay/Tutorial:ResetTutorialTitle", new object[0]);
+            string firstWord = strippedResetText.Split(' ')[0];
+            resetButton.TooltipText = firstWord;
         }
 
         private void TextValidateNumeric(WindowBase sender, UITextValidateEventArgs eventArgs)
