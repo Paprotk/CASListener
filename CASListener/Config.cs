@@ -82,9 +82,10 @@ namespace Arro.MCR
 
                 string[] result = ThreeStringInputDialog.Show(titleText, promptText, defaultEntryText, true);
 
-                Arro.MCR.Face.fVisibleRows = ParseInput(result[0]);
-                Arro.MCR.Face.fVisibleColumns = ParseInput(result[1]);
-                Arro.MCR.Face.fVisibleSliders = ParseInput(result[2]);
+                Arro.MCR.Face.fVisibleRows = Clamp(ParseInput(result[0]), 3, 16);
+                Arro.MCR.Face.fVisibleColumns = Clamp(ParseInput(result[1]), 3, 16);
+                Arro.MCR.Face.fVisibleSliders = Clamp(ParseInput(result[2]), 3, 16);
+                Arro.MCR.Face.UpdateUI();
             }
             catch (Exception ex)
             {

@@ -1,8 +1,12 @@
-﻿using Sims3.SimIFace;
+﻿using Sims3.Gameplay.ActorSystems;
+using Sims3.Gameplay.Interfaces;
+using Sims3.Gameplay.Utilities;
+using Sims3.SimIFace;
+using Sims3.SimIFace.CAS;
 using Sims3.UI;
 using Sims3.UI.CAS;
+using Sims3.UI.CAS.CAP;
 using System;
-
 
 namespace Arro.MCR
 {
@@ -17,256 +21,137 @@ namespace Arro.MCR
         [PersistableStatic(true)]
         public static float fVisibleSliders = 3;
 
-        public static string currentLayout;
+        public static string currentState;
         public static string currentLayoutState;
         public static Button doneButton;
+        public static bool shouldBoostrap;
+
+        public static CASFacialDetails faceSingleton;
 
         public static void Hook()
         {
             try
             {
-                GetCurrentLayout();
-                SetFaceItemGrid();
-                SetCASFaceBackgroundSize();
-                MoveDoneButton();
-
+                faceSingleton = CASFacialDetails.gSingleton;
+                faceSingleton.EffectFinished += OnFacialDetailsEffectFinished;
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, "Face.Hook");
             }
         }
-        public static void GetCurrentLayout()
+        public static void UpdateUI()
         {
-            if (CASHeadEars.gSingleton != null)
+            currentState = CASController.gSingleton.CurrentState.mPhysicalState.ToString();
+            Bootstrap(currentState);
+        }
+
+        private static void OnFacialDetailsEffectFinished(WindowBase sender, UIHandledEventArgs eventArgs)
+        {
+            faceSingleton.EffectFinished -= OnFacialDetailsEffectFinished;
+            currentState = CASController.gSingleton.CurrentState.mPhysicalState.ToString();
+            Bootstrap(currentState);
+            HookButtonClicks();
+        }
+
+        private static void Bootstrap(string currentstate)
+        {
+            
+            if (currentstate == "HeadAndEars")
             {
-                currentLayout = "CASHeadEars";
-                currentLayoutState = CASHeadEars.gSingleton.mBasicsPanel.Visible ? "basics" : "advanced";
-            }
-            else if (CASEyes.gSingleton != null)
-            {
-                currentLayout = "CASEyes";
-                currentLayoutState = CASEyes.gSingleton.mBasicsPanel.Visible ? "other" : "advanced";
-            }
-            else if (CASNose.gSingleton != null)
-            {
-                currentLayout = "CASNose";
-                currentLayoutState = CASNose.gSingleton.mBasicsPanel.Visible ? "basics" : "advanced";
-            }
-            else if (CASMouth.gSingleton != null)
-            {
-                currentLayout = "CASMouth";
-                currentLayoutState = CASMouth.gSingleton.mBasicsPanel.Visible ? "basics" : "advanced";
-            }
-            else if (CASMoles.gSingleton != null)
-            {
-                currentLayout = "CASMoles";
-                currentLayoutState = "other";
-            }
-            else if (CASMakeup.gSingleton != null)
-            {
-                currentLayout = "CASMakeup";
-                currentLayoutState = "other";
-            }
-            else if (CASTattoo.gSingleton != null)
-            {
-                currentLayout = "CASTattoo";
-                currentLayoutState = "other";
+                string mode = CASHeadEars.gSingleton.mBasicsPanel.Visible ? "basics" : "advanced";
+                HeadEars(mode);
+                Button presets = CASHeadEars.gSingleton.GetChildByID(98284289U, true) as Button;
+                Button advanced = CASHeadEars.gSingleton.GetChildByID(98284290U, true) as Button;
+                presets.Click -= (clickSender, clickEventArgs) => HeadEars("basics");
+                advanced.Click -= (clickSender, clickEventArgs) => HeadEars("advanced");
+                presets.Click += (clickSender, clickEventArgs) => HeadEars("basics");
+                advanced.Click += (clickSender, clickEventArgs) => HeadEars("advanced");
             }
         }
 
-        public static void SetFaceItemGrid()
+        private static void HookButtonClicks()
+        {
+            Button mHeadEarsButton = faceSingleton.GetChildByID(98278402U, true) as Button;
+            mHeadEarsButton.Click += (sender, e) => HeadEarsButton_Click(sender, e);
+        }
+
+        private static void HeadEarsButton_Click(WindowBase sender, UIButtonClickEventArgs eventArgs)
+        {
+            string mode = CASHeadEars.gSingleton.mBasicsPanel.Visible ? "basics" : "advanced";
+            HeadEars(mode);
+            Button presets = CASHeadEars.gSingleton.GetChildByID(98284289U, true) as Button;
+            Button advanced = CASHeadEars.gSingleton.GetChildByID(98284290U, true) as Button;
+            presets.Click += (clickSender, clickEventArgs) => HeadEars("basics");
+            advanced.Click += (clickSender, clickEventArgs) => HeadEars("advanced");
+        }
+
+        private static void HeadEars(string mode)
+        {
+            if (mode == "basics")
+            {
+                var visibleRows = CASHeadEars.gSingleton.mPresetsGrid.VisibleRows;
+                var visibleColumns = CASHeadEars.gSingleton.mPresetsGrid.VisibleColumns;
+                Rect GridArea = CASHeadEars.gSingleton.mPresetsGrid.Area;
+                visibleRows = (uint)fVisibleRows;
+                GridArea.Height = (103f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
+                visibleColumns = (uint)fVisibleColumns;
+                GridArea.Width = (108f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
+                CASHeadEars.gSingleton.mPresetsGrid.VisibleColumns = visibleColumns;
+                CASHeadEars.gSingleton.mPresetsGrid.VisibleRows = visibleRows;
+                CASHeadEars.gSingleton.mPresetsGrid.Area = GridArea;
+            }
+            else if (mode == "advanced")
+            {
+             
+            }
+            MoveDoneButton(mode);
+            SetCASFaceBackgroundSize(mode);
+        }
+        public static void MoveDoneButton(string mode)
         {
             try
             {
-                switch (currentLayout)
+                doneButton = CASFacialDetails.gSingleton.GetChildByID(98278400U, true) as Button;
+                float startingPositionX = 353f;
+                float startingPositionY = 35f;
+                if (mode == "basics")
                 {
-                    case "CASHeadEars":
-                        if (currentLayoutState == "basics")
-                        {
-                            var VisibleRows = CASHeadEars.gSingleton.mPresetsGrid.VisibleRows;
-                            var VisibleColumns = CASHeadEars.gSingleton.mPresetsGrid.VisibleColumns;
-                            //var backgroundImage = CASHeadEars.gSingleton.GetChildByID(98278400U, 255510366U, true) as Window;
-                            //backgroundImage.Visible = false;
-                            Rect GridArea = CASHeadEars.gSingleton.mPresetsGrid.Area;
-                            VisibleRows = (uint)fVisibleRows;
-                            GridArea.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-                            VisibleColumns = (uint)fVisibleColumns;
-                            GridArea.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
-                            CASHeadEars.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
-                            CASHeadEars.gSingleton.mPresetsGrid.VisibleRows = VisibleRows;
-                            CASHeadEars.gSingleton.mPresetsGrid.Area = GridArea;
-                        }
-                        else if (currentLayoutState == "advanced")
-                        {
-                            if (CASHeadEars.gSingleton.mMiscGrid != null)
-                            {
-                            }
-                            else if (CASHeadEars.gSingleton.mChinGrid != null)
-                            {
-                            }
-                            else if (CASHeadEars.gSingleton.mJawGrid != null)
-                            {
-                            }
-                            else if (CASHeadEars.gSingleton.mCheekGrid != null)
-                            {
-                            }
-                            else if (CASHeadEars.gSingleton.mEarGrid != null)
-                            {
-                            }
-                        }
-                        break;
-
-                    case "CASEyes":
-                        if (currentLayoutState == "basics")
-                        {
-                            //var VisibleRows = CASEyes.gSingleton.mPresetsGrid.VisibleRows;
-                            //var VisibleColumns = CASEyes.gSingleton.mPresetsGrid.VisibleColumns;
-                            //Rect GridArea = CASEyes.gSingleton.mPresetsGrid.Area;
-                            //VisibleRows = (uint)fVisibleRows;
-                            //GridArea.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-                            //VisibleColumns = (uint)fVisibleColumns;
-                            //GridArea1.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
-                            //CASEyes.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
-                            //CASEyes.gSingleton.mPresetsGrid.VisibleRows = VisibleRows;
-                            //CASEyes.gSingleton.mPresetsGrid.Area = GridArea;
-                        }
-                        else if (currentLayoutState == "advanced")
-                        {
-                            if (CASEyes.gSingleton.mMiscGrid != null)
-                            {
-                            }
-                            else if (CASEyes.gSingleton.mEyeShapeGrid != null)
-                            {
-                            }
-                            else if (CASEyes.gSingleton.mEyeLidGrid != null)
-                            {
-                            }
-                            else if (CASEyes.gSingleton.mBrowGrid != null)
-                            {
-                            }
-                        }
-                        break;
-                    case "CASNose":
-                        if (currentLayoutState == "basics")
-                        {
-                            var VisibleRows = CASNose.gSingleton.mPresetsGrid.VisibleRows;
-                            var VisibleColumns = CASNose.gSingleton.mPresetsGrid.VisibleColumns;
-                            Rect GridArea = CASNose.gSingleton.mPresetsGrid.Area;
-                            VisibleRows = (uint)fVisibleRows;
-                            GridArea.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-                            VisibleColumns = (uint)fVisibleColumns;
-                            GridArea.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
-                            CASNose.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
-                            CASNose.gSingleton.mPresetsGrid.VisibleRows = VisibleRows;
-                            CASNose.gSingleton.mPresetsGrid.Area = GridArea;
-                        }
-                        else if (currentLayoutState == "advanced")
-                        {
-                            if (CASNose.gSingleton.mMiscGrid != null)
-                            {
-                            }
-                            else if (CASNose.gSingleton.mNostrilGrid != null)
-                            {
-                            }
-                            else if (CASNose.gSingleton.mTipGrid != null)
-                            {
-                            }
-                            else if (CASNose.gSingleton.mBridgeGrid != null)
-                            {
-                            }
-                        }
-                        break;
-                    case "CASMouth":
-                        if (currentLayoutState == "basics")
-                        {
-                            var VisibleRows = CASMouth.gSingleton.mPresetsGrid.VisibleRows;
-                            var VisibleColumns = CASMouth.gSingleton.mPresetsGrid.VisibleColumns;
-                            Rect GridArea = CASMouth.gSingleton.mPresetsGrid.Area;
-                            VisibleRows = (uint)fVisibleRows;
-                            GridArea.Height = (104f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-                            VisibleColumns = (uint)fVisibleColumns;
-                            GridArea.Width = (106.33f * fVisibleColumns) * TinyUIFixForTS3Integration.getUIScale();
-                            CASMouth.gSingleton.mPresetsGrid.VisibleColumns = VisibleColumns;
-                            CASMouth.gSingleton.mPresetsGrid.VisibleRows = VisibleRows;
-                            CASMouth.gSingleton.mPresetsGrid.Area = GridArea;
-                        }
-                        else if (currentLayoutState == "advanced")
-                        {
-                            if (CASMouth.gSingleton.mMiscGrid != null)
-                            {
-                            }
-                            else if (CASMouth.gSingleton.mLowerGrid != null)
-                            {
-                            }
-                            else if (CASMouth.gSingleton.mUpperGrid != null)
-                            {
-                            }
-                        }
-                        break;
-
+                    doneButton.Position = new Vector2(startingPositionX + (109f * fVisibleColumns), startingPositionY);
+                }
+                else if (mode == "advanced")
+                {
+                    doneButton.Position = new Vector2(startingPositionX, startingPositionY);
+                }
+                else if (mode == "long")
+                {
+                    doneButton.Position = new Vector2(startingPositionX, startingPositionY);
                 }
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, "SetFaceItemGrid");
+                ExceptionHandler.HandleException(ex, "MoveDoneButton");
             }
         }
-        public static void SetCASFaceBackgroundSize()
+        public static void SetCASFaceBackgroundSize(string mode)
         {
             try
             {
                 Rect rect;
-                if (CASFacialDetails.gSingleton.mShortPanel != null)
-                {
-                    float baseWidth = 409f;
-                    float backgroundWidth = (baseWidth + (109f * (fVisibleColumns - 3))) * TinyUIFixForTS3Integration.getUIScale();
-                    float backgroundHeight = (100f * fVisibleRows + 148f) * TinyUIFixForTS3Integration.getUIScale();
-                    float sliderBackgroundHeight = (100f * fVisibleSliders + 210f) * TinyUIFixForTS3Integration.getUIScale();
 
-                    if (currentLayoutState == "basics")
-                    {
-                        rect = CASFacialDetails.gSingleton.mShortPanel.Area;
-                        rect.Width = backgroundWidth;
-                        rect.Height = backgroundHeight;
-                        CASFacialDetails.gSingleton.mShortPanel.Area = rect;
-                    }
-                    else if (currentLayoutState == "advanced")
-                    {
-                        rect = CASFacialDetails.gSingleton.mShortPanel.Area;
-                        rect.Width = 409f;
-                        rect.Height = sliderBackgroundHeight;
-                        CASFacialDetails.gSingleton.mShortPanel.Area = rect;
-                    }
-                    else if (currentLayout == "CASMoles")
-                    {
-                        rect = CASFacialDetails.gSingleton.mShortPanel.Area;
-                        rect.Width = 409f;
-                        rect.Height = 448f;
-                        CASFacialDetails.gSingleton.mShortPanel.Area = rect;
-                    }
-                }
-                else if (CASFacialDetails.gSingleton.mLongPanel != null)
+                if (mode == "basics")
                 {
-                    float backgroundWidth = (100f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
-                    if (currentLayout == "CASEyes")
-                    {
-                        rect = CASFacialDetails.gSingleton.mLongPanel.Area;
-                        rect.Width = backgroundWidth;
-                        CASFacialDetails.gSingleton.mLongPanel.Area = rect;
-                    }
-                    else if (currentLayout == "CASMakeup")
-                    {
-                        rect = CASFacialDetails.gSingleton.mLongPanel.Area;
-                        rect.Width = backgroundWidth;
-                        CASFacialDetails.gSingleton.mLongPanel.Area = rect;
-                    }
-                    else if (currentLayout == "CASTatto")
-                    {
-                        rect = CASFacialDetails.gSingleton.mLongPanel.Area;
-                        rect.Width = backgroundWidth;
-                        CASFacialDetails.gSingleton.mLongPanel.Area = rect;
-                    }
+                }
+                else if (mode == "advanced")
+                {
+                    rect = faceSingleton.mShortPanel.Area;
+                    rect.Width = 409f;
+                    rect.Height = 545f;
+                    faceSingleton.mShortPanel.Area = rect;
+                }
+                else if (mode == "long")
+                {
+
                 }
             }
             catch (Exception ex)
@@ -274,54 +159,5 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "SetCASFaceBackgroundSize");
             }
         }
-        public static void MoveDoneButton()
-        {
-            try
-            {
-                doneButton = CASFacialDetails.gSingleton.GetChildByID(98278400U, true) as Button;
-                doneButton.Click -= CASFacialDetails.gSingleton.OnDoneButtonClick;
-                doneButton.MouseUp += OnDoneClick;
-                float startingPositionX = 353f;
-                float startingPositionY = 35f;
-                if (currentLayoutState == "basics")
-                {
-                    doneButton.Position = new Vector2(startingPositionX + (100f * (fVisibleColumns - 3)), startingPositionY);
-                    return;
-                }
-                doneButton.Position = new Vector2(startingPositionX, startingPositionY);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, "MoveDoneButton");
-            }
-        }
-        public static void OnDoneClick(WindowBase sender, UIMouseEventArgs args)
-        {
-            if (args.MouseKey == MouseKeys.kMouseRight)
-            {
-                Simulator.AddObject(new OneShotFunctionTask(Configure.Face, StopWatch.TickStyles.Milliseconds, 1f));
-                return;
-            }
-            CASTopState topState = CASTopState.CreateASim;
-            if (Responder.Instance.CASModel.CASMode == CASMode.Mirror)
-            {
-                topState = CASTopState.Mirror;
-            }
-            else if (Responder.Instance.CASModel.CASMode == CASMode.Tattoo)
-            {
-                topState = CASTopState.Tattoo;
-            }
-            else if (Responder.Instance.CASModel.CASMode == CASMode.Stylist)
-            {
-                topState = CASTopState.Stylist;
-            }
-            CASController.Singleton.SetCurrentState(new CASState(topState, CASMidState.Summary, CASPhysicalState.None, CASClothingState.None));
-            args.Handled = true;
-        }
     }
 }
-//Vector2 donebuttonposition = CASFacialDetails.gSingleton.mDoneButton.Position;
-//// create a message with the position
-//string message = string.Format("donebutton position: x = {0}, y = {1}", donebuttonposition.x, donebuttonposition.y);
-//// show the notification
-//Sims3.UI.StyledNotification.Show(new Sims3.UI.StyledNotification.Format(message, StyledNotification.NotificationStyle.kGameMessageNegative));
