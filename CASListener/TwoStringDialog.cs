@@ -7,27 +7,33 @@ namespace Arro.MCR
 {
     public class TwoStringDialogMCR : TwoStringInputDialog
     {
-        public static List<string> Show(string titleText, string promptText, string secondPromptText, string defaultEntryText, string defaultSecondEntryText, string oKText, string cancelText)
+        
+        public new static List<string> Show(string titleText, string promptText, string secondPromptText, string defaultEntryText, string defaultSecondEntryText, string oKText, string cancelText)
         {
             return TwoStringDialogMCR.Show(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, new Vector2(-1f, -1f), verifyFilename: false);
         }
 
-        public static List<string> Show(string titleText, string promptText, string secondPromptText, string defaultEntryText, string defaultSecondEntryText, string oKText, string cancelText, bool verifyFilename)
+        public new static List<string> Show(string titleText, string promptText, string secondPromptText, string defaultEntryText, string defaultSecondEntryText, string oKText, string cancelText, bool verifyFilename)
         {
             return TwoStringDialogMCR.Show(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, new Vector2(-1f, -1f), verifyFilename);
         }
 
-        public static List<string> Show(string titleText, string promptText, string secondPromptText, string defaultEntryText, string defaultSecondEntryText, string oKText, string cancelText, Vector2 position, bool verifyFilename)
+        public new static List<string> Show(string titleText, string promptText, string secondPromptText,
+            string defaultEntryText, string defaultSecondEntryText, string oKText, string cancelText, Vector2 position,
+            bool verifyFilename)
         {
             if (ModalDialog.EnableModalDialogs)
             {
-                using (TwoStringDialogMCR mcrTwoStringInputDialog = new TwoStringDialogMCR(titleText, promptText, secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, position, verifyFilename))
+                using (TwoStringDialogMCR mcrTwoStringInputDialog = new TwoStringDialogMCR(titleText, promptText,
+                           secondPromptText, defaultEntryText, defaultSecondEntryText, oKText, cancelText, position,
+                           verifyFilename))
                 {
                     Audio.StartSound("ui_window_drop");
                     mcrTwoStringInputDialog.StartModal();
                     return mcrTwoStringInputDialog.Result;
                 }
             }
+
             return null;
         }
 
@@ -59,8 +65,7 @@ namespace Arro.MCR
             mModalDialogWindow.TriggerDown += OnTriggerDown;
             Button resetButton = mModalDialogWindow.GetChildByID(98291479U, true) as Button;
             resetButton.Click += (sender, e) => { mEntryTextEdit.Caption = "3"; mSecondEntryTextEdit.Caption = "1"; };
-            string strippedResetText = Localization.LocalizeString("Gameplay/Tutorial:ResetTutorialTitle", new object[0]);
-            string firstWord = strippedResetText.Split(' ')[0];
+            string firstWord = "Reset";
             resetButton.TooltipText = firstWord;
         }
 
@@ -72,7 +77,7 @@ namespace Arro.MCR
                 eventArgs.TextValidated = false;
             }
         }
-        private void OnTriggerDown(WindowBase sender, UITriggerEventArgs eventArgs)
+        private new void OnTriggerDown(WindowBase sender, UITriggerEventArgs eventArgs)
         {
             switch ((ModalDialog.Triggers)eventArgs.TriggerCode)
             {

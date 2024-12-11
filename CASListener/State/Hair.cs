@@ -1,4 +1,4 @@
-﻿using Sims3.SimIFace;
+﻿/*using Sims3.SimIFace;
 using System;
 //Currently unused
 namespace Arro.MCR
@@ -22,4 +22,4 @@ namespace Arro.MCR
             }
         }
     }
-}
+}*/

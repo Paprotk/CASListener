@@ -7,9 +7,9 @@ namespace Arro.MCR
 {
     public class CASHook : Task
     {
-        public static bool isClothesProcessing = false;
-        public static bool isFaceProcessing = false;
-        public static bool isHairProcessing = false;
+        public static bool isClothesProcessing;
+        public static bool isFaceProcessing;
+        public static bool isHairProcessing;
         public override void Simulate()
         {
             if (!Responder.Instance.InCasMode) return;

@@ -12,13 +12,15 @@ namespace Arro.MCR
     {
 
         [Tunable]
+#pragma warning disable CS0169 // Field is never used
         private static bool kInstantiator;
+#pragma warning restore CS0169 // Field is never used
 
         static Main()
         {
-            World.sOnStartupAppEventHandler += new EventHandler(OnStartupApp);
-            World.sOnWorldLoadFinishedEventHandler += new EventHandler(OnWorldLoadFinished);
-            World.sOnWorldQuitEventHandler += new EventHandler(OnWorldQuit);
+            World.sOnStartupAppEventHandler += OnStartupApp;
+            World.sOnWorldLoadFinishedEventHandler += OnWorldLoadFinished;
+            World.sOnWorldQuitEventHandler += OnWorldQuit;
         }
 
         private static void OnStartupApp(object sender, EventArgs e)
@@ -34,9 +36,9 @@ namespace Arro.MCR
                 if (responder)
                 {
                     Sims3.Gameplay.UI.Responder instance = Sims3.Gameplay.UI.Responder.Instance;
-                    instance.GameStateChanging = (GameStateChangingDelegate)Delegate.Remove(instance.GameStateChanging, new GameStateChangingDelegate(Main.OnGameStateChanged));
+                    instance.GameStateChanging = (GameStateChangingDelegate)Delegate.Remove(instance.GameStateChanging, new GameStateChangingDelegate(OnGameStateChanged));
                     Sims3.Gameplay.UI.Responder instance2 = Sims3.Gameplay.UI.Responder.Instance;
-                    instance2.GameStateChanging = (GameStateChangingDelegate)Delegate.Combine(instance2.GameStateChanging, new GameStateChangingDelegate(Main.OnGameStateChanged));
+                    instance2.GameStateChanging = (GameStateChangingDelegate)Delegate.Combine(instance2.GameStateChanging, new GameStateChangingDelegate(OnGameStateChanged));
                 }
             }
             catch (Exception ex)
@@ -48,9 +50,10 @@ namespace Arro.MCR
         {
             try
             {
-                if (Main.CASHook != null)
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                if (CASHook != null) 
                 {
-                    Simulator.DestroyObject(Main.CASHook);
+                    Simulator.DestroyObject(CASHook);
                 }
             }
             catch (Exception ex)
@@ -64,7 +67,7 @@ namespace Arro.MCR
         {
             try
             {
-                if (MCR.CASHook.isClothesProcessing == true)
+                if (MCR.CASHook.isClothesProcessing)
                 {
                     Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Milliseconds, 1f));
                 }
@@ -90,10 +93,8 @@ namespace Arro.MCR
             }
         }
 
-        public static bool isNraasMCInstalled = false;
-        public static bool isSmoothPatchInstalled = false;
+        public static bool isNraasMcInstalled;
         public static Assembly nraasAssembly;
-        public static Assembly smoothpatchAssembly;
 
         private static void CheckForMods()
         {
@@ -103,30 +104,24 @@ namespace Arro.MCR
             {
                 if (assembly.GetName().Name == "NRaasMasterController")
                 {
-                    isNraasMCInstalled = true;
+                    isNraasMcInstalled = true;
                     nraasAssembly = assembly;
-                    break;
-                }
-                if (assembly.GetName().Name == "LazyDuchess.SmoothPatch")
-                {
-                    isSmoothPatchInstalled = true;
-                    smoothpatchAssembly = assembly;
                     break;
                 }
             }
         }
 
-        internal static void OnGameStateChanged(Sims3.UI.Responder.GameSubState previousState, Sims3.UI.Responder.GameSubState newState)
+        internal static void OnGameStateChanged(Responder.GameSubState previousState, Responder.GameSubState newState)
         {
-            if (newState == Sims3.UI.Responder.GameSubState.CASFullMode || newState == Sims3.UI.Responder.GameSubState.CASMirrorMode || newState == Sims3.UI.Responder.GameSubState.CASTackMode || newState == Sims3.UI.Responder.GameSubState.CASDresserMode || newState == Sims3.UI.Responder.GameSubState.CASTattooMode || newState == Sims3.UI.Responder.GameSubState.CASStylistMode || newState == Sims3.UI.Responder.GameSubState.CASCollarMode || newState == Sims3.UI.Responder.GameSubState.CASSurgeryFaceMode || newState == Sims3.UI.Responder.GameSubState.CASSurgeryBodyMode)
+            if (newState == Responder.GameSubState.CASFullMode || newState == Responder.GameSubState.CASMirrorMode || newState == Responder.GameSubState.CASTackMode || newState == Responder.GameSubState.CASDresserMode || newState == Responder.GameSubState.CASTattooMode || newState == Responder.GameSubState.CASStylistMode || newState == Responder.GameSubState.CASCollarMode || newState == Responder.GameSubState.CASSurgeryFaceMode || newState == Responder.GameSubState.CASSurgeryBodyMode)
             {
                 Cheats("register");
-                Main.CASHook = Simulator.AddObject(new CASHook());
+                CASHook = Simulator.AddObject(new CASHook());
             }
-            else if (Main.CASHook != null)
+            else
             {
                 Cheats("unregister");
-                Simulator.DestroyObject(Main.CASHook);
+                Simulator.DestroyObject(CASHook);
             }
         }
         public static ObjectGuid CASHook;
@@ -135,7 +130,7 @@ namespace Arro.MCR
         {
             if (action == "register")
             {
-                Commands.sGameCommands.Register("mcr", "Usage: Type MCR to edit the number of rows and columns.", Commands.CommandType.General, new CommandHandler(Configure_cheat));
+                Commands.sGameCommands.Register("mcr", "Usage: Type MCR to edit the number of rows and columns.", Commands.CommandType.General, (Configure_cheat));
                 return;
             }
             Commands.sGameCommands.Unregister("mcr");

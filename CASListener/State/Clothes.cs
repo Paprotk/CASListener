@@ -56,15 +56,10 @@ namespace Arro.MCR
             {
                 if (CASClothingCategory.gSingleton != null)
                 {
-                    var VisibleRows = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows;
-                    var VisibleColumns = CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns;
                     Rect GridArea = CASClothingCategory.gSingleton.mClothingTypesGrid.Area;
-                    if (fVisibleRows >= 3) //Integration with smoothpatch is done via ArroMCRSP
-                    {
-                        VisibleRows = (uint)fVisibleRows;
-                        GridArea.Height = (139f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
-                    }
-                    VisibleColumns = (uint)fVisibleColumns;
+                    var VisibleRows = (uint)fVisibleRows;
+                    GridArea.Height = (139f * fVisibleRows) * TinyUIFixForTS3Integration.getUIScale();
+                    var VisibleColumns = (uint)fVisibleColumns;
                     GridArea.Width = (305f * fVisibleColumns + 20f) * TinyUIFixForTS3Integration.getUIScale();
                     CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleColumns = VisibleColumns;
                     CASClothingCategory.gSingleton.mClothingTypesGrid.VisibleRows = VisibleRows;
@@ -78,7 +73,7 @@ namespace Arro.MCR
         }
         public static void RefreshGrid()
         {
-            if (Main.isNraasMCInstalled)
+            if (Main.isNraasMcInstalled)
             {
                 new Clothes().InvokeNraasPopulateGrid();
                 return;
@@ -110,10 +105,10 @@ namespace Arro.MCR
         public static Button DoneButton;
         public static void MoveDoneButton()
         {
-            float startingPositionX;
-            float startingPositionY;
             if (currentLayout != null)
             {
+                float startingPositionX;
+                float startingPositionY;
                 switch (currentLayout)
                 {
                     case "CASClothing":
@@ -144,36 +139,20 @@ namespace Arro.MCR
             mConfigureButton.Position = new Vector2(CASClothingCategory.gSingleton.mTrashButton.Position.x + 10f * TinyUIFixForTS3Integration.getUIScale(), CASClothingCategory.gSingleton.mSortButton.Position.y - 13f * TinyUIFixForTS3Integration.getUIScale());
             mConfigureButton.TooltipText = Localization.LocalizeString("Arro/MCR/Local:ConfigureGrid", new object[0]);
             mConfigureButton.Click -= CASClothingCategory.gSingleton.OnShareButtonClick;
-            mConfigureButton.MouseUp += (sender, args) => OnGridClick(sender, args);
-            mConfigureButton.Tick += (sender, args) => EnableButton(sender, args);
+            mConfigureButton.MouseUp += (sender, args) => OnConfigureButtonClick(sender, args);
+            mConfigureButton.Tick += (sender, args) => EnableConfigureButton(sender, args);
         }
-
-        public static void OnGridClick(WindowBase sender, UIMouseEventArgs args)
+        public static void OnConfigureButtonClick(WindowBase sender, UIMouseEventArgs args)
         {
             try
             {
                 if (args.MouseKey == MouseKeys.kMouseLeft)
                 {
                     Simulator.AddObject(new OneShotFunctionTask(Configure.Clothes, StopWatch.TickStyles.Milliseconds, 1f));
-                    return;
                 }
                 else if (args.MouseKey == MouseKeys.kMouseRight)
                 {
-                    Simulator.AddObject(new OneShotFunctionTask(() =>
-                    {
-                        bool Continue = TwoButtonDialog.Show(
-                            Localization.LocalizeString("Arro/MCR/Local:DoYouWantToResetGrid", new object[0]),
-                            Localization.LocalizeString("Ui/Caption/Global:Yes", new object[0]),
-                            Localization.LocalizeString("Ui/Caption/Global:No", new object[0])
-                        );
-
-                        if (Continue)
-                        {
-                            fVisibleRows = 3;
-                            fVisibleColumns = 1;
-                            CASHook.SetBool(false, false, false);
-                        }
-                    }, StopWatch.TickStyles.Milliseconds, 1f));
+                    Simulator.AddObject(new OneShotFunctionTask(ResetGrid, StopWatch.TickStyles.Milliseconds, 1f));
                 }
             }
             catch (Exception ex)
@@ -181,18 +160,36 @@ namespace Arro.MCR
                 ExceptionHandler.HandleException(ex, "OnGridClick");
             }
         }
-        private static void EnableButton(WindowBase sender, UIEventArgs eventArgs)
+        private static bool isResetDialogShown;
+        public static void ResetGrid()
+        {
+            if (!isResetDialogShown)
+            {
+                isResetDialogShown = true;
+                var Continue = TwoButtonDialog.Show(
+                    Localization.LocalizeString("Arro/MCR/Local:DoYouWantToResetGrid", new object[0]),
+                    Localization.LocalizeString("Ui/Caption/Global:Yes", new object[0]),
+                    Localization.LocalizeString("Ui/Caption/Global:No", new object[0])
+                );
+                if (!Continue) return;
+                fVisibleRows = 3;
+                fVisibleColumns = 1;
+                isResetDialogShown = false;
+                CASHook.SetBool(false, false, false);
+            }
+        }
+        private static void EnableConfigureButton(WindowBase sender, UIEventArgs eventArgs)
         {
             mConfigureButton.Enabled = true;
         }
 
         public static void SetClothingBackgroundSize()
         {
-            Rect rect;
-            float backgroundHeight = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
-            float backgroundWidth = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
+            var backgroundHeight = (534f + (139f * (fVisibleRows - 3))) * TinyUIFixForTS3Integration.getUIScale();
+            var backgroundWidth = (300f * fVisibleColumns + 109f) * TinyUIFixForTS3Integration.getUIScale();
             if (currentLayout != null)
             {
+                Rect rect;
                 switch (currentLayout)
                 {
                     case "CASClothing":
@@ -223,11 +220,9 @@ namespace Arro.MCR
             try
             {
                 Type targetType = Main.nraasAssembly.GetType("NRaas.MasterControllerSpace.CAS.CASClothingCategoryEx");
-                if (targetType != null)
-                {
-                    MethodInfo populateGridMethod = targetType.GetMethod("PopulateGrid", BindingFlags.NonPublic | BindingFlags.Static);
-                    populateGridMethod?.Invoke(null, null);
-                }
+                if (targetType == null) return;
+                MethodInfo populateGridMethod = targetType.GetMethod("PopulateGrid", BindingFlags.NonPublic | BindingFlags.Static);
+                populateGridMethod?.Invoke(null, null);
             }
             catch (Exception ex)
             {
