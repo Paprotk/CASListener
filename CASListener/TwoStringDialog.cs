@@ -65,37 +65,30 @@ namespace Arro.MCR
             mModalDialogWindow.TriggerDown += OnTriggerDown;
             Button resetButton = mModalDialogWindow.GetChildByID(98291479U, true) as Button;
             resetButton.Click += (sender, e) => { mEntryTextEdit.Caption = "3"; mSecondEntryTextEdit.Caption = "1"; };
-            string firstWord = "Reset";
-            resetButton.TooltipText = firstWord;
         }
 
         private void TextValidateNumeric(WindowBase sender, UITextValidateEventArgs eventArgs)
         {
-            int num;
-            if (eventArgs.TextChange.Length != 0 && !int.TryParse(eventArgs.TextChange, out num))
+            if (eventArgs.TextChange.Length != 0 && !int.TryParse(eventArgs.TextChange, out _))
             {
                 eventArgs.TextValidated = false;
             }
         }
         private new void OnTriggerDown(WindowBase sender, UITriggerEventArgs eventArgs)
         {
-            switch ((ModalDialog.Triggers)eventArgs.TriggerCode)
+            switch ((Triggers)eventArgs.TriggerCode)
             {
-                case ModalDialog.Triggers.kOKTrigger:
+                case Triggers.kOKTrigger:
                     Audio.StartSound("ui_secondary_button");
                     OnTriggerOk();
                     eventArgs.Handled = true;
                     break;
-                case ModalDialog.Triggers.kCancelTrigger:
+                case Triggers.kCancelTrigger:
                     Audio.StartSound("ui_secondary_button");
                     OnTriggerCancel();
                     eventArgs.Handled = true;
                     break;
             }
         }
-
-        public new const string kLayoutName = "CustomInputDialog";
-
-        public new const int kWinExportID = 4096;
     }
 }

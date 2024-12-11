@@ -22,6 +22,7 @@ namespace Arro.MCR
         public static void WriteErrorXMLFile(string fileName, Exception errorToPrint)
         {
             uint num = 0u;
+            // ReSharper disable once UnusedVariable
             string s = Simulator.CreateExportFile(ref num, fileName);
 
             if (num != 0)

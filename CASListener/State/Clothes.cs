@@ -171,10 +171,10 @@ namespace Arro.MCR
                     Localization.LocalizeString("Ui/Caption/Global:Yes", new object[0]),
                     Localization.LocalizeString("Ui/Caption/Global:No", new object[0])
                 );
+                isResetDialogShown = false;
                 if (!Continue) return;
                 fVisibleRows = 3;
                 fVisibleColumns = 1;
-                isResetDialogShown = false;
                 CASHook.SetBool(false, false, false);
             }
         }
