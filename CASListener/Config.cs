@@ -39,15 +39,15 @@
 
                       if (result != null && result.Count == 2)
                       {
-                          float.TryParse(result[0], out float rows);
+                          float.TryParse(result[0], out var rows);
                           rows = Clamp(rows, 3, 16);
 
-                          float.TryParse(result[1], out float columns);
+                          float.TryParse(result[1], out var columns);
                           columns = Clamp(columns, 1, 16);
 
                           if (rows != MCR.Clothes.fVisibleRows || columns != MCR.Clothes.fVisibleColumns)
                           {
-                              CASHook.SetBool(false, false, false);
+                              MCR.CASHook.SetBool(false, false, false);
                               MCR.Clothes.fVisibleRows = rows;
                               MCR.Clothes.fVisibleColumns = columns;
                           }
